@@ -15,12 +15,12 @@ nodes=read_nodes(header,filename)
 #Lecture des arêtes et les poids
 edges,weights=read_edges(header,filename)
 
-#initialisation"""
+#Initialisation"""
 dim=parse(Int, header["DIMENSION"])
 nodes_vec=Node{Vector{Float64}}[]
 edges_vec=Edge{Vector{Float64}, Float64}[]
 
-#création du vecteur de noeuds
+#Création du vecteur de noeuds
 if isnothing(nodes)
 
  for id in 1:dim
@@ -39,7 +39,7 @@ else
     end
 end
 
-###création du vecteur des arêtes
+###Création du vecteur des arêtes
 
 for i in eachindex(edges)
 
