@@ -38,7 +38,7 @@ function read_nodes(header::Dict{String}{String}, filename::String)
 
 
   if !(node_coord_type in ["TWOD_COORDS", "THREED_COORDS"]) && !(display_data_type in ["COORDS_DISPLAY", "TWOD_DISPLAY"])
-    return nodes
+    return
   end
 
   file = open(filename, "r")
@@ -91,47 +91,53 @@ function n_nodes_to_read(format::String, n::Int, dim::Int)
 end
 
 """Analyse un fichier .tsp et renvoie l'ensemble des arêtes sous la forme d'un tableau."""
+
 function read_edges(header::Dict{String}{String}, filename::String)
 
-  edges = []
-  edge_weight_format = header["EDGE_WEIGHT_FORMAT"]
+  edges = [] #initialisation du vecteur edge
+  weights=[]
+  edge_weight_format = header["EDGE_WEIGHT_FORMAT"] #format de la matrice des poids
   known_edge_weight_formats = ["FULL_MATRIX", "UPPER_ROW", "LOWER_ROW",
   "UPPER_DIAG_ROW", "LOWER_DIAG_ROW", "UPPER_COL", "LOWER_COL",
   "UPPER_DIAG_COL", "LOWER_DIAG_COL"]
-
+#formats connus
+# avertissement format inconnu
   if !(edge_weight_format in known_edge_weight_formats)
     @warn "unknown edge weight format" edge_weight_format
     return edges
   end
 
-  file = open(filename, "r")
-  dim = parse(Int, header["DIMENSION"])
-  edge_weight_section = false
-  k = 0
-  n_edges = 0
-  i = 0
-  n_to_read = n_nodes_to_read(edge_weight_format, k, dim)
-  flag = false
+  file = open(filename, "r") # ouverture du fichier
+  dim = parse(Int, header["DIMENSION"]) #extraction de la dimension
+  edge_weight_section = false #variable pour indiquer l atteinte de la ligne des poids
+  k = 0 # init K
+  n_edges = 0 #init nb d arete
+  i = 0 # init i
+  n_to_read = n_nodes_to_read(edge_weight_format, k, dim) # nombre de noeud a lire
+  flag = false # arret quand 
 
-  for line in eachline(file)
-    line = strip(line)
-    if !flag
-      if occursin(r"^EDGE_WEIGHT_SECTION", line)
+  for line in eachline(file) # lecture ligne par ligne
+    line = strip(line) # mise en forme
+    if !flag # if active quand flag est faux
+      if occursin(r"^EDGE_WEIGHT_SECTION", line) #Indication de que la section des poids est atteint
         edge_weight_section = true
         continue
       end
 
-      if edge_weight_section
-        data = split(line)
-        n_data = length(data)
-        start = 0
-        while n_data > 0
-          n_on_this_line = min(n_to_read, n_data)
+      if edge_weight_section # debut de la lecture des poids
+        data = split(line) # separer les donnee pour avoir un tableau
+        n_data = length(data) # nombre de poids dans la ligne
+        start = 0 # init debut
+        while n_data > 0 # boucle active quand n data n'est pas nul
+          n_on_this_line = min(n_to_read, n_data) #nombre de donne de la ligne
 
           for j = start : start + n_on_this_line - 1
             n_edges = n_edges + 1
+            weight=data[j+1]
+
             if edge_weight_format in ["UPPER_ROW", "LOWER_COL"]
               edge = (k+1, i+k+2)
+
             elseif edge_weight_format in ["UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
               edge = (k+1, i+k+1)
             elseif edge_weight_format in ["UPPER_COL", "LOWER_ROW"]
@@ -144,6 +150,7 @@ function read_edges(header::Dict{String}{String}, filename::String)
               warn("Unknown format - function read_edges")
             end
             push!(edges, edge)
+            push!(weights,weight)
             i += 1
           end
 
@@ -166,29 +173,29 @@ function read_edges(header::Dict{String}{String}, filename::String)
     end
   end
   close(file)
-  return edges
+  return edges,weights
 end
 
 """Renvoie les noeuds et les arêtes du graphe."""
 function read_stsp(filename::String)
-  Base.print("Reading of header : ")
+ Base.print("Reading of header : ")
   header = read_header(filename)
   println("✓")
   dim = parse(Int, header["DIMENSION"])
   edge_weight_format = header["EDGE_WEIGHT_FORMAT"]
 
-  Base.print("Reading of nodes : ")
+ Base.print("Reading of nodes : ")
   graph_nodes = read_nodes(header, filename)
   println("✓")
 
   Base.print("Reading of edges : ")
-  edges_brut = read_edges(header, filename)
+  edges_brut, w = read_edges(header, filename)
   graph_edges = []
   for k = 1 : dim
     edge_list = Int[]
     push!(graph_edges, edge_list)
   end
-
+  println("✓")
   for edge in edges_brut
     if edge_weight_format in ["UPPER_ROW", "LOWER_COL", "UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
       push!(graph_edges[edge[1]], edge[2])
@@ -196,13 +203,15 @@ function read_stsp(filename::String)
       push!(graph_edges[edge[2]], edge[1])
     end
   end
-
+  
   for k = 1 : dim
-    graph_edges[k] = sort(graph_edges[k])
+  graph_edges[k] = sort(graph_edges[k])
   end
-  println("✓")
-  return graph_nodes, graph_edges
+  
+  return graph_nodes, graph_edges,w
+  
 end
+
 
 """Affiche un graphe étant données un ensemble de noeuds et d'arêtes.
 
@@ -234,6 +243,8 @@ end
 
 """Fonction de commodité qui lit un fichier stsp et trace le graphe."""
 function plot_graph(filename::String)
-  graph_nodes, graph_edges = read_stsp(filename)
+  graph_nodes, graph_edges,w = read_stsp(filename)
   plot_graph(graph_nodes, graph_edges)
 end
+
+
