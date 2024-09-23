@@ -4,12 +4,12 @@ include("node.jl")
 include("Edge.jl")
 include("graph.jl")
 
-dir="C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp"
+function create_graph(filename::String)
 
-header=read_header(dir)
-nodes=read_nodes(header,dir)
+header=read_header(filename)
+nodes=read_nodes(header,filename)
 
-edges,weights=read_edges(header,dir)
+edges,weights=read_edges(header,filename)
 
 nodes=sort(nodes, by=first)
 
@@ -29,4 +29,5 @@ for i in eachindex(edges)
 
 end
 
-graph=Graph(header["NAME"],nodes_vec,edges_vec)
+return graph=Graph(header["NAME"],nodes_vec,edges_vec)
+end
