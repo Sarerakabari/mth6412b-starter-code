@@ -39,5 +39,5 @@ node2(edge::AbstractEdge) = edge.node2
 
 """Affiche un arete."""
 function show(edge::AbstractEdge)
-  println("Edge ", name(edge), " bounds ",node1(edge).name, " and " ,node2(edge).name)
+  println("Edge ", name(edge), " bounds ",node1(edge).name, " and " ,node2(edge).name,",his weight is ",data(edge))
 end
