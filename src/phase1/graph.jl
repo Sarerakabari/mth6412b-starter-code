@@ -37,13 +37,13 @@ end
 # posséderont des champs `name` et `nodes`.
 
 """Renvoie le nom du graphe."""
-name(graph::AbstractGraph) = graph.name
+Name(graph::AbstractGraph) = graph.Name
 
 """Renvoie la liste des noeuds du graphe."""
 Nodes(graph::AbstractGraph) = graph.Nodes
 
 """Renvoie le nombre de noeuds du graphe."""
-nb_nodes(graph::AbstractGraph) = length(graph.nodes)
+nb_nodes(graph::AbstractGraph) = length(graph.Nodes)
 
 """Renvoie la liste des arêtes du graphe."""
 Edges(graph::AbstractGraph) = graph.Edges
@@ -53,17 +53,17 @@ nb_edges(graph::AbstractGraph) = length(graph.Edges)
 
 """Affiche un graphe"""
 function show(graph::Graph)
-  println("Graph ", name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edge") 
+  println("Graph ", Name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edge") 
   println(" Nodes are ") 
 
   for Node in Nodes(graph)
-    show(node)
+    show(Node)
   end
 
   println(" Edges are ") 
 
 
-  for Edge in Edges(graph)
-    show(edge)
-  end
+ # for Edge in Edges(graph)
+   # show(Edge)
+  #end
 end
