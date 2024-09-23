@@ -1,6 +1,6 @@
 import Base.show
 include("node.jl")
-include("Edge.jl")
+include("edge.jl")
 """Type abstrait dont d'autres types de graphes dériveront."""
 abstract type AbstractGraph{T,S} end
 
@@ -11,7 +11,11 @@ Exemple :
     n1 = Node("Joe", 3.14)
     n2 = Node("Steve", exp(1))
     n3 = Node("Jill", 4.12)
-    G = Graph("Ick", [node1, node2, node3],)
+    e1=Edge("1,2",10,n1,n2)
+    e2=Edge("1,3",100,n1,n2)
+    G = Graph("Test", [n1, n2, n3],[e1,e2])
+    show(G)
+
 
 Attention, tous les noeuds doivent avoir des données de même type.
 """
@@ -48,12 +52,12 @@ nb_nodes(graph::AbstractGraph) = length(graph.Nodes)
 """Renvoie la liste des arêtes du graphe."""
 Edges(graph::AbstractGraph) = graph.Edges
 
-"""Renvoie le nombre de noeuds du graphe."""
+"""Renvoie le nombre de arête du graphe."""
 nb_edges(graph::AbstractGraph) = length(graph.Edges)
 
 """Affiche un graphe"""
 function show(graph::Graph)
-  println("Graph ", Name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edge") 
+  println("Graph ", Name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edges") 
   println(" Nodes are ") 
 
   for Node in Nodes(graph)
