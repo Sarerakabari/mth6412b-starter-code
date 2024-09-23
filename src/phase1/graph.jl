@@ -63,7 +63,7 @@ function show(graph::Graph)
   println(" Edges are ") 
 
 
- # for Edge in Edges(graph)
-   # show(Edge)
-  #end
+ for Edge in Edges(graph)
+   show(Edge)
+  end
 end

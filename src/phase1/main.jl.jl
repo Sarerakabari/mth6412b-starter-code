@@ -46,4 +46,6 @@ end
 return graph=Graph(header["NAME"],nodes_vec,edges_vec)
 end
 
-create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/gr17.tsp")
+
+show(G)
