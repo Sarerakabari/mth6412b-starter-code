@@ -11,14 +11,28 @@ nodes=read_nodes(header,filename)
 
 edges,weights=read_edges(header,filename)
 
-nodes=sort(nodes, by=first)
-
+dim=parse(Int, header["DIMENSION"])
 nodes_vec=Node{Vector{Float64}}[]
 edges_vec=Edge{Vector{Float64}, Float64}[]
-for id in keys(nodes)
-    new_node=Node(string(id),nodes[id])
-    push!(nodes_vec,new_node)
+if isnothing(nodes)
+
+ for id in 1:dim
+        new_node=Node(string(id),Float64[])
+        push!(nodes_vec,new_node)
+    end
+
+else
+    nodes=sort(nodes, by=first)
+
+ for id in 1:dim
+        new_node=Node(string(id),nodes[id])
+        push!(nodes_vec,new_node)
+    end
 end
+
+
+
+
 
 
 
@@ -31,3 +45,5 @@ end
 
 return graph=Graph(header["NAME"],nodes_vec,edges_vec)
 end
+
+create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
