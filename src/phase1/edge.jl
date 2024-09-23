@@ -11,7 +11,7 @@ Exemple:
         noeud1 = Node("James", 12)
         noeud2= Node("Kirk",14)
         
-        edge=Edge("(noeud1, noeud2) ",12,noeud1,noeud2)
+        edge=Edge("(noeud1, noeud2)",12,noeud1,noeud2)
 
 """
 mutable struct Edge{T,S} <: AbstractEdge{T,S}
@@ -39,5 +39,10 @@ node2(edge::AbstractEdge) = edge.node2
 
 """Affiche un arete."""
 function show(edge::AbstractEdge)
+<<<<<<< HEAD
   println("Edge ", name(edge), " bounds ",node1(edge).name, " and " ,node2(edge).name,",his weight is ",data(edge))
 end
+=======
+  println("Edge ", name(edge), " bounds ",node1(edge).name, " and " ,node2(edge).name)
+end
+>>>>>>> 1ae7d4096f80e371c8692bf1b4bc3e60b47a2356
