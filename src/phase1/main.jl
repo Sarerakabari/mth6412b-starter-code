@@ -3,17 +3,24 @@ include("read_stsp.jl")
 include("node.jl")
 include("Edge.jl")
 include("graph.jl")
+#Fonction qui construit un graph avec les données stsp
 
 function create_graph(filename::String)
-
+#Création de l' entête
 header=read_header(filename)
+
+#Lecture des noeuds
 nodes=read_nodes(header,filename)
 
+#Lecture des arêtes et les poids
 edges,weights=read_edges(header,filename)
 
+#initialisation"""
 dim=parse(Int, header["DIMENSION"])
 nodes_vec=Node{Vector{Float64}}[]
 edges_vec=Edge{Vector{Float64}, Float64}[]
+
+#création du vecteur de noeuds
 if isnothing(nodes)
 
  for id in 1:dim
@@ -24,12 +31,15 @@ if isnothing(nodes)
 else
     nodes=sort(nodes, by=first)
 
+
+
  for id in 1:dim
         new_node=Node(string(id),nodes[id])
         push!(nodes_vec,new_node)
     end
 end
 
+###création du vecteur des arêtes
 
 for i in eachindex(edges)
 
@@ -37,8 +47,8 @@ for i in eachindex(edges)
  push!(edges_vec,new_edge)
 
 end
-
-return graph=Graph(header["NAME"],nodes_vec,edges_vec)
+#création du graph
+return graph=Graph(header["NAME"],nodes_vec,edges_vec) 
 end
 
 G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/gr17.tsp")
