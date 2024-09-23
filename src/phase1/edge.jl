@@ -11,7 +11,7 @@ Exemple:
         noeud1 = Node("James", 12)
         noeud2= Node("Kirk",14)
         
-        edge=Edge("(noeud1, noeud2) ",12,noeud1,noeud2)
+        edge=Edge("(noeud1, noeud2)",12,noeud1,noeud2)
 
 """
 mutable struct Edge{T,S} <: AbstractEdge{T,S}
