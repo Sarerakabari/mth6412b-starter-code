@@ -94,42 +94,40 @@ end
 
 function read_edges(header::Dict{String}{String}, filename::String)
 
-  edges = [] #initialisation du vecteur edge
+  edges = [] 
   weights=[]
-  edge_weight_format = header["EDGE_WEIGHT_FORMAT"] #format de la matrice des poids
+  edge_weight_format = header["EDGE_WEIGHT_FORMAT"] 
   known_edge_weight_formats = ["FULL_MATRIX", "UPPER_ROW", "LOWER_ROW",
   "UPPER_DIAG_ROW", "LOWER_DIAG_ROW", "UPPER_COL", "LOWER_COL",
   "UPPER_DIAG_COL", "LOWER_DIAG_COL"]
-#formats connus
-# avertissement format inconnu
+
   if !(edge_weight_format in known_edge_weight_formats)
     @warn "unknown edge weight format" edge_weight_format
     return edges
   end
 
-  file = open(filename, "r") # ouverture du fichier
-  dim = parse(Int, header["DIMENSION"]) #extraction de la dimension
-  edge_weight_section = false #variable pour indiquer l atteinte de la ligne des poids
-  k = 0 # init K
-  n_edges = 0 #init nb d arete
-  i = 0 # init i
-  n_to_read = n_nodes_to_read(edge_weight_format, k, dim) # nombre de noeud a lire
-  flag = false # arret quand 
-
-  for line in eachline(file) # lecture ligne par ligne
-    line = strip(line) # mise en forme
-    if !flag # if active quand flag est faux
-      if occursin(r"^EDGE_WEIGHT_SECTION", line) #Indication de que la section des poids est atteint
+  file = open(filename, "r") 
+  dim = parse(Int, header["DIMENSION"]) 
+  edge_weight_section = false 
+  k = 0 
+  n_edges = 0 
+  i = 0 
+  n_to_read = n_nodes_to_read(edge_weight_format, k, dim) 
+  flag = false 
+  for line in eachline(file) 
+    line = strip(line) 
+    if !flag 
+      if occursin(r"^EDGE_WEIGHT_SECTION", line) 
         edge_weight_section = true
         continue
       end
 
-      if edge_weight_section # debut de la lecture des poids
-        data = split(line) # separer les donnee pour avoir un tableau
-        n_data = length(data) # nombre de poids dans la ligne
-        start = 0 # init debut
-        while n_data > 0 # boucle active quand n data n'est pas nul
-          n_on_this_line = min(n_to_read, n_data) #nombre de donne de la ligne
+      if edge_weight_section
+        data = split(line) 
+        n_data = length(data)
+        start = 0 
+        while n_data > 0 
+          n_on_this_line = min(n_to_read, n_data) 
 
           for j = start : start + n_on_this_line - 1
             n_edges = n_edges + 1
