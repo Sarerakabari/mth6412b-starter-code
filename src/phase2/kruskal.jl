@@ -1,6 +1,6 @@
 import Base.show
-include("graph.jl")
-include("comp_connexe.jl")
+#include("graph.jl")
+include("compconnexe.jl")
 
 """Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
    dans un graphe non orienté""" 
@@ -9,7 +9,7 @@ function kruskal(graph::AbstractGraph{T,S}) where {T,S}
     """Création de composantes connexe contenant chacque noeud du graphe"""
     set_comp_connexe = Vector{ComposanteConnexe{T,S}}()
     for node in nodes(graph)
-        push!(set_comp_connexe,ConnectedComponent{T}
+        push!(set_comp_connexe,ConnectedComponent{T},
         (node.name,[node],[]))
     end
 
@@ -20,8 +20,10 @@ function kruskal(graph::AbstractGraph{T,S}) where {T,S}
     for edge in edges_graph
         twocompconx = Vector{ConnectedComponent{T}}()
         for elt in set_comp_connexe
-            if node1(edge) in nodes(elt) and node2(edge) in nodes(elt)
-                break
+            if node1(edge) in nodes(elt) 
+                if node2(edge) in nodes(elt)
+                    break
+                end
             elseif length(twocompconx) == 2
                 break
             else

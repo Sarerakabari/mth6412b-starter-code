@@ -23,7 +23,7 @@ end
 
 """Ajoute un noeud au graphe."""
 function add_node!(graph::Graph{T,S}, node::Node{T}) where {T,S}
-  push!(graph.Nodes, node)
+  push!(graph.nodes, node)
   graph
 end
 
@@ -57,14 +57,14 @@ function show(graph::Graph)
   println("Graph ", name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edge") 
   println(" Nodes are ") 
 
-  for Node in Nodes(graph)
-    show(node)
-  end
+  #for node in nodes(graph)
+  #  show(node)
+  #end
 
   println(" Edges are ") 
 
 
-  for Edge in Edges(graph)
+  for edge in edges(graph)
     show(edge)
   end
 end

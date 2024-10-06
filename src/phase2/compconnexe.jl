@@ -1,5 +1,6 @@
 import Base.show
-include("graph.jl")
+
+#include("graph.jl")
 
 
 #"""Type abstrait dont d'autres types de composantes connexe dériveront."""
