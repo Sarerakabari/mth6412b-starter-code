@@ -46,9 +46,8 @@ function kruskal(graph::AbstractGraph{T,S}) where {T,S}
             end
         end
     end
-    sort!(set_comp_connexe, by=elt -> nb_nodes(elt), rev = true)
-    return Graph("Arbre de recouvrement minimale du graphe " * name(graph), nodes(set_comp_connexe[1]),
-                edges(set_comp_connexe[1]))
+    return Graph("Arbre de recouvrement minimale du graphe " * name(graph), nodes(set_comp_connexe),
+                edges(set_comp_connexe))
 end
 
 
