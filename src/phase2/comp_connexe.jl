@@ -38,9 +38,9 @@ end
 
 """
 Fusionne deux composantes connexes en ajoutant tous les noeuds et les arêtes de `comp_conx2` à `comp_conx1` 
-et en ajoutant une arête de fusion `edge_fusion`.
+et en ajoutant une arête de fusion `edge_fusion`. 
 """
-function merge_connected_components!(comp_conx1::ComposanteConnexe{T,S},
+function fusion_of_two_connected_components!(comp_conx1::ComposanteConnexe{T,S},
   comp_conx2::ComposanteConnexe{T,S}, edge_fusion::Edge{T,S}) where {T,S}
 
   # Ajout des noeuds de comp_conx2 à comp_conx1
