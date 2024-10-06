@@ -33,8 +33,8 @@ import Base.show
     comme des graphes."""
 mutable struct ComposanteConnexe{T,S} <: AbstractGraph{T,S}
   name::String
-  Nodes::Vector{Node{T}}
-  Edges::Vector{Edge{T,S}}
+  nodes::Vector{Node{T}}
+  edges::Vector{Edge{T,S}}
 end
 
 """
