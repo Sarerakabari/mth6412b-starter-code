@@ -32,8 +32,8 @@ include("graph.jl")
     comme des graphes."""
 mutable struct ComposanteConnexe{T,S} <: AbstractGraph{T,S}
   name::String
-  nodes::Vector{Node{T}}
-  edges::Vector{Edge{T,S}}
+  Nodes::Vector{Node{T}}
+  Edges::Vector{Edge{T,S}}
 end
 
 """
