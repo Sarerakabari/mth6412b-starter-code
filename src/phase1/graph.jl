@@ -51,6 +51,7 @@ Edges(graph::AbstractGraph) = graph.Edges
 """Renvoie le nombre de noeuds du graphe."""
 nb_edges(graph::AbstractGraph) = length(graph.Edges)
 
+
 """Affiche un graphe"""
 function show(graph::Graph)
   println("Graph ", name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edge") 
