@@ -33,24 +33,26 @@ md"""
 ##### 1. Choisir et implémenter une structure de données pour les composantes connexes d’un graphe
 """
 
+# ╔═╡ d970b71a-1f3f-46c8-93ce-df35125d369a
+md"""
+Implementation proposée d'une structure qui pointe le parent"""
+
 # ╔═╡ 8c4e3107-ac56-4e2a-a889-b199e7eb8547
 md"""
-```
-abstract type AbstractConnexeElement{T} end
+```julia
+abstract type Abstractnode_pointer{T} end
 
-mutable struct ConnexeElement{T} <: AbstractConnexeElement{T}
-    name::String
-    parent::Node{T}
-    child::Node{T}
-end
+mutable struct node_pointer{T} <: Abstractnode_pointer{T}
+  name::String
+  child::Node{T}
+  parent::Node{T}
 
-abstract type AbstractCompConnexe{T} end
-
-mutable struct CompConnexe{T} <: AbstractCompConnexe{T}
-    comp::Vector{ConnexeElement}
 end
 ```
 """
+
+# ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
+md"""Constructeur pour un composant connexe."""
 
 # ╔═╡ 9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 md"""
@@ -123,7 +125,9 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
 # ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
-# ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
+# ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
+# ╠═8c4e3107-ac56-4e2a-a889-b199e7eb8547
+# ╠═6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd

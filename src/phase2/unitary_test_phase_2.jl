@@ -30,7 +30,7 @@ e14=Edge("FE",10,n6,n5)
 
 E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
 
-""" Création de composants connexes et d'un ensemble"""
+#Création de composants connexes et d'un ensemble
 
 comp_c1=node_pointer(n1)
 
@@ -49,7 +49,7 @@ G=Graph("small",N,E)
 
 A,B=kruskal(G)
 
-""" test sur le constructeur node_pointer"""
+#test sur le constructeur node_pointer
 
 @test comp_c1.name==n1.name
 
@@ -57,22 +57,21 @@ A,B=kruskal(G)
 
 @test comp_c1.parent==n1
 
-
-""" verification si le noeud est son propre parent apres l'utilisation du constructeur node_pointer"""
+#verification si le noeud est son propre parent apres l'utilisation du constructeur node_pointer
 
 root=find_root(comp_c1,set_comp)
 
 @test root==comp_c1
 
 
-""" test sur les liasons des composant connexe"""
+#test sur les liasons des composant connexe
 
 link!(set_comp[1],set_comp[2],set_comp)
 
 @test set_comp[2].parent==set_comp[1].child
 
 
-""" test sur les unions des composant connexe à partir de noeud d'une arête"""
+#test sur les unions des composant connexe à partir de noeud d'une arête
 
 
 unite!(n1,n5,set_comp)
@@ -82,7 +81,7 @@ unite!(n1,n5,set_comp)
 
 @test set_comp[1].parent==set_comp[1].child
 
-"""Test sur l'exemple du cours"""
+#Test sur l'exemple du cours
 
 @test B==37
 

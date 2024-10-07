@@ -15,13 +15,7 @@ end
 # on présume que tous les noeuds dérivant d'AbstractNode
 # posséderont des champs `name` et `data`.
 
-"""Renvoie le nom du noeud."""
-name(node_pointer::Abstractnode_pointer) = node_pointer.name
-
-"""Renvoie les données contenues dans le noeud."""
-data(node_pointer::Abstractnode_pointer) = node_pointer.parent
-
-"""Constructeur composant connexe."""
+"""Constructeur pour un composant connexe."""
 function node_pointer(Node::Node{T}) where {T}
 name=Node.name 
 return node_pointer(name,Node,Node)
