@@ -7,7 +7,6 @@ abstract type Abstractcomp_conx{T} end
 
 mutable struct comp_conx{T} <: Abstractcomp_conx{T}
   name::String
-  Child::Node{T}
   Parent::Node{T}
 end
 
@@ -21,13 +20,14 @@ name(comp_conx::Abstractcomp_conx) = comp_conx.name
 data(comp_conx::Abstractcomp_conx) = comp_conx.parent
 
 function comp_conx(Node::Node{T}) where {T}
-name=Node.name  
-return comp_conx(name,Node,Node)
+name=Node.name 
+return comp_conx(name,Node)
 end
 
 function change_parent!(comp_conx::Abstractcomp_conx, new_parent::Node{T}) where {T}
     comp_conx.parent=new_parent
 end
+
 
 
 

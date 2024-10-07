@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.11
+# v0.19.46
 
 using Markdown
 using InteractiveUtils
@@ -167,9 +167,12 @@ The test sets can be nested. Let's define a test set for `fibonacci` and two sub
 		end
 	end
 	@testset "tests for special cases" begin
-		@test fibonacci(0) == 0
+		@test fibonacci(0) == 0 skip=true
 	end
 end
+
+# ╔═╡ 61541fd5-7f06-4766-bcac-9b51f2552e6a
+
 
 # ╔═╡ c8b5efb8-a6e3-47e4-9862-32ab0b9ce933
 md"""
@@ -250,8 +253,9 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.1"
+julia_version = "1.10.0"
 manifest_format = "2.0"
+project_hash = "7f04ae4c9b3cd5197b3509067f6574bac4dc27ab"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -268,11 +272,12 @@ deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[deps.Random]]
-deps = ["SHA", "Serialization"]
+deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -289,13 +294,13 @@ uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 # ╠═aef19068-a719-4acd-88a3-e3c0ce8554bf
 # ╟─1ee51dbd-4aa0-4f0a-98f4-76da811c0422
 # ╠═84bab878-f8ad-4b5c-b5da-badeb63f2ee6
-# ╠═443babaf-cd21-4249-bc66-c07ef1cff5a4
+# ╟─443babaf-cd21-4249-bc66-c07ef1cff5a4
 # ╠═c6d31523-9af2-45b6-ae8e-be3c4ccb0436
 # ╠═7d11c400-27b3-474e-ab15-d6dfb64b2877
 # ╟─7892d555-32fa-4aaf-8c8a-1cc53adda578
 # ╠═9ba0fa81-87d9-47b1-b40c-bb3b8c54130f
 # ╠═59e8803a-cb80-46bc-8598-9676c6ff88e6
-# ╠═c33bfd0f-98bf-490c-8d7d-35b0562b5ded
+# ╟─c33bfd0f-98bf-490c-8d7d-35b0562b5ded
 # ╟─0a32dd21-9d88-40b9-99fd-28704689850d
 # ╠═ffc7d5ff-e617-4393-9329-7a9a38fc2ace
 # ╟─635fae9c-5ace-4b72-abed-21e2fc368fc5
@@ -310,6 +315,7 @@ uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 # ╟─78553f59-40bd-46f2-8fc9-3f5a9ea0b454
 # ╟─c536b700-eeaa-4268-937b-98e255c55253
 # ╠═9d7a2ff1-a770-4071-9640-bea2c037f7eb
+# ╠═61541fd5-7f06-4766-bcac-9b51f2552e6a
 # ╟─c8b5efb8-a6e3-47e4-9862-32ab0b9ce933
 # ╠═c8071cab-b8b2-4c3a-b871-4556fbf368a6
 # ╟─ad251bae-9796-48ca-8111-328763496395
