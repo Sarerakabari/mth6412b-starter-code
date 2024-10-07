@@ -35,7 +35,7 @@ md"""
 
 # ╔═╡ d970b71a-1f3f-46c8-93ce-df35125d369a
 md"""
-Implementation proposée d'une structure qui pointe le parent"""
+Implementation proposée d'une structure composante connexe : noeud qui pointe le parent"""
 
 # ╔═╡ 8c4e3107-ac56-4e2a-a889-b199e7eb8547
 md"""
@@ -52,7 +52,7 @@ end
 """
 
 # ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
-md"""Constructeur pour un composant connexe."""
+md"""Constructeur pour un composant connexe.Un noeud est son propre parent"""
 
 # ╔═╡ 16339626-8605-4ac6-985c-49e11a718af6
 md"""
@@ -65,7 +65,7 @@ end
 """
 
 # ╔═╡ 549070f3-187c-42f9-b89e-bd992a1538ea
-md""" Union des composants connexes composés des 2 noeuds des arête d'un graph """
+md""" Méthode pour unir des composants connexes composés des 2 noeuds d'un arête d'un graph """
 
 # ╔═╡ 3af3a294-b0d8-49f0-bbd0-9d13172df39c
 md"""
@@ -80,6 +80,23 @@ end
 
 
 # ╔═╡ fd8454ba-cee5-4f25-86c1-3f097d09906b
+md"""  Méthode pour trouver la racine du composant connexe """
+
+# ╔═╡ 4f23d7d2-1718-4b16-976e-8a24660bbd4e
+md"""
+```julia
+function find_root(c::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
+
+  if c.child!=c.parent
+
+     c=find_root(C[findfirst(x->x.name==c.parent.name,C)],C)
+     
+  end
+
+  return c
+end
+```
+"""
 
 
 # ╔═╡ 9d8d7cfe-a427-4d19-8bed-de8a921dafe2
@@ -153,13 +170,14 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
 # ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
-# ╠═d970b71a-1f3f-46c8-93ce-df35125d369a
+# ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
 # ╠═549070f3-187c-42f9-b89e-bd992a1538ea
 # ╟─3af3a294-b0d8-49f0-bbd0-9d13172df39c
-# ╠═fd8454ba-cee5-4f25-86c1-3f097d09906b
+# ╟─fd8454ba-cee5-4f25-86c1-3f097d09906b
+# ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
