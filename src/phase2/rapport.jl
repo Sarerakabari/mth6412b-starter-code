@@ -19,14 +19,32 @@ md"""
 #
 """
 
+# ╔═╡ b727f17a-8843-4d23-941b-698c19c5c6c1
+md"""
+```
+Auteurs:Ando Rakotonandrasana
+		Oussama Mouhtal
+		Octave Claich
+```
+"""
+
+
 # ╔═╡ 2f59b97d-e868-46bc-9945-76075015d4cc
 md""" Le  code se trouve au lien suivant: """
 
 # ╔═╡ 322e6e27-5af8-49b0-96f4-025bbf2403f4
 md"""[https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2](https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2)"""
 
+# ╔═╡ 48b7402e-7cfc-4e5f-87a0-b67bca4eb326
+md""" Tous les implementations de cette phase sont inspirées du livre ci-dessous :"""
+
+# ╔═╡ 3d9e6b3c-8179-4759-a862-146fe1872464
+md"""
+ ###### Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford. (2022). Introduction to algorithms. MIT press.
+"""
+
 # ╔═╡ 063e8297-bc61-4bde-85d0-8f144185c6d3
-md""" Le lecteur peut fork le projet et lancer le fichier main.jl pour retrouver les résultats ci-dessous"""
+md""" Le lecteur peut fork le projet et lancer le fichier main.jl pour retrouver les résultats ci-dessus"""
 
 # ╔═╡ b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 md"""
@@ -106,7 +124,7 @@ md"""
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 md"""Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
-   dans un graphe non orienté""" 
+   dans un graphe non orienté:""" 
 
 # ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
@@ -369,65 +387,15 @@ md""" Code du programme principale : """
 # ╔═╡ 1ad3c3ef-7407-473b-a1fc-92e6ac118b63
 md"""
 ```julia
-include("read_stsp.jl")
-include("node.jl")
-include("Edge.jl")
-include("graph.jl")
-include("../phase2/kruskal.jl")
-#Fonction qui construit un graph avec les données stsp
-
-function create_graph(filename::String)
-#Création de l' entête
-header=read_header(filename)
-
-#Lecture des noeuds
-nodes=read_nodes(header,filename)
-
-#Lecture des arêtes et les poids
-edges,weights=read_edges(header,filename)
-
-#Initialisation
-dim=parse(Int, header["DIMENSION"])
-nodes_vec=Node{Vector{Float64}}[]
-edges_vec=Edge{Vector{Float64}, Float64}[]
-
-#Création du vecteur de noeuds
-if isnothing(nodes)
-
- for id in 1:dim
-        new_node=Node(string(id),Float64[])
-        push!(nodes_vec,new_node)
-    end
-
-else
-    nodes=sort(nodes, by=first)
-
-
-
- for id in 1:dim
-        new_node=Node(string(id),nodes[id])
-        push!(nodes_vec,new_node)
-    end
-end
-
-###Création du vecteur des arêtes
-
-for i in eachindex(edges)
-
- new_edge =Edge(string(edges[i]),parse(Float64,weights[i]),nodes_vec[edges[i][1]],nodes_vec[edges[i][2]])
- push!(edges_vec,new_edge)
-
-end
-#création du graph
-return graph=Graph(header["NAME"],nodes_vec,edges_vec) 
-end
+include("../phase1/main.jl")
+include("kruskal.jl")
 
 
 
 
-#du graphe à partir bayg29.tsp
+# création du graphe à partir bayg29.tsp
 
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bayg29.tsp")
 
 #Test sur le fichier bayg29.tsp
 A,B=kruskal(G)
@@ -447,7 +415,7 @@ md""" Test sur le fichier bayg29.tsp"""
 # ╔═╡ aff84e04-709b-46e6-bb0e-7ceafb5f8799
 md"""
 ```julia
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp")
+G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bayg29.tsp")
 A,B=kruskal(G)
 
 println("the minimun spanning tree are composed of:")
@@ -503,7 +471,7 @@ md""" Test sur le fichier bays29.tsp"""
 # ╔═╡ 77714937-68a7-4a05-9f35-2eb508069506
 md"""
 ```julia
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bays29.tsp")
 A,B=kruskal(G)
 
 println("the minimun spanning tree are composed of:")
@@ -561,7 +529,7 @@ md"""
 ```julia
 #du graphe à partir bayg29.tsp
 
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/swiss42.tsp")
 
 #Test sur le fichier bayg29.tsp
 A,B=kruskal(G)
@@ -638,7 +606,7 @@ Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.0"
 manifest_format = "2.0"
 project_hash = "348ed7e828d2091a44e211d4df367eb5f2d0eb19"
 
@@ -662,15 +630,18 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─0829e03c-8bc6-4c0d-b1c2-572dd831cb1a
 # ╟─9f427156-bc94-4877-80f9-3db6f178f274
 # ╟─c8cc4922-0f3b-4c3a-b444-8045b67205c8
+# ╟─b727f17a-8843-4d23-941b-698c19c5c6c1
 # ╟─2f59b97d-e868-46bc-9945-76075015d4cc
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
+# ╟─48b7402e-7cfc-4e5f-87a0-b67bca4eb326
+# ╟─3d9e6b3c-8179-4759-a862-146fe1872464
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
 # ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 # ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
-# ╠═549070f3-187c-42f9-b89e-bd992a1538ea
+# ╟─549070f3-187c-42f9-b89e-bd992a1538ea
 # ╟─3af3a294-b0d8-49f0-bbd0-9d13172df39c
 # ╟─fd8454ba-cee5-4f25-86c1-3f097d09906b
 # ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
@@ -678,7 +649,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
-# ╠═4c326a3e-fc60-4732-b48f-9fb2146dce6e
+# ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
 # ╟─ab9964f8-856e-4fe9-bcab-914bd3102388
 # ╟─d33138a8-4521-4e6c-a14b-a3c9bf6a346b
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
@@ -690,7 +661,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
 # ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
 # ╟─ea296f84-65b8-47c7-8bcf-c5f39055711a
-# ╠═16b10cd0-7969-404e-a226-8af6500bff2a
+# ╟─16b10cd0-7969-404e-a226-8af6500bff2a
 # ╟─1ad3c3ef-7407-473b-a1fc-92e6ac118b63
 # ╟─d38a7590-50d9-4730-99f8-10db3be53d13
 # ╟─aff84e04-709b-46e6-bb0e-7ceafb5f8799
