@@ -17,7 +17,7 @@ nodes=read_nodes(header,filename)
 #Lecture des arêtes et les poids
 edges,weights=read_edges(header,filename)
 
-#Initialisation"""
+#Initialisation
 dim=parse(Int, header["DIMENSION"])
 nodes_vec=Node{Vector{Float64}}[]
 edges_vec=Edge{Vector{Float64}, Float64}[]
@@ -56,8 +56,11 @@ end
 
 
 
+#du graphe à partir bayg29.tsp
 
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+
+#Test sur le fichier bayg29.tsp
 A,B=kruskal(G)
 
 println("the minimun spanning tree are composed of:")

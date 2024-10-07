@@ -363,6 +363,84 @@ md"""
 ##### 4. tester votre implémentation sur diverses instances de TSP symétrique dans un programme principal et commenter.
 """
 
+# ╔═╡ 16b10cd0-7969-404e-a226-8af6500bff2a
+md""" Code du programme principale : """
+
+# ╔═╡ 1ad3c3ef-7407-473b-a1fc-92e6ac118b63
+md"""
+```julia
+include("read_stsp.jl")
+include("node.jl")
+include("Edge.jl")
+include("graph.jl")
+include("../phase2/kruskal.jl")
+#Fonction qui construit un graph avec les données stsp
+
+function create_graph(filename::String)
+#Création de l' entête
+header=read_header(filename)
+
+#Lecture des noeuds
+nodes=read_nodes(header,filename)
+
+#Lecture des arêtes et les poids
+edges,weights=read_edges(header,filename)
+
+#Initialisation
+dim=parse(Int, header["DIMENSION"])
+nodes_vec=Node{Vector{Float64}}[]
+edges_vec=Edge{Vector{Float64}, Float64}[]
+
+#Création du vecteur de noeuds
+if isnothing(nodes)
+
+ for id in 1:dim
+        new_node=Node(string(id),Float64[])
+        push!(nodes_vec,new_node)
+    end
+
+else
+    nodes=sort(nodes, by=first)
+
+
+
+ for id in 1:dim
+        new_node=Node(string(id),nodes[id])
+        push!(nodes_vec,new_node)
+    end
+end
+
+###Création du vecteur des arêtes
+
+for i in eachindex(edges)
+
+ new_edge =Edge(string(edges[i]),parse(Float64,weights[i]),nodes_vec[edges[i][1]],nodes_vec[edges[i][2]])
+ push!(edges_vec,new_edge)
+
+end
+#création du graph
+return graph=Graph(header["NAME"],nodes_vec,edges_vec) 
+end
+
+
+
+
+#du graphe à partir bayg29.tsp
+
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+
+#Test sur le fichier bayg29.tsp
+A,B=kruskal(G)
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+```
+"""
+
+
 # ╔═╡ d38a7590-50d9-4730-99f8-10db3be53d13
 md""" Test sur le fichier bayg29.tsp"""
 
@@ -416,6 +494,62 @@ Edge (11, 22) bounds 11 and 22,his weight is 63.0
 Edge (7, 25) bounds 7 and 25,his weight is 72.0  
 Edge (23, 27) bounds 23 and 27,his weight is 74.0
 the total cost is 1319.0
+```
+"""
+
+# ╔═╡ 201f6e55-daf7-4fce-aef5-fb00ad48770d
+md""" Test sur le fichier bays29.tsp"""
+
+# ╔═╡ 77714937-68a7-4a05-9f35-2eb508069506
+md"""
+```julia
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+A,B=kruskal(G)
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+```
+"""
+
+# ╔═╡ 1ee8ce73-1d27-4232-871d-e18e40f2e806
+md"""#### Résultat :"""
+
+# ╔═╡ 5e7e90e8-1088-4c75-9474-d51a7327e1df
+md"""
+```
+the minimun spanning tree are composed of:
+Edge (10, 20) bounds 10 and 20,his weight is 28.0
+Edge (14, 18) bounds 14 and 18,his weight is 35.0
+Edge (4, 15) bounds 4 and 15,his weight is 38.0
+Edge (26, 29) bounds 26 and 29,his weight is 39.0
+Edge (24, 27) bounds 24 and 27,his weight is 41.0
+Edge (2, 21) bounds 2 and 21,his weight is 42.0
+Edge (4, 10) bounds 4 and 10,his weight is 42.0
+Edge (8, 27) bounds 8 and 27,his weight is 43.0
+Edge (14, 22) bounds 14 and 22,his weight is 44.0
+Edge (1, 28) bounds 1 and 28,his weight is 45.0
+Edge (5, 9) bounds 5 and 9,his weight is 46.0
+Edge (6, 12) bounds 6 and 12,his weight is 55.0
+Edge (16, 27) bounds 16 and 27,his weight is 55.0
+Edge (15, 18) bounds 15 and 18,his weight is 56.0
+Edge (15, 19) bounds 15 and 19,his weight is 56.0
+Edge (5, 26) bounds 5 and 26,his weight is 57.0
+Edge (10, 13) bounds 10 and 13,his weight is 57.0
+Edge (14, 17) bounds 14 and 17,his weight is 59.0
+Edge (6, 28) bounds 6 and 28,his weight is 60.0
+Edge (5, 6) bounds 5 and 6,his weight is 61.0
+Edge (1, 21) bounds 1 and 21,his weight is 65.0
+Edge (16, 19) bounds 16 and 19,his weight is 66.0
+Edge (1, 24) bounds 1 and 24,his weight is 67.0
+Edge (19, 25) bounds 19 and 25,his weight is 69.0
+Edge (3, 29) bounds 3 and 29,his weight is 77.0
+Edge (11, 15) bounds 11 and 15,his weight is 79.0
+Edge (23, 27) bounds 23 and 27,his weight is 80.0
+Edge (7, 25) bounds 7 and 25,his weight is 95.0
+the total cost is 1557.0
 ```
 """
 
@@ -483,9 +617,15 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
 # ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
 # ╟─ea296f84-65b8-47c7-8bcf-c5f39055711a
+# ╠═16b10cd0-7969-404e-a226-8af6500bff2a
+# ╟─1ad3c3ef-7407-473b-a1fc-92e6ac118b63
 # ╟─d38a7590-50d9-4730-99f8-10db3be53d13
 # ╟─aff84e04-709b-46e6-bb0e-7ceafb5f8799
 # ╟─be38727a-edf3-4272-a0c7-5105cd15abbf
 # ╟─1384e8db-3032-467b-a779-01f48ac66ed6
+# ╟─201f6e55-daf7-4fce-aef5-fb00ad48770d
+# ╟─77714937-68a7-4a05-9f35-2eb508069506
+# ╟─1ee8ce73-1d27-4232-871d-e18e40f2e806
+# ╟─5e7e90e8-1088-4c75-9474-d51a7327e1df
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
