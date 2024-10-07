@@ -23,7 +23,7 @@ md"""
 md""" Le  code se trouve au lien suivant: """
 
 # ╔═╡ 322e6e27-5af8-49b0-96f4-025bbf2403f4
-md"""[https://github.com/oclaich/mth6412b-starter-code/tree/phase2/src/phase1](https://github.com/oclaich/mth6412b-starter-code/tree/phase2/src/phase1)"""
+md"""[https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2](https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2)"""
 
 # ╔═╡ 063e8297-bc61-4bde-85d0-8f144185c6d3
 md""" Le lecteur peut fork le projet et lancer le fichier main.jl pour retrouver les résultats ci-dessous"""
