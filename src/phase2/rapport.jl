@@ -68,21 +68,21 @@ mutable struct node_pointer{T} <: Abstractnode_pointer{T}
   name::String
   child::Node{T}
   parent::Node{T}
-
 end
 ```
 """
 
 # ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
 md"""Maintenant, on va définir les fonctions qui vont nous servir pour implémenter l'algorithme kruskal. 
-La fonction ci-dessous serve à construire une composante connexe à partir d'un noeud"""
+La fonction ci-dessous serve à construire une composante connexe à partir d'un noeud qui va etre à la fonctions
+enfant et parant"""
 
 # ╔═╡ 16339626-8605-4ac6-985c-49e11a718af6
 md"""
 ```julia
 function node_pointer(Node::Node{T}) where {T}
-name=Node.name 
-return node_pointer(name,Node,Node)
+  name=Node.name 
+  return node_pointer(name,Node,Node)
 end
 ```
 """
