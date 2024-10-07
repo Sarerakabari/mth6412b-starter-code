@@ -48,6 +48,7 @@ set_comp=[comp_c1,comp_c2,comp_c3,comp_c4,comp_c5]
 G=Graph("small",N,E)
 
 A,B=kruskal(G)
+
 """ test sur le constructeur node_pointer"""
 
 @test comp_c1.name==n1.name
