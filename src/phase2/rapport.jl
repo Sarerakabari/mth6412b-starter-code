@@ -233,7 +233,7 @@ md"""
 # ╔═╡ c450bddb-9cf8-46a5-8d68-f153872cf29a
 md"""
 ```
-Les tests unitaires sont présents dans le unitary_test_phase_2.jl
+Les tests unitaires sont présents dans le test.jl
 ```
 """
 
