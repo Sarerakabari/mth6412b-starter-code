@@ -12,8 +12,6 @@ mutable struct node_pointer{T} <: Abstractnode_pointer{T}
 
 end
 
-# on présume que tous les noeuds dérivant d'AbstractNode
-# posséderont des champs `name` et `data`.
 
 """Constructeur pour un composant connexe."""
 function node_pointer(Node::Node{T}) where {T}
