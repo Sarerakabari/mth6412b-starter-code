@@ -363,6 +363,62 @@ md"""
 ##### 4. tester votre implémentation sur diverses instances de TSP symétrique dans un programme principal et commenter.
 """
 
+# ╔═╡ d38a7590-50d9-4730-99f8-10db3be53d13
+md""" Test sur le fichier bayg29.tsp"""
+
+# ╔═╡ aff84e04-709b-46e6-bb0e-7ceafb5f8799
+md"""
+```julia
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp")
+A,B=kruskal(G)
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+```
+"""
+
+# ╔═╡ be38727a-edf3-4272-a0c7-5105cd15abbf
+md"""#### Résultat :"""
+
+# ╔═╡ 1384e8db-3032-467b-a779-01f48ac66ed6
+md"""
+```julia
+the minimun spanning tree are composed of:
+Edge (10, 20) bounds 10 and 20,his weight is 25.0
+Edge (14, 18) bounds 14 and 18,his weight is 32.0
+Edge (1, 28) bounds 1 and 28,his weight is 34.0  
+Edge (4, 15) bounds 4 and 15,his weight is 34.0  
+Edge (14, 22) bounds 14 and 22,his weight is 36.0
+Edge (26, 29) bounds 26 and 29,his weight is 36.0
+Edge (24, 27) bounds 24 and 27,his weight is 38.0
+Edge (4, 10) bounds 4 and 10,his weight is 39.0  
+Edge (8, 27) bounds 8 and 27,his weight is 39.0  
+Edge (2, 21) bounds 2 and 21,his weight is 41.0  
+Edge (5, 9) bounds 5 and 9,his weight is 42.0    
+Edge (6, 12) bounds 6 and 12,his weight is 46.0  
+Edge (17, 22) bounds 17 and 22,his weight is 47.0
+Edge (16, 27) bounds 16 and 27,his weight is 48.0
+Edge (2, 20) bounds 2 and 20,his weight is 49.0  
+Edge (15, 19) bounds 15 and 19,his weight is 49.0
+Edge (5, 21) bounds 5 and 21,his weight is 50.0  
+Edge (5, 6) bounds 5 and 6,his weight is 51.0    
+Edge (5, 26) bounds 5 and 26,his weight is 51.0  
+Edge (10, 13) bounds 10 and 13,his weight is 51.0
+Edge (1, 24) bounds 1 and 24,his weight is 52.0  
+Edge (6, 28) bounds 6 and 28,his weight is 52.0  
+Edge (19, 25) bounds 19 and 25,his weight is 52.0
+Edge (15, 18) bounds 15 and 18,his weight is 56.0
+Edge (3, 29) bounds 3 and 29,his weight is 60.0  
+Edge (11, 22) bounds 11 and 22,his weight is 63.0
+Edge (7, 25) bounds 7 and 25,his weight is 72.0  
+Edge (23, 27) bounds 23 and 27,his weight is 74.0
+the total cost is 1319.0
+```
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -426,6 +482,10 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─b15a92ef-c7d1-409c-8d2d-b011ed005de5
 # ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
 # ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
-# ╠═ea296f84-65b8-47c7-8bcf-c5f39055711a
+# ╟─ea296f84-65b8-47c7-8bcf-c5f39055711a
+# ╟─d38a7590-50d9-4730-99f8-10db3be53d13
+# ╟─aff84e04-709b-46e6-bb0e-7ceafb5f8799
+# ╟─be38727a-edf3-4272-a0c7-5105cd15abbf
+# ╟─1384e8db-3032-467b-a779-01f48ac66ed6
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
