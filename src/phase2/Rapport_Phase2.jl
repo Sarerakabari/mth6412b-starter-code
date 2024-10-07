@@ -210,7 +210,20 @@ println("the total cost is ",B)
 md"""#### Résultat :"""
 
 # ╔═╡ 63f51ecf-1760-4122-80ce-a0bf6a868b5c
-
+md"""
+```julia
+the minimun spanning tree are composed of:
+Edge HG bounds H and G,his weight is 1
+Edge IC bounds I and C,his weight is 2
+Edge GF bounds G and F,his weight is 2
+Edge AB bounds A and B,his weight is 4
+Edge CF bounds C and F,his weight is 4
+Edge CD bounds C and D,his weight is 7
+Edge AH bounds A and H,his weight is 8
+Edge DE bounds D and E,his weight is 9
+the total cost is 37
+```
+"""
 
 # ╔═╡ 56190668-c0d7-4fd8-8159-2389852c4bfd
 md"""
@@ -220,8 +233,134 @@ md"""
 # ╔═╡ c450bddb-9cf8-46a5-8d68-f153872cf29a
 md"""
 ```
-Les tests unitaires sont présents dans le fichier test.jl
+Les tests unitaires sont présents dans le unitary_test_phase_2.jl
 ```
+"""
+
+# ╔═╡ b15a92ef-c7d1-409c-8d2d-b011ed005de5
+md""" 
+```julia
+include("node_pointer.jl")
+include("kruskal.jl")
+using Test
+#création de noeud
+n1=Node("A",[4])
+n2=Node("B",[4])
+n3=Node("C",[4])
+n4=Node("D",[4])
+n5=Node("E",[4])
+n6=Node("F",[4])
+n7=Node("G",[4])
+n8=Node("H",[4])
+n9=Node("I",[4])
+#vecteur de noeuds
+N=[n1,n2,n3,n4,n5,n6,n7,n8,n9]
+#creation de arêtes
+e1=Edge("AB",4,n1,n2)
+e2=Edge("AH",8,n1,n8)
+e3=Edge("BC",8,n2,n3)
+e4=Edge("BH",11,n2,n8)
+e5=Edge("HI",7,n8,n9)
+e6=Edge("HG",1,n8,n7)
+e7=Edge("IC",2,n9,n3)
+e8=Edge("IG",6,n9,n7)
+e9=Edge("CD",7,n3,n4)
+e10=Edge("CF",4,n3,n6)
+e11=Edge("GF",2,n7,n6)
+e12=Edge("DF",14,n4,n6)
+e13=Edge("DE",9,n4,n5)
+e14=Edge("FE",10,n6,n5)
+#vecteur des arête
+E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
+
+#Création de composants connexes et d'un ensemble
+
+comp_c1=node_pointer(n1)
+
+comp_c2=node_pointer(n2)
+
+comp_c3=node_pointer(n3)
+
+comp_c4=node_pointer(n4)
+
+comp_c5=node_pointer(n5)
+
+set_comp=[comp_c1,comp_c2,comp_c3,comp_c4,comp_c5]
+
+#Création du graphe
+
+G=Graph("small",N,E)
+
+# Algorithme de Kruskal appliqué au graphe du cours qui retourne l'arbre de recouvrement minimal et le côut de cette arbre
+A,B=kruskal(G)
+
+#test sur le constructeur node_pointer
+
+@test comp_c1.name==n1.name
+
+@test comp_c1.child==n1
+
+@test comp_c1.parent==n1
+
+#verification si le noeud est son propre parent apres l'utilisation du constructeur node_pointer
+
+root=find_root(comp_c1,set_comp)
+
+@test root==comp_c1
+
+
+#test sur les liasons des composant connexe
+
+link!(set_comp[1],set_comp[2],set_comp)
+
+@test set_comp[2].parent==set_comp[1].child
+
+
+#test sur les unions des composant connexe à partir de noeud d'une arête
+
+
+unite!(n1,n5,set_comp)
+
+@test set_comp[5].parent==set_comp[1].child
+
+
+@test set_comp[1].parent==set_comp[1].child
+
+#Test sur l'exemple du cours
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+
+@test B==37
+```
+"""
+
+# ╔═╡ c7ad79b3-5ac5-496a-a943-872340fe360f
+md"""#### Résultat :"""
+
+# ╔═╡ 1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
+md"""
+```julia
+the minimun spanning tree are composed of:
+Edge HG bounds H and G,his weight is 1
+Edge IC bounds I and C,his weight is 2
+Edge GF bounds G and F,his weight is 2
+Edge AB bounds A and B,his weight is 4
+Edge CF bounds C and F,his weight is 4
+Edge CD bounds C and D,his weight is 7
+Edge AH bounds A and H,his weight is 8
+Edge DE bounds D and E,his weight is 9
+the total cost is 37
+Test Passed
+```
+"""
+
+# ╔═╡ ea296f84-65b8-47c7-8bcf-c5f39055711a
+md"""
+##### 4. tester votre implémentation sur diverses instances de TSP symétrique dans un programme principal et commenter.
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -281,8 +420,12 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─d33138a8-4521-4e6c-a14b-a3c9bf6a346b
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
 # ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
-# ╠═63f51ecf-1760-4122-80ce-a0bf6a868b5c
+# ╟─63f51ecf-1760-4122-80ce-a0bf6a868b5c
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
 # ╟─c450bddb-9cf8-46a5-8d68-f153872cf29a
+# ╟─b15a92ef-c7d1-409c-8d2d-b011ed005de5
+# ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
+# ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
+# ╠═ea296f84-65b8-47c7-8bcf-c5f39055711a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

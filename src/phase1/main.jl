@@ -53,10 +53,15 @@ end
 return graph=Graph(header["NAME"],nodes_vec,edges_vec) 
 end
 
+
+
+
+
 G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
 A,B=kruskal(G)
 
+println("the minimun spanning tree are composed of:")
 for a in A
     show(a)
-    end
-    show(B)
+end
+println("the total cost is ",B)

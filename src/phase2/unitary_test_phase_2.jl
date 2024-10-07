@@ -86,12 +86,14 @@ unite!(n1,n5,set_comp)
 
 #Test sur l'exemple du cours
 
-@test B==37
 println("the minimun spanning tree are composed of:")
 for a in A
     show(a)
 end
 println("the total cost is ",B)
+
+@test B==37
+
 
 
 
