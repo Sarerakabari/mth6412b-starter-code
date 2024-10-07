@@ -7,16 +7,17 @@ include("node_pointer.jl")
 function kruskal(graph::Graph{T,S}) where {T,S}
 
 
-    #Création de composantes connexe contenant chacque noeud du graphe
+    #Création des composantes connexe initiale
     set_comp_connexe = Vector{node_pointer{T}}()
     for node in graph.Nodes
         push!(set_comp_connexe,node_pointer(node))
     end
     
-    #Trier  les arretes du graphe dans un ordre croissant
+    #Trie  des arretes du graphe dans un ordre croissant
     sort!(graph.Edges, by=e -> e.data)
 
 
+    #Initilaisation du vecteur des arêtes composant l'arbre de recouvrement minimal
     A=Vector{Edge{T,S}}()
     total_cost=0
 

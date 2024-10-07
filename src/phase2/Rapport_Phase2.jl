@@ -105,18 +105,112 @@ md"""
 """
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
+md"""Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
+   dans un graphe non orienté""" 
+
+# ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
-```
-Fonction pour check si deux noeuds sont dans la même composante connexe.
-Elle va renvoyer l'indice de la composante connexe dans laquelle se trouvent les noeuds au sein d'une liste de composantes connexes.
+```julia
+import Base.show
+include("node_pointer.jl")
+function kruskal(graph::Graph{T,S}) where {T,S}
 
-function check_comp_connexe(comp_connexes::CompConnexe{T}[],node1::Node{T},node2::Node{T}) where {T}
+    #Création des composantes connexe initiale
+    set_comp_connexe = Vector{node_pointer{T}}()
+    for node in graph.Nodes
+        push!(set_comp_connexe,node_pointer(node))
+    end
+    
+    #Trie  des arretes du graphe dans un ordre croissant
+    sort!(graph.Edges, by=e -> e.data)
 
-Algorithme de Kruskal, qui doit renvoyer uniquement l'ensemble des arêtes et le poids total de l'arbre de recouvrement minimal.
 
-function  kruskal(graph::Graph{T}) where {T}
+    #Initilaisation du vecteur des arêtes composant l'arbre de recouvrement minimal
+    A=Vector{Edge{T,S}}()
+    total_cost=0
+
+    #Selection des arêtes qui fera partie de l'arbre de recouvrement minimal 
+    for edge in graph.Edges
+
+
+        x=find_root(set_comp_connexe[findfirst(x->x.name==edge.node1.name,set_comp_connexe)],set_comp_connexe)
+       
+        y=find_root(set_comp_connexe[findfirst(x->x.name==edge.node2.name,set_comp_connexe)],set_comp_connexe)
+        if x!=y
+            push!(A,edge)
+            unite!(edge.node1,edge.node2,set_comp_connexe)  
+            total_cost+=edge.data
+        end   
+    end
+    return A,total_cost
+end
 ```
 """
+
+# ╔═╡ b55a2239-968f-48df-a867-933efcb4b86e
+md"""Testons sur l'exemple du cours.""" 
+
+# ╔═╡ 4c326a3e-fc60-4732-b48f-9fb2146dce6e
+md""" Créons alors le graphe montré en cours :"""
+
+# ╔═╡ ab9964f8-856e-4fe9-bcab-914bd3102388
+md""" 
+``` julia
+#création de noeud
+n1=Node("A",[4])
+n2=Node("B",[4])
+n3=Node("C",[4])
+n4=Node("D",[4])
+n5=Node("E",[4])
+n6=Node("F",[4])
+n7=Node("G",[4])
+n8=Node("H",[4])
+n9=Node("I",[4])
+#vecteur de noeuds
+N=[n1,n2,n3,n4,n5,n6,n7,n8,n9]
+#creation de arêtes
+e1=Edge("AB",4,n1,n2)
+e2=Edge("AH",8,n1,n8)
+e3=Edge("BC",8,n2,n3)
+e4=Edge("BH",11,n2,n8)
+e5=Edge("HI",7,n8,n9)
+e6=Edge("HG",1,n8,n7)
+e7=Edge("IC",2,n9,n3)
+e8=Edge("IG",6,n9,n7)
+e9=Edge("CD",7,n3,n4)
+e10=Edge("CF",4,n3,n6)
+e11=Edge("GF",2,n7,n6)
+e12=Edge("DF",14,n4,n6)
+e13=Edge("DE",9,n4,n5)
+e14=Edge("FE",10,n6,n5)
+#vecteur des arête
+E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
+#Création du graphe
+G=Graph("small",N,E)
+```
+"""
+
+# ╔═╡ d33138a8-4521-4e6c-a14b-a3c9bf6a346b
+md"""Algorithme de Kruskal appliqué au graphe du cours qui retourne l'arbre de recouvrement minimal et le coût de cette arbre"""
+
+# ╔═╡ 3e2249ce-2411-4ba4-bd18-033689e41ae2
+md"""
+```julia
+A,B=kruskal(G) 
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+```
+"""
+
+# ╔═╡ 481cf377-6d0b-42c9-bdec-6ea229805ed0
+md"""#### Résultat :"""
+
+# ╔═╡ 63f51ecf-1760-4122-80ce-a0bf6a868b5c
+
 
 # ╔═╡ 56190668-c0d7-4fd8-8159-2389852c4bfd
 md"""
@@ -180,6 +274,14 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
+# ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
+# ╟─b55a2239-968f-48df-a867-933efcb4b86e
+# ╠═4c326a3e-fc60-4732-b48f-9fb2146dce6e
+# ╟─ab9964f8-856e-4fe9-bcab-914bd3102388
+# ╟─d33138a8-4521-4e6c-a14b-a3c9bf6a346b
+# ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
+# ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
+# ╠═63f51ecf-1760-4122-80ce-a0bf6a868b5c
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
 # ╟─c450bddb-9cf8-46a5-8d68-f153872cf29a
 # ╟─00000000-0000-0000-0000-000000000001

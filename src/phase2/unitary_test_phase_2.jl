@@ -1,6 +1,7 @@
 include("node_pointer.jl")
 include("kruskal.jl")
 using Test
+#création de noeud
 n1=Node("A",[4])
 n2=Node("B",[4])
 n3=Node("C",[4])
@@ -10,9 +11,9 @@ n6=Node("F",[4])
 n7=Node("G",[4])
 n8=Node("H",[4])
 n9=Node("I",[4])
-
+#vecteur de noeuds
 N=[n1,n2,n3,n4,n5,n6,n7,n8,n9]
-
+#creation de arêtes
 e1=Edge("AB",4,n1,n2)
 e2=Edge("AH",8,n1,n8)
 e3=Edge("BC",8,n2,n3)
@@ -27,7 +28,7 @@ e11=Edge("GF",2,n7,n6)
 e12=Edge("DF",14,n4,n6)
 e13=Edge("DE",9,n4,n5)
 e14=Edge("FE",10,n6,n5)
-
+#vecteur des arête
 E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
 
 #Création de composants connexes et d'un ensemble
@@ -44,9 +45,11 @@ comp_c5=node_pointer(n5)
 
 set_comp=[comp_c1,comp_c2,comp_c3,comp_c4,comp_c5]
 
+#Création du graphe
 
 G=Graph("small",N,E)
 
+# Algorithme de Kruskal appliqué au graphe du cours qui retourne l'arbre de recouvrement minimal et le côut de cette arbre
 A,B=kruskal(G)
 
 #test sur le constructeur node_pointer
@@ -84,7 +87,11 @@ unite!(n1,n5,set_comp)
 #Test sur l'exemple du cours
 
 @test B==37
-
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
 
 
 
