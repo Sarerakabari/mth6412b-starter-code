@@ -553,6 +553,79 @@ the total cost is 1557.0
 ```
 """
 
+# ╔═╡ f4fcf415-bd09-4493-82fd-7d9c054dbf60
+md""" Test sur le fichier swiss42.tsp"""
+
+# ╔═╡ a5d12422-a0d9-4741-963c-a38450c347d7
+md"""
+```julia
+#du graphe à partir bayg29.tsp
+
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+
+#Test sur le fichier bayg29.tsp
+A,B=kruskal(G)
+
+println("the minimun spanning tree are composed of:")
+for a in A
+    show(a)
+end
+println("the total cost is ",B)
+```
+"""
+
+# ╔═╡ 1af51dff-d647-41a6-aa32-a84a35e3b054
+md"""#### Résultat :"""
+
+# ╔═╡ ce87222b-1a28-4696-a784-7c72d5274a19
+md"""
+```
+the minimun spanning tree are composed of:
+Edge (3, 28) bounds 3 and 28,his weight is 4.0
+Edge (15, 17) bounds 15 and 17,his weight is 8.0
+Edge (3, 4) bounds 3 and 4,his weight is 11.0
+Edge (4, 5) bounds 4 and 5,his weight is 11.0
+Edge (15, 16) bounds 15 and 16,his weight is 11.0
+Edge (12, 13) bounds 12 and 13,his weight is 14.0
+Edge (1, 2) bounds 1 and 2,his weight is 15.0
+Edge (6, 27) bounds 6 and 27,his weight is 15.0
+Edge (3, 29) bounds 3 and 29,his weight is 18.0
+Edge (2, 7) bounds 2 and 7,his weight is 19.0
+Edge (24, 42) bounds 24 and 42,his weight is 19.0
+Edge (5, 7) bounds 5 and 7,his weight is 20.0
+Edge (18, 32) bounds 18 and 32,his weight is 21.0
+Edge (30, 31) bounds 30 and 31,his weight is 21.0
+Edge (11, 26) bounds 11 and 26,his weight is 22.0
+Edge (16, 38) bounds 16 and 38,his weight is 22.0
+Edge (6, 7) bounds 6 and 7,his weight is 23.0
+Edge (19, 27) bounds 19 and 27,his weight is 23.0
+Edge (21, 35) bounds 21 and 35,his weight is 23.0
+Edge (21, 34) bounds 21 and 34,his weight is 24.0
+Edge (14, 20) bounds 14 and 20,his weight is 25.0
+Edge (13, 19) bounds 13 and 19,his weight is 26.0
+Edge (22, 40) bounds 22 and 40,his weight is 26.0
+Edge (10, 24) bounds 10 and 24,his weight is 27.0
+Edge (29, 30) bounds 29 and 30,his weight is 27.0
+Edge (9, 10) bounds 9 and 10,his weight is 28.0
+Edge (12, 26) bounds 12 and 26,his weight is 28.0
+Edge (9, 11) bounds 9 and 11,his weight is 29.0
+Edge (22, 41) bounds 22 and 41,his weight is 30.0
+Edge (2, 8) bounds 2 and 8,his weight is 32.0
+Edge (18, 38) bounds 18 and 38,his weight is 33.0
+Edge (6, 20) bounds 6 and 20,his weight is 34.0
+Edge (15, 20) bounds 15 and 20,his weight is 35.0
+Edge (23, 39) bounds 23 and 39,his weight is 36.0
+Edge (1, 33) bounds 1 and 33,his weight is 37.0
+Edge (23, 40) bounds 23 and 40,his weight is 39.0
+Edge (36, 37) bounds 36 and 37,his weight is 39.0
+Edge (10, 40) bounds 10 and 40,his weight is 46.0
+Edge (25, 41) bounds 25 and 41,his weight is 49.0
+Edge (33, 35) bounds 33 and 35,his weight is 49.0
+Edge (32, 36) bounds 32 and 36,his weight is 60.0
+the total cost is 1079.0
+```
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -627,5 +700,9 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─77714937-68a7-4a05-9f35-2eb508069506
 # ╟─1ee8ce73-1d27-4232-871d-e18e40f2e806
 # ╟─5e7e90e8-1088-4c75-9474-d51a7327e1df
+# ╟─f4fcf415-bd09-4493-82fd-7d9c054dbf60
+# ╟─a5d12422-a0d9-4741-963c-a38450c347d7
+# ╟─1af51dff-d647-41a6-aa32-a84a35e3b054
+# ╟─ce87222b-1a28-4696-a784-7c72d5274a19
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
