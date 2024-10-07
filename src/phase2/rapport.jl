@@ -53,7 +53,11 @@ md"""
 
 # ╔═╡ d970b71a-1f3f-46c8-93ce-df35125d369a
 md"""
-Implementation proposée d'une structure composante connexe : noeud qui pointe le parent"""
+Ce code définit une structure de données abstraite pour représenter un pointeur de nœud dans un arbre
+Cette structure possède trois champs : `name`, qui est une chaîne de caractères représentant le nom de la structure, 
+`child`, qui est un pointeur vers un nœud enfant de type générique `Node{T}`, 
+et `parent`, qui pointe vers un nœud parent de type `Node{T}`.
+"""
 
 # ╔═╡ 8c4e3107-ac56-4e2a-a889-b199e7eb8547
 md"""
@@ -70,7 +74,8 @@ end
 """
 
 # ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
-md"""Constructeur pour un composant connexe.Un noeud est son propre parent"""
+md"""Maintenant, on va définir les fonctions qui vont nous servir pour implémenter l'algorithme kruskal. 
+La fonction ci-dessous serve à construire une composante connexe à partir d'un noeud"""
 
 # ╔═╡ 16339626-8605-4ac6-985c-49e11a718af6
 md"""
@@ -83,7 +88,7 @@ end
 """
 
 # ╔═╡ 549070f3-187c-42f9-b89e-bd992a1538ea
-md""" Méthode pour unir des composants connexes composés des 2 noeuds d'un arête d'un graph """
+md""" Méthode pour unir deux composants connexe d'un ensemble (vecteur de node_pointer) """
 
 # ╔═╡ 3af3a294-b0d8-49f0-bbd0-9d13172df39c
 md"""
@@ -123,8 +128,8 @@ md"""
 """
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
-md"""Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
-   dans un graphe non orienté:""" 
+md"""Après avoir définit tout le matériel, nous implémontons l'algorithme de kruskal 
+d'une manière plus compact.""" 
 
 # ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
@@ -166,7 +171,7 @@ end
 """
 
 # ╔═╡ b55a2239-968f-48df-a867-933efcb4b86e
-md"""Testons sur l'exemple du cours.""" 
+md"""Testons l'algorithme sur l'exemple du cours.""" 
 
 # ╔═╡ 4c326a3e-fc60-4732-b48f-9fb2146dce6e
 md""" Créons alors le graphe montré en cours :"""
@@ -251,7 +256,7 @@ md"""
 # ╔═╡ c450bddb-9cf8-46a5-8d68-f153872cf29a
 md"""
 ```
-Les tests unitaires sont présents dans le test.jl
+Les tests unitaires sont présents dans le fichier test.jl. Nous avons implémenter les tests unitaires ci-dessous.
 ```
 """
 
@@ -606,7 +611,7 @@ Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.0"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "348ed7e828d2091a44e211d4df367eb5f2d0eb19"
 
