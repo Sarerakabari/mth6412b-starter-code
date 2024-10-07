@@ -4,7 +4,6 @@ include("read_stsp.jl")
 include("node.jl")
 include("Edge.jl")
 include("graph.jl")
-include("../phase2/kruskal.jl")
 #Fonction qui construit un graph avec les données stsp
 
 function create_graph(filename::String)
@@ -55,16 +54,3 @@ end
 
 
 
-
-#du graphe à partir bayg29.tsp
-
-G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bayg29.tsp")
-
-#Test sur le fichier bayg29.tsp
-A,B=kruskal(G)
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
-end
-println("the total cost is ",B)
