@@ -16,6 +16,7 @@ using Logging
 # ╔═╡ c8cc4922-0f3b-4c3a-b444-8045b67205c8
 md"""
 ### Mini rapport: Phase 2 du projet
+#
 """
 
 # ╔═╡ 2f59b97d-e868-46bc-9945-76075015d4cc
