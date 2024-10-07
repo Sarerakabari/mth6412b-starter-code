@@ -67,6 +67,21 @@ end
 # ╔═╡ 549070f3-187c-42f9-b89e-bd992a1538ea
 md""" Union des composants connexes composés des 2 noeuds des arête d'un graph """
 
+# ╔═╡ 3af3a294-b0d8-49f0-bbd0-9d13172df39c
+md"""
+```julia
+function link!(c1::node_pointer{T},c2::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
+
+  C[findfirst(x->x.name==c2.name,C)].parent=c1.child
+  C
+end
+```
+"""
+
+
+# ╔═╡ fd8454ba-cee5-4f25-86c1-3f097d09906b
+
+
 # ╔═╡ 9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 md"""
 ##### 2. Implémenter l'algorithme de Kruskal et le tester sur l'exemple des notes de cours.
@@ -138,11 +153,13 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
 # ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
-# ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
+# ╠═d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
-# ╟─549070f3-187c-42f9-b89e-bd992a1538ea
+# ╠═549070f3-187c-42f9-b89e-bd992a1538ea
+# ╟─3af3a294-b0d8-49f0-bbd0-9d13172df39c
+# ╠═fd8454ba-cee5-4f25-86c1-3f097d09906b
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
