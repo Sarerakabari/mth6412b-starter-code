@@ -88,25 +88,9 @@ end
 ```
 """
 
-# ╔═╡ 549070f3-187c-42f9-b89e-bd992a1538ea
-md""" La fonction `link!` relie deux composants connexes en mettant à jour le parent du second nœud 
-pour qu'il pointe vers l'enfant du premier nœud, formant ainsi une liaison entre les deux composants. """
-
-# ╔═╡ 3af3a294-b0d8-49f0-bbd0-9d13172df39c
-md"""
-```julia
-function link!(c1::node_pointer{T},c2::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
-
-  C[findfirst(x->x.name==c2.name,C)].parent=c1.child
-  C
-end
-```
-"""
-
-
 # ╔═╡ fd8454ba-cee5-4f25-86c1-3f097d09906b
 md""" la fonction `find_root` trouve la racine d'un composant connexe. 
-Une racine est un nœud où l'enfant est égal au parent. 
+Une racine est un composant connexe où l'enfant est égal au parent. 
 Si un nœud n'est pas une racine, la fonction remonte de parent en parent jusqu'à atteindre la racine. """
 
 # ╔═╡ 4f23d7d2-1718-4b16-976e-8a24660bbd4e
@@ -126,6 +110,35 @@ end
 """
 
 
+# ╔═╡ 4e014129-c219-4bf6-945c-245b17b05dae
+md""" La fonction `link!` relie deux composants connexes en mettant à jour le parent de c 2 
+pour qu'il pointe vers l'enfant de c 1, formant ainsi une liaison entre les deux composants. """
+
+# ╔═╡ c5a3aabd-1786-48fc-ba37-4fac672248cb
+md"""
+```julia
+function link!(c1::node_pointer{T},c2::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
+
+  C[findfirst(x->x.name==c2.name,C)].parent=c1.child
+  C
+end
+```
+"""
+
+# ╔═╡ 127a54e2-838f-4ee8-b7db-cfbceec47e48
+md"""La fonction ci-dessous relie deux racines des nœuds donnés en arguments. """
+
+# ╔═╡ 59e115ff-d1eb-4056-a031-da6ebd4a550c
+md"""
+```julia
+function unite!(n1::Node{T},n2::Node{T},C::Vector{node_pointer{T}}) where {T}
+
+  link!(find_root(C[findfirst(x->x.name==n1.name,C)],C),find_root(C[findfirst(x->x.name==n2.name,C)],C),C)
+  C
+end  
+```
+"""
+
 # ╔═╡ 9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 md"""
 ##### 2. Implémenter l'algorithme de Kruskal et le tester sur l'exemple des notes de cours.
@@ -133,7 +146,7 @@ md"""
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 md"""Après avoir définit tout le matériel, nous implémontons l'algorithme de kruskal 
-d'une manière plus compact.""" 
+d'une manière plus compact. La fonction `kruskal` prend en argument un graphe qui doit etre connexe et retourne l'ensemble des aretes composant l'arbre de recouvrement minimale""" 
 
 # ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
@@ -650,12 +663,14 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
-# ╟─549070f3-187c-42f9-b89e-bd992a1538ea
-# ╟─3af3a294-b0d8-49f0-bbd0-9d13172df39c
-# ╟─fd8454ba-cee5-4f25-86c1-3f097d09906b
+# ╠═fd8454ba-cee5-4f25-86c1-3f097d09906b
 # ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
+# ╠═4e014129-c219-4bf6-945c-245b17b05dae
+# ╟─c5a3aabd-1786-48fc-ba37-4fac672248cb
+# ╠═127a54e2-838f-4ee8-b7db-cfbceec47e48
+# ╟─59e115ff-d1eb-4056-a031-da6ebd4a550c
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
-# ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
+# ╠═b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
 # ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
