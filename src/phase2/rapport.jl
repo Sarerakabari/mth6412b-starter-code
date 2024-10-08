@@ -239,7 +239,7 @@ G=Graph("small",N,E)
 """
 
 # ╔═╡ d33138a8-4521-4e6c-a14b-a3c9bf6a346b
-md"""Algorithme de Kruskal appliqué au graphe du cours qui retourne l'arbre de recouvrement minimal et le coût de cette arbre"""
+md"""Algorithme de Kruskal appliqué au graphe du cours qui retourne l'ensemble des arets de l'arbre de recouvrement minimal et le coût de cette arbre"""
 
 # ╔═╡ 3e2249ce-2411-4ba4-bd18-033689e41ae2
 md"""
@@ -671,14 +671,14 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
-# ╠═fd8454ba-cee5-4f25-86c1-3f097d09906b
+# ╟─fd8454ba-cee5-4f25-86c1-3f097d09906b
 # ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
-# ╠═4e014129-c219-4bf6-945c-245b17b05dae
+# ╟─4e014129-c219-4bf6-945c-245b17b05dae
 # ╟─c5a3aabd-1786-48fc-ba37-4fac672248cb
-# ╠═127a54e2-838f-4ee8-b7db-cfbceec47e48
+# ╟─127a54e2-838f-4ee8-b7db-cfbceec47e48
 # ╟─59e115ff-d1eb-4056-a031-da6ebd4a550c
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
-# ╠═b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
+# ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
 # ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
