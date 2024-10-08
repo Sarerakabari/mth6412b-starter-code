@@ -53,7 +53,7 @@ md"""
 
 # ╔═╡ d970b71a-1f3f-46c8-93ce-df35125d369a
 md"""
-Ce code définit une structure de données abstraite pour représenter un pointeur de nœud dans un arbre
+Ce code définit une structure de données abstraite pour représenter un composant connexe
 Cette structure possède trois champs : `name`, qui est une chaîne de caractères représentant le nom de la structure, 
 `child`, qui est un pointeur vers un nœud enfant de type générique `Node{T}`, 
 et `parent`, qui pointe vers un nœud parent de type `Node{T}`.
