@@ -34,7 +34,7 @@ function kruskal(graph::Graph{T,S}) where {T,S}
         if x!=y
             # Ajouter l'arete à l'ensemble des aretes qui vont constituer l'arbre de recouvrement minimal
             push!(A,edge)
-            # liaison des deux composantes connexes en une seule
+            # liaison des deux composantes connexes
             unite!(edge.node1,edge.node2,set_comp_connexe)  
 
             # Mettre à jour le coût total de l'arbre de recouvrement minimal
