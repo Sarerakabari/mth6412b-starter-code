@@ -74,8 +74,9 @@ end
 
 # ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
 md"""Maintenant, on va définir les fonctions qui vont nous servir pour implémenter l'algorithme kruskal. 
-La fonction ci-dessous serve à construire une composante connexe à partir d'un noeud qui va etre à la fonctions
-enfant et parant"""
+La fonction ci-dessous initialise une structure de composant connexe à partir d'un nœud donné dans le graphe, 
+en attribuant le nom du nœud et en le reliant à lui-même comme parent et enfant. 
+Cela sert à créer des composants connexes individuels."""
 
 # ╔═╡ 16339626-8605-4ac6-985c-49e11a718af6
 md"""
@@ -88,7 +89,8 @@ end
 """
 
 # ╔═╡ 549070f3-187c-42f9-b89e-bd992a1538ea
-md""" Méthode pour unir deux composants connexe d'un ensemble (vecteur de node_pointer) """
+md""" La fonction `link!` relie deux composants connexes en mettant à jour le parent du second nœud 
+pour qu'il pointe vers l'enfant du premier nœud, formant ainsi une liaison entre les deux composants. """
 
 # ╔═╡ 3af3a294-b0d8-49f0-bbd0-9d13172df39c
 md"""
@@ -103,7 +105,9 @@ end
 
 
 # ╔═╡ fd8454ba-cee5-4f25-86c1-3f097d09906b
-md"""  Méthode pour trouver la racine du composant connexe """
+md""" la fonction `find_root` trouve la racine d'un composant connexe. 
+Une racine est un nœud où l'enfant est égal au parent. 
+Si un nœud n'est pas une racine, la fonction remonte de parent en parent jusqu'à atteindre la racine. """
 
 # ╔═╡ 4f23d7d2-1718-4b16-976e-8a24660bbd4e
 md"""
