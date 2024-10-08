@@ -39,7 +39,7 @@ end
 
 
 
-""" Liaison de deux composantes connexes qui sont les racines des neuds donées en argument
+""" Liaison de deux racines de noeuds données en argument
 dans un ensemble de composantes connexes"""
 function unite!(n1::Node{T},n2::Node{T},C::Vector{node_pointer{T}}) where {T}
 

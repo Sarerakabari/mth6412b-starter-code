@@ -24,13 +24,20 @@ function kruskal(graph::Graph{T,S}) where {T,S}
     #Selection des arêtes qui fera partie de l'arbre de recouvrement minimal 
     for edge in graph.Edges
 
-
+        # Trouver la racine de la composante connexe contenant le premier nœud de l'arete
         x=find_root(set_comp_connexe[findfirst(x->x.name==edge.node1.name,set_comp_connexe)],set_comp_connexe)
-       
+
+        # Trouver la racine de la composante connexe contenant le deuxième nœud de l'arete
         y=find_root(set_comp_connexe[findfirst(x->x.name==edge.node2.name,set_comp_connexe)],set_comp_connexe)
+
+        #Si les deux nœuds appartiennent à des composantes connexes différentes (pour éviter les cycles)
         if x!=y
+            # Ajouter l'arete à l'ensemble des aretes qui vont constituer l'arbre de recouvrement minimal
             push!(A,edge)
+            # liaison des deux composantes connexes en une seule
             unite!(edge.node1,edge.node2,set_comp_connexe)  
+
+            # Mettre à jour le coût total de l'arbre de recouvrement minimal
             total_cost+=edge.data
         end   
     end
