@@ -2,9 +2,15 @@ import Base.show
 include("node_priority.jl")
 include("queue.jl")
 
-"""Algorithme prim pour trouver l'arbre de recouvrement minimale 
-   dans un graphe non orienté""" 
+"""
+    prim(graph::Graph{T,S}) where {T,S}
 
+Algorithme de Prim, qui renvoie un vecteur d'arêtes représentant un arbre de recouvrement minimal du graph donné en argument,
+et le poids total de cet arbre de recouvrement minimal.
+
+# Arguments
+- `graph::Graph{T,S}`: le graph considéré dont on cherche un arbre de recouvrement minimal.
+"""
 function prim(graph::Graph{T,S}) where {T,S}
 
 
