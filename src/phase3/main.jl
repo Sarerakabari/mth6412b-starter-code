@@ -7,7 +7,7 @@ include("prim.jl")
 
 # Création du graphe à partir bayg29.tsp
 
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bays29.tsp")
+G=create_graph("../../instances/stsp/bays29.tsp")
 
 #Test sur le fichier bayg29.tsp
 A,B=kruskal(G)
