@@ -1,9 +1,14 @@
 import Base.show
 include("node_pointer_heuristic.jl")
 
-"""Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
-   dans un graphe non orienté""" 
+"""
+    kruskal(graph::Graph{T,S}) where {T,S}
 
+Version de l'algorithme de Kruskal utilisant la nouvelle implémentation de la structure node_pointer, avec les heuristiques utilisées.
+
+# Arguments
+- `graph::Graph{T,S}`:  le graph sur lequel on va chercher à construire un arbre de recouvrement minimal.
+"""
 function kruskal(graph::Graph{T,S}) where {T,S}
 
 
