@@ -31,7 +31,7 @@ function find_root(c::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
 end
 
 
-""" liaison de deux composantes connexes dans un ensemble de composantes connexes"""
+""" liaison de deux composantes connexes dans un ensemble de composantes connexes avec le rang"""
 function link!(c1::node_pointer{T},c2::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
 
   if c1.rank > c2.rank
@@ -47,8 +47,7 @@ end
 
 
 
-""" Liaison de deux racines de noeuds données en argument
-dans un ensemble de composantes connexes"""
+""" Liaison par compression de chemin"""
 function unite!(n1::Node{T},n2::Node{T},C::Vector{node_pointer{T}}) where {T}
 
   link!(find_root(C[findfirst(x->x.name==n1.name,C)],C),find_root(C[findfirst(x->x.name==n2.name,C)],C),C)
