@@ -75,5 +75,3 @@ isless(p::node_priority, q::node_priority) = priority(p) < priority(q)
 Définition d'une relation d'égalité entre éléments de type node_priority
 """
 ==(p::node_priority, q::node_priority) = priority(p) == priority(q)
-
-==(p::node_priority, q::node_priority) = priority(p) == priority(q)
