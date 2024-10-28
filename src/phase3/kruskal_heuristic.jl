@@ -41,5 +41,6 @@ function kruskal(graph::Graph{T,S}) where {T,S}
             total_cost+=edge.data
         end   
     end
-    return A,total_cost
+    mst=Graph("MST",G.Nodes,A)
+    return  mst,total_cost
 end
