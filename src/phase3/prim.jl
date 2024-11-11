@@ -30,7 +30,7 @@ function prim(graph::Graph{T,S}) where {T,S}
         u=popfirst!(Q)
         
         #voisin du noeud u
-        u_neighboor=findall(x->x.node1==u.node||x.node2==u.node,G.Edges)
+        u_neighboor=findall(x->x.node1==u.node||x.node2==u.node,graph.Edges)
        
         # initialisation de l'arête legère et son indice
         min_weight=Inf
@@ -40,19 +40,19 @@ function prim(graph::Graph{T,S}) where {T,S}
         for i in u_neighboor
 
             # Voisin de u dans Q
-            if G.Edges[i].node1==u.node 
-            j=findfirst(x->x.node==G.Edges[i].node2,Q.items)
+            if graph.Edges[i].node1==u.node 
+            j=findfirst(x->x.node==graph.Edges[i].node2,Q.items)
             else
-            j=findfirst(x->x.node==G.Edges[i].node1,Q.items)    
+            j=findfirst(x->x.node==graph.Edges[i].node1,Q.items)    
             end
            
             
             if !isnothing(j) 
                 
                 #mise à jour de priorité de Q
-                if G.Edges[i].data < Q.items[j].priority
+                if graph.Edges[i].data < Q.items[j].priority
 
-                   priority!(Q.items[j],G.Edges[i].data)
+                   priority!(Q.items[j],graph.Edges[i].data)
                    
                    parent!(Q.items[j],u.node)
                     
@@ -71,7 +71,7 @@ function prim(graph::Graph{T,S}) where {T,S}
         end   
     end
     # création de l'arbre de recouvrement minimale 
-    mst=Graph("MST",G.Nodes,A)
+    mst=Graph("MST",graph.Nodes,A)
     
     return mst,total_cost
 end
