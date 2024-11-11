@@ -1,0 +1,15 @@
+name = "STSP"
+uuid = "2e8f7fde-67d4-4736-8caa-f393b889fab5"
+authors = ["Octave Claich <octave.claich@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+DocumenterTools = "35a29f4d-8980-5a13-9543-d66fff28ecb8"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
