@@ -2,29 +2,30 @@ export rsl
 
 include("../phase3/prim.jl")
 
-function parcours_preordre!(graph::Graph{T,S}, départ::Node{T},visité::Dict{Node{T}, Bool},ordre::Vector{Node{T}}) where {T,S}
-    push!(ordre,départ)
-    visité[départ] = true
+"""Parcours en préordre d'une arbre"""
+function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node{T}, Bool},ordre::Vector{Node{T}}) where {T,S}
+    push!(ordre,start)
+    visited[start] = true
 
-    for edge_index in findall(x-> x.node1 == départ || x.node2 == départ, graph.Edges)
+    for edge_index in findall(x-> x.node1 == start || x.node2 == start, graph.Edges)
         edge=graph.Edges[edge_index]
-        voisin = edge.node1 == départ ? edge.node2 : edge.node1
+        voisin = edge.node1 == start ? edge.node2 : edge.node1
         if !visité[voisin]
-            parcours_preordre!(graph,voisin,visité,ordre)
+            parcours_preordre!(graph,voisin,visited,ordre)
         end
     end
 end
 
-function rsl(graph::Graph{T,S},départ::Node{T}) where {T,S}
+function rsl(graph::Graph{T,S},start::Node{T}) where {T,S}
 
-    arbre, weight=prim(graph,départ)
+    arbre, weight=prim(graph,start)
 
-    visité=Dict(node => false for node in graph.Nodes)
+    visited=Dict(node => false for node in graph.Nodes)
     ordre=Node{T}[]
 
-    parcours_preordre!(arbre,départ,visité,ordre)
+    parcours_preordre!(arbre,start,visited,ordre)
 
-    push!(ordre,départ)
+    push!(ordre,start)
 
     tournée = Edge{T,S}[]
     cout = 0
