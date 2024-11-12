@@ -42,5 +42,6 @@ function rsl(graph::Graph{T,S},start::Node{T}) where {T,S}
         end
     end
 
-    return ordre, tournée, cout
+    Tournée=Graph("Tournée",ordre,tournée)
+    return Tournée, cout
 end
