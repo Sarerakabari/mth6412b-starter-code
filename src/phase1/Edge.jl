@@ -1,5 +1,5 @@
-import Base.show
-include("node.jl")
+export Edge
+export name,data,node1,node2,show
 
 """Type abstrait dont d'autres types d'arêtes dériveront."""
 abstract type AbstractEdge{T,S} end

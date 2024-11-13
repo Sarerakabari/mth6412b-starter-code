@@ -1,6 +1,4 @@
-import Base.show
-include("node_priority.jl")
-include("queue.jl")
+export prim
 
 """
     prim(graph::Graph{T,S},départ::Node{T}) where {T,S}

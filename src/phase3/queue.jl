@@ -1,5 +1,8 @@
-include("node_priority.jl")
 import Base.popfirst!,Base.push!,Base.isempty,Base.length
+
+export node_Queue
+export push!,popfirst!,is_empty,length,show
+
 """Type abstrait de Queue """
 abstract type AbstractQueue{T} end
 """Type représentant une file de priorité avec des éléments node_priority de type T."""

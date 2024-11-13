@@ -1,7 +1,5 @@
-
-import Base.show
-include("node.jl")
-include("edge.jl")
+export Graph
+export add_node!,add_edge!,Name,Nodes,nb_nodes,Edges,nb_edges,show
 """Type abstrait dont d'autres types de graphes dériveront."""
 abstract type AbstractGraph{T,S} end
 

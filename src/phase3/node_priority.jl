@@ -1,5 +1,6 @@
-import Base.isless, Base.==
-include("../phase1/graph.jl")
+export node_priority
+export node_priority,priority,priority!,parent!,isless,==
+
 """Type abstrait d'un node_priority."""
 abstract type Abstractnode_priority{T} end
 

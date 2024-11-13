@@ -1,5 +1,4 @@
-import Base.show
-include("node_pointer.jl")
+export kruskal
 
 """Algorithme Kruskal pour trouver l'arbre de recouvrement minimale 
    dans un graphe non orienté""" 

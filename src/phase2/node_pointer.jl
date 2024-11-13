@@ -1,6 +1,5 @@
-import Base.show
-include("../phase1/graph.jl")
-
+export node_pointer
+export node_pointer,find_root,link!,unite!
 
 """Type abstrait d'un composant connexe: noeud enfant pointant vers le noeud parent ."""
 abstract type Abstractnode_pointer{T} end
