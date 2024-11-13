@@ -42,4 +42,4 @@ end
 return graph=Graph(header["NAME"],nodes_vec,edges_vec)
 end
 
-# create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
