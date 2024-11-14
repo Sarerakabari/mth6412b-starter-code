@@ -2,7 +2,11 @@ using Graphs
 using GraphPlot
 
 include("../phase1/main.jl")
+include("../phase3/node_priority.jl")
+include("../phase3/queue.jl")
+include("../phase3/prim.jl")
 include("rsl.jl")
+include("finetuning.jl")
 
 
 # Création du graphe à partir bayg29.tsp
@@ -29,9 +33,12 @@ function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where
     end
 
     # Tracer le graphe avec GraphPlot.jl
-    gplot(g, layout = spring_layout)
+    gplot(g, layout = spring_layout,nodelabel = [node.name for node in nodes], nodesize=13)
 end
 GG=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-3/instances/stsp/bays29.tsp")
 
 #show(T)
+T,C,noeud = finetuning_start(rsl, G)
+show(noeud)
+println(C)
 visualize_graph(T.Nodes, T.Edges)
