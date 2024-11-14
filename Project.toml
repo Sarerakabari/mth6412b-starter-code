@@ -1,6 +1,6 @@
 name = "STSP"
 uuid = "2e8f7fde-67d4-4736-8caa-f393b889fab5"
-authors = ["Octave Claich <octave.claich@gmail.com>"]
+authors = ["Ando Rakotonandrasana <ando-sitraka-2.rakotonandrasana@polymtl.ca>"]
 version = "0.1.0"
 
 [deps]

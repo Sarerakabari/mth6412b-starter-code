@@ -1,6 +1,6 @@
-export rsl
+export parcours_preordre!,rsl
 
-include("../phase3/prim.jl")
+
 
 """Parcours en préordre d'une arbre"""
 function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node{T}, Bool},ordre::Vector{Node{T}}) where {T,S}

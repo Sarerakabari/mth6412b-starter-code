@@ -1,4 +1,8 @@
-import Base.==
+
+import Base.==, Base.isless
+
+export node_priority,node_priority, priority, priority!,parent!
+
 """Type abstrait d'un node_priority."""
 abstract type Abstractnode_priority{T} end
 
