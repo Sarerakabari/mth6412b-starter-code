@@ -1,5 +1,6 @@
-import Base.popfirst!,Base.push!,Base.isempty,Base.length
+include("node_priority.jl")
 
+import Base.popfirst!,Base.push!,Base.isempty,Base.length
 export node_Queue
 export push!,popfirst!,is_empty,length,show
 

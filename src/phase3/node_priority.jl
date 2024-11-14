@@ -1,6 +1,4 @@
-export node_priority
-export node_priority,priority,priority!,parent!,isless,==
-
+import Base.==
 """Type abstrait d'un node_priority."""
 abstract type Abstractnode_priority{T} end
 
@@ -67,7 +65,7 @@ end
 
 Définition d'une relation d'ordre entre éléments de type node_priority
 """
-isless(p::node_priority, q::node_priority) = priority(p) < priority(q)
+Base.isless(p::node_priority, q::node_priority) = priority(p) < priority(q)
 
 
 """

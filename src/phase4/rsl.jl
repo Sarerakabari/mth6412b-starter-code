@@ -10,7 +10,7 @@ function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node
     for edge_index in findall(x-> x.node1 == start || x.node2 == start, graph.Edges)
         edge=graph.Edges[edge_index]
         voisin = edge.node1 == start ? edge.node2 : edge.node1
-        if !visité[voisin]
+        if !visited[voisin]
             parcours_preordre!(graph,voisin,visited,ordre)
         end
     end
@@ -41,7 +41,7 @@ function rsl(graph::Graph{T,S},start::Node{T}) where {T,S}
             error("Erreur : on n'a pas trouvé d'arête entre $n1 et $n2 dans le graphe.")
         end
     end
-
+    pop!(ordre)
     Tournée=Graph("Tournée",ordre,tournée)
     return Tournée, cout
 end

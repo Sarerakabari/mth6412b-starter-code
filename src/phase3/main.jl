@@ -7,7 +7,7 @@ include("prim.jl")
 
 # Création du graphe à partir bayg29.tsp
 
-G=create_graph("../../instances/stsp/bays29.tsp")
+G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-3/instances/stsp/bays29.tsp")
 
 #Test sur le fichier bayg29.tsp
 
@@ -24,10 +24,9 @@ println("the total cost is ",B)
 
 #prim
 
-C,D=prim(G)
+C,D=prim(G,G.Nodes[1])
 
 println("the minimun spanning tree are composed of:")
 
 show(C)
-
 println("the total cost is ",D)

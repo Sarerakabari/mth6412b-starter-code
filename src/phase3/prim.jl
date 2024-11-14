@@ -1,16 +1,19 @@
+include("node_priority.jl")
+include("queue.jl")
+
 export prim
 
 """
-    prim(graph::Graph{T,S},départ::Node{T}) where {T,S}
+    prim(graph::Graph{T,S},start::Node{T}) where {T,S}
 
 Algorithme de Prim, qui renvoie un vecteur d'arêtes représentant un arbre de recouvrement minimal du graph donné en argument,
 et le poids total de cet arbre de recouvrement minimal.
 
 # Arguments
 - `graph::Graph{T,S}`: le graph considéré dont on cherche un arbre de recouvrement minimal.
-- `départ::Node{T}`: le noeud de départ pour la création de l'arbre de recouvrement minimal
+- `start::Node{T}`: le noeud de start pour la création de l'arbre de recouvrement minimal
 """
-function prim(graph::Graph{T,S},départ::Node{T}) where {T,S}
+function prim(graph::Graph{T,S},start::Node{T}) where {T,S}
 
 
     #Création d'une file de priorité vide
@@ -19,16 +22,20 @@ function prim(graph::Graph{T,S},départ::Node{T}) where {T,S}
 
     #initialisation de la file de priorité 
     for node in graph.Nodes
-        push!(Q,node_priority(node))
+        if node == start
+            push!(Q,priority!(node_priority(node),0))
+        else
+            push!(Q,node_priority(node))
+        end
         
     end
-    # Mise à jour de la priorité du noeud de départ (pas la méthode de complexité minimale sans doute)
-    for i in 1:length(Q.items)
-        if Q.items[i].node == départ
-            priority!(Q.items[i], 0)
-            break
-        end
-    end
+    # Mise à jour de la priorité du noeud de start (pas la méthode de complexité minimale sans doute)
+    #for i in 1:length(Q.items)
+    #    if Q.items[i].node == start
+    #        priority!(Q.items[i], 0)
+    #        break
+    #    end
+    #end
    
     #Initilaisation du vecteur des arêtes composant l'arbre de recouvrement minimal et du cout total
     A=Vector{Edge{T,S}}()
@@ -82,6 +89,5 @@ function prim(graph::Graph{T,S},départ::Node{T}) where {T,S}
     end
     # création de l'arbre de recouvrement minimale 
     mst=Graph("MST",graph.Nodes,A)
-    
     return mst,total_cost
 end
