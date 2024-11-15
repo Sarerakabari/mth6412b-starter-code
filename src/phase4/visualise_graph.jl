@@ -1,7 +1,7 @@
 using Graphs
 using GraphPlot
 
-
+"""Fonction pour afficher les graphes graphiquement"""
 function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where {T,S}
     # Associer chaque nœud à un identifiant numérique pour Graphs.jl
     node_to_index = Dict{Node{T}, Int}()
