@@ -34,10 +34,8 @@ e14=Edge("FE",10,n6,n5)
 #vecteur des arête
 E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
 
-
+#Création du graphe
 G1=Graph("small",N,E)
 
-
-g_1,W=one_tree(G1,1)
 
 show(g_1)
