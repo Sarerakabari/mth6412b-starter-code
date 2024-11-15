@@ -11,8 +11,5 @@ include("visualise_graph.jl")
 G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-3/instances/stsp/bays29.tsp")
 
    
-GG=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-3/instances/stsp/bays29.tsp")
-
-#show(T)
 T,C,noeud = finetuning_start(rsl, G)
 visualize_graph(T.Nodes, T.Edges)
