@@ -4,6 +4,7 @@ include("../phase3/queue.jl")
 include("../phase3/prim.jl")
 include("rsl.jl")
 include("finetuning.jl")
+using Test
 
 
 #création des noeuds
@@ -29,4 +30,26 @@ E=[e1,e2,e3,e4,e5,e6]
 #Création du graphe complet
 G1=Graph("small",N,E)
 
-@test 
+
+#Création d'une arbre à partir de N
+E1=[e1,e2,e3]
+
+#Création de l'arbre
+Tree=Graph("tree",N,E1)
+
+visited = Dict(node => false for node in N)
+ordre = Node{Vector{Int64}}[]
+parcours_preordre!(Tree, n2, visited,ordre)
+
+
+
+#Tester la fonction parcours_preordre!
+@test ordre[1] == n2
+@test ordre[2] == n1
+@test ordre[3] == n3
+@test ordre[4] == n4
+
+
+#for node in ordre
+#    show(node)
+#end
