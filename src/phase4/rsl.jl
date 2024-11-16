@@ -2,11 +2,11 @@ export parcours_preordre!,rsl
 
 
 
-"""Parcours en préordre d'une arbre"""
+"""Parcours en préordre d'une arbre (Parcour dans l'ordre de visite comme Prim)"""
 function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node{T}, Bool},ordre::Vector{Node{T}}) where {T,S}
     push!(ordre,start)
     visited[start] = true
-
+    #La boucle for parcour les noeuds voisin comme dans l'algorithme Prim
     for edge_index in findall(x-> x.node1 == start || x.node2 == start, graph.Edges)
         edge=graph.Edges[edge_index]
         voisin = edge.node1 == start ? edge.node2 : edge.node1
@@ -16,6 +16,7 @@ function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node
     end
 end
 
+"""L'algorithme rsl pour déterminer une tournée minimale approximative à partie d'un noeud départ choisi"""
 function rsl(graph::Graph{T,S},start::Node{T}) where {T,S}
 
     arbre, weight=prim(graph,start)
