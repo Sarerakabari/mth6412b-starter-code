@@ -2,6 +2,9 @@ include("../phase1/main.jl")
 include("../phase3/kruskal_heuristic.jl")
 include("../phase3/prim.jl")
 include("../phase4/sub_graph.jl")
+include("../phase3/queue.jl")
+include("../phase4/rsl.jl")
+include("../phase4/degrees.jl")
 
 
 #création de noeud
@@ -41,3 +44,12 @@ G1=Graph("small",N,E)
 g_1,W=one_tree(G1,1)
 
 show(g_1)
+
+
+G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
+
+start=G.Nodes[3]
+
+A,B=rsl(G,start)
+
+d,v_k,p,v=degrees(A)
