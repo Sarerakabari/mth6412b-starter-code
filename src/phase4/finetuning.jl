@@ -2,20 +2,21 @@ export finetuning_start_hk, calculate_cost!
 
 
 
-""" 
+"""
+    finetuning_start_rsl(filename::String)
+
+ 
 La fonction finetuning_start_rsl permet de déterminer le point de départ optimal 
 pour trouver la tournée minimale pour rsl.
+#args: 
+`filename`     : Pour création du graphe
+#returns:
+`Tournée`   : La tournée minimale étant donnée le meilleur point de départ
+`cost`      : Le cout de la tournée
+`Id`        : L'indice du meilleur noeud de départ
 """
 function finetuning_start_rsl(filename::String)
-"""
-args: 
-filename     : Pour création du graphe
-returns:
-Tournée   : La tournée minimale étant donnée le meilleur point de départ
-cost      : Le cout de la tournée
-Id        : L'indice du meilleur noeud de départ
 
-""" 
 
     G = create_graph(filename)
     n = length(G.Nodes)
@@ -54,18 +55,15 @@ end
 """ 
 La fonction finetuning_start_hk permet de déterminer le point de départ optimal 
 pour trouver la tournée minimale pour hk!, tout en gardant les autres paramètres fixes.
+#args: 
+`filename`     : Pour création du graphe
+`epsilon`  : critère d'arret pour l'algorithme hk
+#returns:
+`Tournée`   : La tournée minimale étant donnée le meilleur point de départ
+`cost`      : Le cout de la tournée
+`Id`        : L'indice du meilleur noeud de départ
 """
-function finetuning_start_hk(filename::String, epsilon)
-"""
-args: 
-filename     : Pour création du graphe
-epsilon  : critère d'arret pour l'algorithme hk
-returns:
-Tournée   : La tournée minimale étant donnée le meilleur point de départ
-cost      : Le cout de la tournée
-Id        : L'indice du meilleur noeud de départ
-
-""" 
+function finetuning_start_hk(filename::String, epsilon) 
 
 
 
@@ -120,7 +118,6 @@ La fonction finetuning_start_epsilon_hk permet de déterminer la tournée minima
 en focntion du noeud de départ et du critère d'arret,
  tout en gardant les autres paramètres fixes.
 """
-
 function finetuning_start_epsilon_hk(filename::String, list_epsilon)
 
 

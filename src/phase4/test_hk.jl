@@ -33,7 +33,7 @@ e11=Edge("GF",float.(2),n7,n6)
 e12=Edge("DF",float.(14),n4,n6)
 e13=Edge("DE",float.(9),n4,n5)
 e14=Edge("FE",float.(10),n6,n5)
-#vecteur des arête
+#vecteur des arêtes
 E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
 
 

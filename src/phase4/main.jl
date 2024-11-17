@@ -7,13 +7,15 @@ include("hk.jl")
 include("finetuning.jl")
 include("visualise_graph.jl")
 
-list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
+#list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
 
 T1,C1,ID1 = finetuning_start_rsl("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp")
-T3,C3,EPS = finetuning_epsilon_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", 1,list_eps)
-T2,C2,ID2 = finetuning_start_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", EPS)
-T4,C4,EPS4,ID4 = finetuning_start_epsilon_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", list_eps)
-println(C4)
+#T2,C2,EPS2 = finetuning_epsilon_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", 1,list_eps)
+#T3,C3,ID3 = finetuning_start_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", EPS)
+#T4,C4,EPS4,ID4 = finetuning_start_epsilon_hk("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", list_eps)
 println(C1)
-println(C2)
-println(C3)
+show(T1)
+visualize_graph(T1.Nodes,T1.Edges)
+#println(C2)
+#println(C3)
+#println(C4)

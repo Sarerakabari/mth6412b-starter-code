@@ -15,7 +15,7 @@ using Logging
 
 # ╔═╡ c8cc4922-0f3b-4c3a-b444-8045b67205c8
 md"""
-### Mini rapport: Phase 2 du projet
+### Mini rapport: Phase 4 du projet
 #
 """
 
@@ -33,170 +33,213 @@ Auteurs:Ando Rakotonandrasana
 md""" Le  code se trouve au lien suivant: """
 
 # ╔═╡ 322e6e27-5af8-49b0-96f4-025bbf2403f4
-md"""[https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2](https://github.com/Sarerakabari/mth6412b-starter-code/tree/Phase_2/src/phase2)"""
-
-# ╔═╡ 48b7402e-7cfc-4e5f-87a0-b67bca4eb326
-md""" Tous les implementations de cette phase sont inspirées du livre ci-dessous :"""
-
-# ╔═╡ 3d9e6b3c-8179-4759-a862-146fe1872464
-md"""
- ###### Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford. (2022). Introduction to algorithms. MIT press.
-"""
+md"""[https://github.com/Sarerakabari/mth6412b-starter-code/tree/phase4/src/phase4](https://github.com/Sarerakabari/mth6412b-starter-code/tree/phase4/src/phase4)"""
 
 # ╔═╡ 063e8297-bc61-4bde-85d0-8f144185c6d3
 md""" Le lecteur peut fork le projet et lancer le fichier main.jl pour retrouver les résultats ci-dessus"""
 
 # ╔═╡ b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 md"""
-##### 1. Choisir et implémenter une structure de données pour les composantes connexes d’un graphe
+##### 1. Implémentation de l'algorithme rsl
 """
 
 # ╔═╡ d970b71a-1f3f-46c8-93ce-df35125d369a
 md"""
-Ce code définit une structure de données abstraite pour représenter un composant connexe.
-Cette structure possède trois champs : `name`, qui est une chaîne de caractères représentant le nom de la structure, 
-`child`, qui est un pointeur vers un nœud enfant de type générique `Node{T}`, 
-et `parent`, qui pointe vers un nœud parent de type `Node{T}`.
+La fonction `parcours_preordre!` met à jour le vecteur `ordre` pour qu'il contienne la liste des nœuds du graphe formant un arbre de recouvrement minimal, selon l'ordre de visite utilisé par l'algorithme de Prim, à partir d'un nœud initial `start`.
 """
 
 # ╔═╡ 8c4e3107-ac56-4e2a-a889-b199e7eb8547
 md"""
 ```julia
-abstract type Abstractnode_pointer{T} end
-
-mutable struct node_pointer{T} <: Abstractnode_pointer{T}
-  name::String
-  child::Node{T}
-  parent::Node{T}
+function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node{T}, Bool},ordre::Vector{Node{T}}) where {T,S}
+    push!(ordre,start)
+    visited[start] = true
+    #La boucle for parcour les noeuds voisin comme dans l'algorithme Prim
+    for edge_index in findall(x-> x.node1 == start || x.node2 == start, graph.Edges)
+        edge=graph.Edges[edge_index]
+        voisin = edge.node1 == start ? edge.node2 : edge.node1
+        if !visited[voisin]
+            parcours_preordre!(graph,voisin,visited,ordre)
+        end
+    end
 end
 ```
 """
 
 # ╔═╡ 6f34b908-e413-4317-a27d-6c6a8df213be
-md"""Maintenant, on va définir les fonctions qui vont nous servir pour implémenter l'algorithme kruskal. 
-La fonction ci-dessous initialise une structure de composant connexe à partir d'un nœud donné dans le graphe, 
-en attribuant le nom du nœud et en le reliant à lui-même comme parent et enfant. 
-Cela sert à créer des composants connexes individuels."""
+md"""La fonction `rsl` retourne une tournée approximativement minimale ainsi que le cout de cette dernière. Cette fonction procède en deux phases :  
+1. Elle détermine un arbre de recouvrement minimal dans `graph`.  
+2. Ensuite, elle effectue un parcours selon l'ordre de visite des nœuds dans l'arbre de recouvrement minimal construit par l'algorithme de Prim. À partir de cet ordre, elle génère la tournée.
+
+"""
 
 # ╔═╡ 16339626-8605-4ac6-985c-49e11a718af6
 md"""
 ```julia
-function node_pointer(Node::Node{T}) where {T}
-  name=Node.name 
-  return node_pointer(name,Node,Node)
+function rsl(graph::Graph{T,S},idx) where {T,S}
+    
+    # Recherche de l'arbre de recouvrement minimale
+    arbre, weight=prim(graph,graph.Nodes[idx])
+
+    # Parcours dans l'ordre de visite de l'arbre
+    visited=Dict(node => false for node in graph.Nodes)
+    ordre=Node{T}[]
+
+    parcours_preordre!(arbre,graph.Nodes[idx],visited,ordre)
+    
+    # Pour boucler la tournée
+    push!(ordre,graph.Nodes[idx])
+
+    # Création de la tournée à partir du vecteur ordre
+    tournée = Edge{T,S}[]
+    cout = 0
+
+    for i in 1:length(ordre)-1
+        n1, n2 = ordre[i],ordre[i+1]
+        edge_index=findfirst(x -> (x.node1 == n1 && x.node2 == n2) || (x.node1 == n2 && x.node2 == n1), graph.Edges)
+        edge=graph.Edges[edge_index]
+        if edge !== nothing
+            push!(tournée,edge)
+            cout+=edge.data
+        else
+            error("Erreur : on n'a pas trouvé d'arête entre $n1 et $n2 dans le graphe.")
+        end
+    end
+    # Suppresion de dernier élément(start), puisqu'il est redondant
+    pop!(ordre)
+    Tournée=Graph("Tournée",ordre,tournée)
+    return Tournée, cout
 end
+
 ```
 """
 
 # ╔═╡ fd8454ba-cee5-4f25-86c1-3f097d09906b
-md""" la fonction `find_root` trouve la racine d'un composant connexe. 
-Une racine est un composant connexe où l'enfant est égal au parent. 
-Si un nœud n'est pas une racine, la fonction remonte de parent en parent jusqu'à atteindre la racine. """
+md"""
+##### 2. Test unitaires dans le cas rsl
+"""
 
 # ╔═╡ 4f23d7d2-1718-4b16-976e-8a24660bbd4e
 md"""
-```julia
-function find_root(c::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
-
-  if c.child!=c.parent
-
-     c=find_root(C[findfirst(x->x.name==c.parent.name,C)],C)
-     
-  end
-
-  return c
-end
+```
+Les tests unitaires dans le cas de rsl sont présents dans le fichier test_rsl.jl. Nous avons implémenter les tests unitaires ci-dessous avec un exemple simple.
 ```
 """
 
-
-# ╔═╡ 4e014129-c219-4bf6-945c-245b17b05dae
-md""" La fonction `link!` relie deux composants connexes en mettant à jour le parent de c 2 
-pour qu'il pointe vers l'enfant de c 1, formant ainsi une liaison entre les deux composants. """
 
 # ╔═╡ c5a3aabd-1786-48fc-ba37-4fac672248cb
 md"""
 ```julia
-function link!(c1::node_pointer{T},c2::node_pointer{T},C::Vector{node_pointer{T}}) where {T}
+include("../phase1/main.jl")
+include("../phase3/node_priority.jl")
+include("../phase3/queue.jl")
+include("../phase3/prim.jl")
+include("rsl.jl")
+include("finetuning.jl")
+using Test
 
-  C[findfirst(x->x.name==c2.name,C)].parent=c1.child
-  C
-end
+
+#création des noeuds
+n1=Node("A",[4])
+n2=Node("B",[4])
+n3=Node("C",[4])
+n4=Node("D",[4])
+
+#vecteur de noeuds
+N=[n1,n2,n3,n4]
+
+#création des arêtes
+e1=Edge("AB",1,n1,n2)
+e2=Edge("AC",1,n1,n3)
+e3=Edge("AD",1,n1,n4)
+e4=Edge("BC",11,n2,n3)
+e5=Edge("BD",7,n2,n4)
+e6=Edge("CD",5,n3,n4)
+
+#vecteur des arêtes
+E=[e1,e2,e3,e4,e5,e6]
+
+#Création du graphe complet
+G1=Graph("small",N,E)
+
+
+#Création d'une arbre à partir de N
+E1=[e1,e2,e3]
+
+#Création de l'arbre
+Tree=Graph("tree",N,E1)
+
+
+#Tester la fonction parcours_preordre!
+visited = Dict(node => false for node in N)
+ordre = Node{Vector{Int64}}[]
+parcours_preordre!(Tree, n2, visited,ordre)
+
+
+@test ordre[1] == n2
+@test ordre[2] == n1
+@test ordre[3] == n3
+@test ordre[4] == n4
+
+
+#Tester la fonction rsl
+
+T,C = rsl(G1,n1)
+@test C == 18
+T,C = rsl(G1,n2)
+@test C == 14
+T,C = rsl(G1,n3)
+@test C == 14
+T,C = rsl(G1,n4)
+@test C == 18
 ```
 """
 
-# ╔═╡ 127a54e2-838f-4ee8-b7db-cfbceec47e48
-md"""La fonction ci-dessous relie deux racines des nœuds donnés en arguments. """
+# ╔═╡ d50e2d9f-7839-4648-9731-b95d19043c75
+md"""
+###### Résulat
+"""
 
-# ╔═╡ 59e115ff-d1eb-4056-a031-da6ebd4a550c
+# ╔═╡ 127a54e2-838f-4ee8-b7db-cfbceec47e48
 md"""
 ```julia
-function unite!(n1::Node{T},n2::Node{T},C::Vector{node_pointer{T}}) where {T}
-
-  link!(find_root(C[findfirst(x->x.name==n1.name,C)],C),find_root(C[findfirst(x->x.name==n2.name,C)],C),C)
-  C
-end  
+Test Passed
 ```
 """
 
 # ╔═╡ 9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 md"""
-##### 2. Implémenter l'algorithme de Kruskal et le tester sur l'exemple des notes de cours.
+##### 3. Ajustement fin des paramètres de la fonction `rsl`.
 """
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
-md"""Après avoir définit tout le matériel, nous implémontons l'algorithme de kruskal 
-d'une manière plus compact. La fonction `kruskal` prend en argument un graphe qui doit etre connexe et retourne l'ensemble des aretes composant l'arbre de recouvrement minimale et la somme des poids des arets que nous avons appelé cout totale.""" 
+md"""La `rsl` dépend du point de départ. La fonction `finetuning_start_rsl`  ajuste le noeud de départ de te sorte on construit la tournée la plus optimale. """ 
 
 # ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
 ```julia
-import Base.show
-include("node_pointer.jl")
-function kruskal(graph::Graph{T,S}) where {T,S}
+function finetuning_start_rsl(filename::String)
 
-
-    #Création des composantes connexe initiale
-    set_comp_connexe = Vector{node_pointer{T}}()
-    for node in graph.Nodes
-        push!(set_comp_connexe,node_pointer(node))
+    G = create_graph(filename)
+    n = length(G.Nodes)
+    Id = 1
+    Tournée, cost = rsl(G,1) 
+    for idx in 2:n
+        Tournée_old, cost_old = rsl(G,idx)
+        if cost_old < cost
+            cost = cost_old
+            Tournée = Tournée_old
+            Id = idx
+        end
     end
-    
-    #Trie  des arretes du graphe dans un ordre croissant
-    sort!(graph.Edges, by=e -> e.data)
-
-
-    #Initilaisation du vecteur des arêtes composant l'arbre de recouvrement minimal
-    A=Vector{Edge{T,S}}()
-    total_cost=0
-
-    #Selection des arêtes qui fera partie de l'arbre de recouvrement minimal 
-    for edge in graph.Edges
-
-        # Trouver la racine de la composante connexe contenant le premier nœud de l'arete
-        x=find_root(set_comp_connexe[findfirst(x->x.name==edge.node1.name,set_comp_connexe)],set_comp_connexe)
-
-        # Trouver la racine de la composante connexe contenant le deuxième nœud de l'arete
-        y=find_root(set_comp_connexe[findfirst(x->x.name==edge.node2.name,set_comp_connexe)],set_comp_connexe)
-
-        #Si les deux nœuds appartiennent à des composantes connexes différentes (pour éviter les cycles)
-        if x!=y
-            # Ajouter l'arete à l'ensemble des aretes qui vont constituer l'arbre de recouvrement minimal
-            push!(A,edge)
-            # liaison des deux composantes connexes
-            unite!(edge.node1,edge.node2,set_comp_connexe)  
-
-            # Mettre à jour le coût total de l'arbre de recouvrement minimal
-            total_cost+=edge.data
-        end   
-    end
-    return A,total_cost
+    return Tournée, cost , Id
 end
 ```
 """
 
 # ╔═╡ b55a2239-968f-48df-a867-933efcb4b86e
-md"""Testons l'algorithme sur l'exemple du cours.""" 
+md"""
+##### 4. Résultats""" 
 
 # ╔═╡ 4c326a3e-fc60-4732-b48f-9fb2146dce6e
 md""" Créons alors le graphe montré en cours :"""
@@ -659,39 +702,36 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─41d11a17-73b7-4da2-999d-a9ceda200969
 # ╟─0829e03c-8bc6-4c0d-b1c2-572dd831cb1a
 # ╟─9f427156-bc94-4877-80f9-3db6f178f274
-# ╟─c8cc4922-0f3b-4c3a-b444-8045b67205c8
+# ╠═c8cc4922-0f3b-4c3a-b444-8045b67205c8
 # ╟─b727f17a-8843-4d23-941b-698c19c5c6c1
 # ╟─2f59b97d-e868-46bc-9945-76075015d4cc
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
-# ╟─48b7402e-7cfc-4e5f-87a0-b67bca4eb326
-# ╟─3d9e6b3c-8179-4759-a862-146fe1872464
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
-# ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
+# ╠═b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 # ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
 # ╟─16339626-8605-4ac6-985c-49e11a718af6
 # ╟─fd8454ba-cee5-4f25-86c1-3f097d09906b
 # ╟─4f23d7d2-1718-4b16-976e-8a24660bbd4e
-# ╟─4e014129-c219-4bf6-945c-245b17b05dae
 # ╟─c5a3aabd-1786-48fc-ba37-4fac672248cb
+# ╟─d50e2d9f-7839-4648-9731-b95d19043c75
 # ╟─127a54e2-838f-4ee8-b7db-cfbceec47e48
-# ╟─59e115ff-d1eb-4056-a031-da6ebd4a550c
 # ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
-# ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
+# ╠═4c326a3e-fc60-4732-b48f-9fb2146dce6e
 # ╟─ab9964f8-856e-4fe9-bcab-914bd3102388
 # ╟─d33138a8-4521-4e6c-a14b-a3c9bf6a346b
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
 # ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
 # ╟─63f51ecf-1760-4122-80ce-a0bf6a868b5c
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
-# ╟─c450bddb-9cf8-46a5-8d68-f153872cf29a
+# ╠═c450bddb-9cf8-46a5-8d68-f153872cf29a
 # ╟─b15a92ef-c7d1-409c-8d2d-b011ed005de5
 # ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
-# ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
+# ╠═1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
 # ╟─ea296f84-65b8-47c7-8bcf-c5f39055711a
 # ╟─16b10cd0-7969-404e-a226-8af6500bff2a
 # ╟─1ad3c3ef-7407-473b-a1fc-92e6ac118b63
