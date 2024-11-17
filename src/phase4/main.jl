@@ -43,4 +43,4 @@ function main(filename::String, finetunning::String)
 end
 
 
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_hk")

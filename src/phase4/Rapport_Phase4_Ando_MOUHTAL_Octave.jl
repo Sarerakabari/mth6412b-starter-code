@@ -213,7 +213,7 @@ md"""
 """
 
 # ╔═╡ b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
-md"""La `rsl` dépend du point de départ. La fonction `finetuning_start_rsl`  ajuste le noeud de départ de te sorte on construit la tournée la plus optimale. """ 
+md"""La fonction `rsl` dépend du point de départ. La fonction `finetuning_start_rsl`  ajuste le noeud de départ de te sorte on construit la tournée la plus optimale. """ 
 
 # ╔═╡ 61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 md"""
@@ -242,321 +242,301 @@ md"""
 ##### 4. Résultats""" 
 
 # ╔═╡ 4c326a3e-fc60-4732-b48f-9fb2146dce6e
-md""" Créons alors le graphe montré en cours :"""
+md"""Premièrement, introduisons la fonction `main` en dessous qui servent pour afficher les résultats dans cette phase du projet. La fonction à deux arguments:
+1. filename     : Le chemin vers le fichier .tsp
+2. finetunning  : La méthode à utiliser, pour l'instant il prend `start_rsl` puisque on va utiliser la fonction `finetuning_start_rsl`
+"""
 
 # ╔═╡ ab9964f8-856e-4fe9-bcab-914bd3102388
 md""" 
 ``` julia
-#création de noeud
-n1=Node("A",[4])
-n2=Node("B",[4])
-n3=Node("C",[4])
-n4=Node("D",[4])
-n5=Node("E",[4])
-n6=Node("F",[4])
-n7=Node("G",[4])
-n8=Node("H",[4])
-n9=Node("I",[4])
-#vecteur de noeuds
-N=[n1,n2,n3,n4,n5,n6,n7,n8,n9]
-#creation de arêtes
-e1=Edge("AB",4,n1,n2)
-e2=Edge("AH",8,n1,n8)
-e3=Edge("BC",8,n2,n3)
-e4=Edge("BH",11,n2,n8)
-e5=Edge("HI",7,n8,n9)
-e6=Edge("HG",1,n8,n7)
-e7=Edge("IC",2,n9,n3)
-e8=Edge("IG",6,n9,n7)
-e9=Edge("CD",7,n3,n4)
-e10=Edge("CF",4,n3,n6)
-e11=Edge("GF",2,n7,n6)
-e12=Edge("DF",14,n4,n6)
-e13=Edge("DE",9,n4,n5)
-e14=Edge("FE",10,n6,n5)
-#vecteur des arête
-E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
-#Création du graphe
-G=Graph("small",N,E)
+function main(filename::String, finetunning::String)
+
+    if finetunning == "start_rsl"
+        T, C, ID =  finetuning_start_rsl(filename)
+        println("Le coût de la tournée est : ", C)
+        println("La tournée est composée par :")
+        show(T)
+        visualize_graph(T.Nodes,T.Edges)
+
+    elseif finetunning == "start_hk"
+        T, C, ID =  finetuning_start_hk(filename, 1e-1)
+        println("Le coût de la tournée est", C)
+        println("La tournée est composée par:")
+        show(T)
+        visualize_graph(T.Nodes,T.Edges)
+    elseif finetunning == "epsilon_hk"
+        T, C, EPS =  finetuning_epsilon_hk(filename,1,list_eps)
+        println("Le coût de la tournée est", C)
+        println("La tournée est composée par:")
+        show(T)
+        visualize_graph(T.Nodes,T.Edges)
+    else finetunning == "start_epsilon_hk"
+        T, C, ID =  finetuning_start_epsilon_hk(filename,list_eps)
+        println("Le coût de la tournée est :  ", C)
+        println("La tournée est composée par:")
+        show(T)
+        visualize_graph(T.Nodes,T.Edges)
+    end
+
+end
 ```
 """
 
-# ╔═╡ d33138a8-4521-4e6c-a14b-a3c9bf6a346b
-md"""Algorithme de Kruskal appliqué au graphe du cours qui retourne l'ensemble des arets de l'arbre de recouvrement minimal et le coût de cette arbre"""
+# ╔═╡ 1738d0e6-cab3-4e01-a99c-b490579071f5
+md""" Code du programme principale : """
 
 # ╔═╡ 3e2249ce-2411-4ba4-bd18-033689e41ae2
 md"""
 ```julia
-A,B=kruskal(G) 
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
-end
-println("the total cost is ",B)
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
 ```
 """
 
 # ╔═╡ 481cf377-6d0b-42c9-bdec-6ea229805ed0
-md"""#### Résultat :"""
+md"""###### Résulat
+"""
 
 # ╔═╡ 63f51ecf-1760-4122-80ce-a0bf6a868b5c
 md"""
 ```julia
-the minimun spanning tree are composed of:
-Edge HG bounds H and G,his weight is 1
-Edge IC bounds I and C,his weight is 2
-Edge GF bounds G and F,his weight is 2
-Edge AB bounds A and B,his weight is 4
-Edge CF bounds C and F,his weight is 4
-Edge CD bounds C and D,his weight is 7
-Edge AH bounds A and H,his weight is 8
-Edge DE bounds D and E,his weight is 9
-the total cost is 37
+Le coût de la tournée est : 2014.0
+La tournée est composée par :
+Graph Tournée has 29 nodes and 29 Edges
+ Nodes are 
+Node 17, data: [230.0, 590.0]
+Node 22, data: [490.0, 500.0]
+Node 14, data: [510.0, 700.0]
+Node 18, data: [460.0, 860.0]
+Node 15, data: [750.0, 900.0]
+Node 4, data: [750.0, 1100.0]
+Node 10, data: [710.0, 1310.0]
+Node 20, data: [590.0, 1390.0]
+Node 2, data: [630.0, 1660.0]
+Node 21, data: [830.0, 1770.0]
+Node 5, data: [750.0, 2030.0]
+Node 9, data: [790.0, 2260.0]
+Node 6, data: [1030.0, 2070.0]
+Node 12, data: [1170.0, 2300.0]
+Node 28, data: [1260.0, 1910.0]
+Node 1, data: [1150.0, 1760.0]
+Node 24, data: [1260.0, 1500.0]
+Node 27, data: [1460.0, 1420.0]
+Node 8, data: [1490.0, 1630.0]
+Node 16, data: [1280.0, 1200.0]
+Node 23, data: [1840.0, 1240.0]
+Node 26, data: [490.0, 2130.0]
+Node 29, data: [360.0, 1980.0]
+Node 3, data: [40.0, 2090.0]
+Node 13, data: [970.0, 1340.0]
+Node 19, data: [1040.0, 950.0]
+Node 25, data: [1280.0, 790.0]
+Node 7, data: [1650.0, 650.0]
+Node 11, data: [840.0, 550.0]
+ Edges are 
+Edge (17, 22) bounds 17 and 22,his weight is 47.0
+Edge (14, 22) bounds 14 and 22,his weight is 36.0
+Edge (14, 18) bounds 14 and 18,his weight is 32.0
+Edge (15, 18) bounds 15 and 18,his weight is 56.0
+Edge (4, 15) bounds 4 and 15,his weight is 34.0
+Edge (4, 10) bounds 4 and 10,his weight is 39.0
+Edge (10, 20) bounds 10 and 20,his weight is 25.0
+Edge (2, 20) bounds 2 and 20,his weight is 49.0
+Edge (2, 21) bounds 2 and 21,his weight is 41.0
+Edge (5, 21) bounds 5 and 21,his weight is 50.0
+Edge (5, 9) bounds 5 and 9,his weight is 42.0
+Edge (6, 9) bounds 6 and 9,his weight is 56.0
+Edge (6, 12) bounds 6 and 12,his weight is 46.0
+Edge (12, 28) bounds 12 and 28,his weight is 71.0
+Edge (1, 28) bounds 1 and 28,his weight is 34.0
+Edge (1, 24) bounds 1 and 24,his weight is 52.0
+Edge (24, 27) bounds 24 and 27,his weight is 38.0
+Edge (8, 27) bounds 8 and 27,his weight is 39.0
+Edge (8, 16) bounds 8 and 16,his weight is 84.0
+Edge (16, 23) bounds 16 and 23,his weight is 98.0
+Edge (23, 26) bounds 23 and 26,his weight is 286.0
+Edge (26, 29) bounds 26 and 29,his weight is 36.0
+Edge (3, 29) bounds 3 and 29,his weight is 60.0
+Edge (3, 13) bounds 3 and 13,his weight is 215.0
+Edge (13, 19) bounds 13 and 19,his weight is 71.0
+Edge (19, 25) bounds 19 and 25,his weight is 52.0
+Edge (7, 25) bounds 7 and 25,his weight is 72.0
+Edge (7, 11) bounds 7 and 11,his weight is 147.0
+Edge (11, 17) bounds 11 and 17,his weight is 106.0
 ```
+"""
+
+# ╔═╡ 7a309c85-33b9-4ce1-85de-536cf26eddf9
+md"""Le coût de la tournée est de 2014, ce qui est inférieur au double du coût de la tournée minimale réelle, qui est de 1610.
 """
 
 # ╔═╡ 56190668-c0d7-4fd8-8159-2389852c4bfd
 md"""
-##### 3. Accompagner votre code de tests unitaires.
+##### 5. Implémentation de l'algorithme hk
 """
 
 # ╔═╡ c450bddb-9cf8-46a5-8d68-f153872cf29a
 md"""
-```
-Les tests unitaires sont présents dans le fichier test.jl. Nous avons implémenter les tests unitaires ci-dessous.
-```
+D'abord, présentons des structures de données et des fonctions qui vont nous servir pour l'implémentation de l'algorithme hk.
+"""
+
+# ╔═╡ c9273814-333e-46a9-b57f-4ace39d5189c
+md"""
+1. mutable struct weighted_node
+   Représente un nœud pondéré avec :
+   - Un nom (name).
+   - Un nœud associé (node).
+   - Une priorité ou un poids (priority).
+
 """
 
 # ╔═╡ b15a92ef-c7d1-409c-8d2d-b011ed005de5
 md""" 
 ```julia
-include("node_pointer.jl")
-include("kruskal.jl")
-using Test
-#création de noeud
-n1=Node("A",[4])
-n2=Node("B",[4])
-n3=Node("C",[4])
-n4=Node("D",[4])
-n5=Node("E",[4])
-n6=Node("F",[4])
-n7=Node("G",[4])
-n8=Node("H",[4])
-n9=Node("I",[4])
-#vecteur de noeuds
-N=[n1,n2,n3,n4,n5,n6,n7,n8,n9]
-#creation de arêtes
-e1=Edge("AB",4,n1,n2)
-e2=Edge("AH",8,n1,n8)
-e3=Edge("BC",8,n2,n3)
-e4=Edge("BH",11,n2,n8)
-e5=Edge("HI",7,n8,n9)
-e6=Edge("HG",1,n8,n7)
-e7=Edge("IC",2,n9,n3)
-e8=Edge("IG",6,n9,n7)
-e9=Edge("CD",7,n3,n4)
-e10=Edge("CF",4,n3,n6)
-e11=Edge("GF",2,n7,n6)
-e12=Edge("DF",14,n4,n6)
-e13=Edge("DE",9,n4,n5)
-e14=Edge("FE",10,n6,n5)
-#vecteur des arête
-E=[e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14]
-
-#Création de composants connexes et d'un ensemble
-
-comp_c1=node_pointer(n1)
-
-comp_c2=node_pointer(n2)
-
-comp_c3=node_pointer(n3)
-
-comp_c4=node_pointer(n4)
-
-comp_c5=node_pointer(n5)
-
-set_comp=[comp_c1,comp_c2,comp_c3,comp_c4,comp_c5]
-
-#Création du graphe
-
-G=Graph("small",N,E)
-
-# Algorithme de Kruskal appliqué au graphe du cours qui retourne l'arbre de recouvrement minimal et le côut de cette arbre
-A,B=kruskal(G)
-
-#test sur le constructeur node_pointer
-
-@test comp_c1.name==n1.name
-
-@test comp_c1.child==n1
-
-@test comp_c1.parent==n1
-
-#verification si le noeud est son propre parent apres l'utilisation du constructeur node_pointer
-
-root=find_root(comp_c1,set_comp)
-
-@test root==comp_c1
-
-
-#test sur les liasons des composant connexe
-
-link!(set_comp[1],set_comp[2],set_comp)
-
-@test set_comp[2].parent==set_comp[1].child
-
-
-#test sur les unions des composant connexe à partir de noeud d'une arête
-
-
-unite!(n1,n5,set_comp)
-
-@test set_comp[5].parent==set_comp[1].child
-
-
-@test set_comp[1].parent==set_comp[1].child
-
-#Test sur l'exemple du cours
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
+mutable struct weighted_node{T} <: Abstractweighted_node{T}
+    name::String
+    node::Node{T}
+    priority::Number
 end
-println("the total cost is ",B)
-
-@test B==37
 ```
 """
 
 # ╔═╡ c7ad79b3-5ac5-496a-a943-872340fe360f
-md"""#### Résultat :"""
+md"""2. `weighted_node`
+   Constructeur pour un objet `weighted_node`. Initialise la priorité d’un nœud à 0.
+
+"""
 
 # ╔═╡ 1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
 md"""
 ```julia
-the minimun spanning tree are composed of:
-Edge HG bounds H and G,his weight is 1
-Edge IC bounds I and C,his weight is 2
-Edge GF bounds G and F,his weight is 2
-Edge AB bounds A and B,his weight is 4
-Edge CF bounds C and F,his weight is 4
-Edge CD bounds C and D,his weight is 7
-Edge AH bounds A and H,his weight is 8
-Edge DE bounds D and E,his weight is 9
-the total cost is 37
-Test Passed
+function weighted_node(node::Node{T}) where T
+
+    name=node.name
+
+    return weighted_node(name,node,0)
+
+end
 ```
 """
 
 # ╔═╡ ea296f84-65b8-47c7-8bcf-c5f39055711a
 md"""
-##### 4. tester votre implémentation sur diverses instances de TSP symétrique dans un programme principal et commenter.
-"""
 
-# ╔═╡ 16b10cd0-7969-404e-a226-8af6500bff2a
-md""" Code du programme principale : """
+3. `priority(p::weighted_node)`:
+   Retourne la priorité (ou poids) actuelle d’un nœud pondéré.
+"""
 
 # ╔═╡ 1ad3c3ef-7407-473b-a1fc-92e6ac118b63
 md"""
 ```julia
-include("../phase1/main.jl")
-include("kruskal.jl")
-
-
-
-
-# création du graphe à partir bayg29.tsp
-
-G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bayg29.tsp")
-
-#Test sur le fichier bayg29.tsp
-A,B=kruskal(G)
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
-end
-println("the total cost is ",B)
+priority(p::weighted_node) = p.priority
 ```
 """
 
 
 # ╔═╡ d38a7590-50d9-4730-99f8-10db3be53d13
-md""" Test sur le fichier bayg29.tsp"""
+md"""
+4. `priority!(p::weighted_node, priority::Number)`:
+   Met à jour la priorité d’un nœud pondéré avec une nouvelle valeur.
+"""
 
 # ╔═╡ aff84e04-709b-46e6-bb0e-7ceafb5f8799
 md"""
 ```julia
-G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bayg29.tsp")
-A,B=kruskal(G)
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
+function priority!(p::weighted_node, priority::Number)
+    p.priority =priority
+    p
 end
-println("the total cost is ",B)
 ```
 """
 
 # ╔═╡ be38727a-edf3-4272-a0c7-5105cd15abbf
-md"""#### Résultat :"""
+md"""5. `weigth_update!(graph::Graph{T,S}, pi_k::Vector{weighted_node{T}})`:
+   Met à jour les poids des arêtes dans un graphe en ajoutant les priorités des deux nœuds connectés par chaque arête.
+"""
 
 # ╔═╡ 1384e8db-3032-467b-a779-01f48ac66ed6
 md"""
 ```julia
-the minimun spanning tree are composed of:
-Edge (10, 20) bounds 10 and 20,his weight is 25.0
-Edge (14, 18) bounds 14 and 18,his weight is 32.0
-Edge (1, 28) bounds 1 and 28,his weight is 34.0  
-Edge (4, 15) bounds 4 and 15,his weight is 34.0  
-Edge (14, 22) bounds 14 and 22,his weight is 36.0
-Edge (26, 29) bounds 26 and 29,his weight is 36.0
-Edge (24, 27) bounds 24 and 27,his weight is 38.0
-Edge (4, 10) bounds 4 and 10,his weight is 39.0  
-Edge (8, 27) bounds 8 and 27,his weight is 39.0  
-Edge (2, 21) bounds 2 and 21,his weight is 41.0  
-Edge (5, 9) bounds 5 and 9,his weight is 42.0    
-Edge (6, 12) bounds 6 and 12,his weight is 46.0  
-Edge (17, 22) bounds 17 and 22,his weight is 47.0
-Edge (16, 27) bounds 16 and 27,his weight is 48.0
-Edge (2, 20) bounds 2 and 20,his weight is 49.0  
-Edge (15, 19) bounds 15 and 19,his weight is 49.0
-Edge (5, 21) bounds 5 and 21,his weight is 50.0  
-Edge (5, 6) bounds 5 and 6,his weight is 51.0    
-Edge (5, 26) bounds 5 and 26,his weight is 51.0  
-Edge (10, 13) bounds 10 and 13,his weight is 51.0
-Edge (1, 24) bounds 1 and 24,his weight is 52.0  
-Edge (6, 28) bounds 6 and 28,his weight is 52.0  
-Edge (19, 25) bounds 19 and 25,his weight is 52.0
-Edge (15, 18) bounds 15 and 18,his weight is 56.0
-Edge (3, 29) bounds 3 and 29,his weight is 60.0  
-Edge (11, 22) bounds 11 and 22,his weight is 63.0
-Edge (7, 25) bounds 7 and 25,his weight is 72.0  
-Edge (23, 27) bounds 23 and 27,his weight is 74.0
-the total cost is 1319.0
+function weigth_update!(graph::Graph{T,S},pi_k::Vector{weighted_node{T}})where {T,S}
+
+    for edge in graph.Edges
+        edge.data= edge.data + pi_k[findfirst(x->x.node==edge.node1,pi_k)].priority+pi_k[findfirst(x->x.node==edge.node2,pi_k)].priority
+    end
+end
 ```
 """
 
 # ╔═╡ 201f6e55-daf7-4fce-aef5-fb00ad48770d
-md""" Test sur le fichier bays29.tsp"""
+md"""
+6. `one_tree(graph::Graph{T,S}, idx::Int64)`:
+   Construit un 1-arbre à partir d’un graphe en :
+   - Excluant un nœud donné.
+   - Appliquant l’algorithme de Prim sur le sous-graphe résultant.
+   - Ajoutant les deux arêtes les plus courtes connectant le nœud exclu.
+"""
 
 # ╔═╡ 77714937-68a7-4a05-9f35-2eb508069506
 md"""
 ```julia
-G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/bays29.tsp")
-A,B=kruskal(G)
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
-end
-println("the total cost is ",B)
+function one_tree(graph::Graph{T,S},idx::Int64)where {T,S}
+    #noeud selectionné pour le 1-arbre
+    n=graph.Nodes[idx]
+    # creation du graphe sans le noeud
+    sub_graph_nodes =[graph.Nodes[1:idx-1];graph.Nodes[idx+1:end]]
+    sub_graph_edges=graph.Edges
+    A=Vector{Edge{T,S}}()
+    B=Vector{Edge{T,S}}()
+    #retrair des arêtes contentant le noeud
+    for edge in sub_graph_edges
+        if (edge.node1!=n) & (edge.node2!=n) 
+            push!(A,edge)
+        else
+            push!(B,edge) 
+        end
+    end
+    #sous graphe
+    s_g=Graph("k_n",sub_graph_nodes,A)
+    #prim sur le sous graphe
+    k_n,W=prim(s_g,graph.Nodes[idx])
+    # creation du  1-arbre
+    sort!(B, by=e -> e.data)
+    push!(k_n.Nodes,n)
+    if B[1].node1!=B[2].node2
+        push!(k_n.Edges,B[1])
+        push!(k_n.Edges,B[2])
+        W=W+B[1].data+B[2].data
+    else
+        push!(k_n.Edges,B[1])
+        push!(k_n.Edges,B[3])
+        W=W+B[1].data+B[3].data
+    end
+return k_n,W
 ```
 """
 
 # ╔═╡ 1ee8ce73-1d27-4232-871d-e18e40f2e806
-md"""#### Résultat :"""
+md"""
+7. `fix_tree(graph::Graph{T,S}, arbre::Graph{T,S}, start::Node{T})`:
+   Corrige un 1-arbre en le transformant en un circuit hamiltonien. Cela inclut :
+   - Un parcours en pré-ordre des nœuds.
+   - La construction d'une tournée (chemin circulaire) et le calcul de son coût total.
+
+8. `degrees(graph::Graph{T,S})`:
+   Calcule :
+   - Les degrés de chaque nœud.
+   - Les sous-gradients associés.
+   Retourne des structures de données pour les pondérations et sous-gradients.
+
+9. `hk!(graph::Graph{T,S}, idx, epsilon)`:
+   Implémente une méthode itérative pour trouver une solution optimale à un problème combinatoire en :
+   - Générant des 1-arbres (via `one_tree`).
+   - Corrigeant les poids du graphe (via `weigth_update!`).
+   - Ajustant les sous-gradients et les priorités des nœuds.
+   - Convertissant le 1-arbre final en un circuit (via `fix_tree`).
+   - Arrêtant les itérations lorsque la précision `epsilon` est atteinte.
+   L’algorithme exploite un processus de mise à jour des poids pour améliorer les solutions au fil des itérations."""
 
 # ╔═╡ 5e7e90e8-1088-4c75-9474-d51a7327e1df
 md"""
@@ -702,12 +682,12 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─41d11a17-73b7-4da2-999d-a9ceda200969
 # ╟─0829e03c-8bc6-4c0d-b1c2-572dd831cb1a
 # ╟─9f427156-bc94-4877-80f9-3db6f178f274
-# ╠═c8cc4922-0f3b-4c3a-b444-8045b67205c8
+# ╟─c8cc4922-0f3b-4c3a-b444-8045b67205c8
 # ╟─b727f17a-8843-4d23-941b-698c19c5c6c1
 # ╟─2f59b97d-e868-46bc-9945-76075015d4cc
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
-# ╠═b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
+# ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 # ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
 # ╟─6f34b908-e413-4317-a27d-6c6a8df213be
@@ -721,19 +701,20 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
-# ╠═4c326a3e-fc60-4732-b48f-9fb2146dce6e
+# ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
 # ╟─ab9964f8-856e-4fe9-bcab-914bd3102388
-# ╟─d33138a8-4521-4e6c-a14b-a3c9bf6a346b
+# ╟─1738d0e6-cab3-4e01-a99c-b490579071f5
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
 # ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
 # ╟─63f51ecf-1760-4122-80ce-a0bf6a868b5c
+# ╟─7a309c85-33b9-4ce1-85de-536cf26eddf9
 # ╟─56190668-c0d7-4fd8-8159-2389852c4bfd
-# ╠═c450bddb-9cf8-46a5-8d68-f153872cf29a
+# ╟─c450bddb-9cf8-46a5-8d68-f153872cf29a
+# ╟─c9273814-333e-46a9-b57f-4ace39d5189c
 # ╟─b15a92ef-c7d1-409c-8d2d-b011ed005de5
 # ╟─c7ad79b3-5ac5-496a-a943-872340fe360f
-# ╠═1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
+# ╟─1bbf53cc-bb82-43ef-9f48-fbb8ad253b55
 # ╟─ea296f84-65b8-47c7-8bcf-c5f39055711a
-# ╟─16b10cd0-7969-404e-a226-8af6500bff2a
 # ╟─1ad3c3ef-7407-473b-a1fc-92e6ac118b63
 # ╟─d38a7590-50d9-4730-99f8-10db3be53d13
 # ╟─aff84e04-709b-46e6-bb0e-7ceafb5f8799
