@@ -43,7 +43,7 @@ function hk(graph::Graph{T,S},idx)where {T,S}
     maxz=0
     z=0
 
-while z<65 # condition d'arrêt (a optimiser si possible)
+while tk>6*1e-1 # condition d'arrêt 
     # création du 1 arbre
     T_k,L=one_tree(graph,idx)
 
@@ -57,12 +57,13 @@ while z<65 # condition d'arrêt (a optimiser si possible)
     #mise à jour du pas et de la période 
     if k==periode
 
-        periode=periode/2
+        periode=floor(Int,(periode/2))+1
         tk=tk/2
         k=0    
 
     end
-   
+    #println(tk)
+
     # mise à jour de la correction sur le poids
     pi_k=pi_k+tk*sum(v_k)
 
@@ -78,17 +79,16 @@ while z<65 # condition d'arrêt (a optimiser si possible)
     k_2+=1
     
     # suivi de performance pour debugger
-    z=(count(x -> x == 0, v_k)/length(v_k))*100
-    if z>=maxz
-        maxz=z
-        println(maxz)
-    end
+    #z=(count(x -> x == 0, v_k)/length(v_k))*100
+    #if z>=maxz
+    #    maxz=z
+        #println(maxz)
+   #end
 
 end
 # correction de l'arbre pour avoir un circuit 
-# optimiser svp
 T_k,W=fix_tree(graph,T_k,graph.Nodes[idx])
 W=W-2*pi_k
 
-return T_k,W,pi_k    
+return T_k,W
 end

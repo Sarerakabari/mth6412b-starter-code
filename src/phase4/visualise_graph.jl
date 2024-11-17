@@ -1,6 +1,6 @@
 using Graphs
 using GraphPlot
-
+export visualize_graph
 """Fonction pour afficher les graphes graphiquement"""
 function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where {T,S}
     # Associer chaque nœud à un identifiant numérique pour Graphs.jl
@@ -18,5 +18,5 @@ function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where
     end
 
     # Tracer le graphe avec GraphPlot.jl
-    gplot(g, layout = spring_layout,nodelabel = [node.name for node in nodes], nodesize=13)
+    gplot(g, layout = circular_layout,nodelabel = [node.name for node in nodes], nodesize=13)
 end

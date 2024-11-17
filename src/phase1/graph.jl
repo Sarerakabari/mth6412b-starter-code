@@ -54,6 +54,9 @@ Edges(graph::AbstractGraph) = graph.Edges
 """Renvoie le nombre de arête du graphe."""
 nb_edges(graph::AbstractGraph) = length(graph.Edges)
 
+"""Copie d'une graphe"""
+copy(graph::AbstractGraph) = Graph(Name(graph), Base.copy(Nodes(graph)), Base.copy(Edges(graph)))
+
 """Affiche un graphe"""
 function show(graph::Graph)
   println("Graph ", Name(graph), " has ", nb_nodes(graph), " nodes and ", nb_edges(graph) ," Edges") 

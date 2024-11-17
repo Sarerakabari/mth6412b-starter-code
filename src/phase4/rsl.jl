@@ -17,16 +17,16 @@ function parcours_preordre!(graph::Graph{T,S}, start::Node{T},visited::Dict{Node
 end
 
 """L'algorithme rsl pour déterminer une tournée minimale approximative à partie d'un noeud départ choisi"""
-function rsl(graph::Graph{T,S},start::Node{T}) where {T,S}
+function rsl(graph::Graph{T,S},idx) where {T,S}
 
-    arbre, weight=prim(graph,start)
+    arbre, weight=prim(graph,graph.Nodes[idx])
 
     visited=Dict(node => false for node in graph.Nodes)
     ordre=Node{T}[]
 
-    parcours_preordre!(arbre,start,visited,ordre)
+    parcours_preordre!(arbre,graph.Nodes[idx],visited,ordre)
 
-    push!(ordre,start)
+    push!(ordre,graph.Nodes[idx])
 
     tournée = Edge{T,S}[]
     cout = 0
