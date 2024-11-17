@@ -1,9 +1,43 @@
-export finetuning_start
+export finetuning_start_hk, calculate_cost!
 
 
 
+""" 
+La fonction finetuning_start_rsl permet de déterminer le point de départ optimal 
+pour trouver la tournée minimale pour rsl.
+"""
+function finetuning_start_rsl(filename::String)
+"""
+args: 
+filename     : Pour création du graphe
+returns:
+Tournée   : La tournée minimale étant donnée le meilleur point de départ
+cost      : Le cout de la tournée
+Id        : L'indice du meilleur noeud de départ
+
+""" 
+
+    G = create_graph(filename)
+    n = length(G.Nodes)
+    Id = 1
+    Tournée, cost = rsl(G,1) 
+    for idx in 2:n
+        Tournée_old, cost_old = rsl(G,idx)
+        if cost_old < cost
+            cost = cost_old
+            Tournée = Tournée_old
+            Id = idx
+        end
+    end
+    return Tournée, cost , Id
+end
 
 
+"""
+Calculate la valeur réel du cout de la tournée retourner par un algorithme, 
+spécifiquement pour hk, puisque le cout de l'arbre de l'arbre 1-tree change
+au fil des itérations.
+"""
 function calculate_cost!(graph::Graph{T,S},filename::String) where {T,S}
     G = create_graph(filename)
     cost = 0
@@ -15,41 +49,67 @@ function calculate_cost!(graph::Graph{T,S},filename::String) where {T,S}
     cost
 end
 
+
+
 """ 
-La fonction finetuning_start permet de déterminer le point de départ optimal 
-pour trouver la tournée minimale, tout en gardant les autres paramètres fixes.
+La fonction finetuning_start_hk permet de déterminer le point de départ optimal 
+pour trouver la tournée minimale pour hk!, tout en gardant les autres paramètres fixes.
 """
-function finetuning_start(solver, filename::String)
+function finetuning_start_hk(filename::String, epsilon)
 """
 args: 
-solver    : solveur pour trouver la tournée qui est soit
-         RSL soit HK avec le sous-solveurs de HK est prim
 filename     : Pour création du graphe
-
+epsilon  : critère d'arret pour l'algorithme hk
 returns:
-Tournée   : La tournée minimale 
+Tournée   : La tournée minimale étant donnée le meilleur point de départ
 cost      : Le cout de la tournée
-nn        : Le meilleur point de départ
+Id        : L'indice du meilleur noeud de départ
 
 """ 
 
 
 
-    # solver change le graphe en entrée, pour cela nous créeons le graphe à chacque fois
+    # hk! change le graphe en entrée, 
+    # pour cela nous créeons le graphe à chacque fois
     G = create_graph(filename)
     n = length(G.Nodes)
-    nn = G.Nodes[1]
-    Tournée, cost = solver(G,1) 
+    Id = 1
+    Tournée, cost = hk!(G,1,epsilon) 
     cost = calculate_cost!(Tournée,filename)
     for idx in 2:n
         G = create_graph(filename)
-        Tournée_old, cost_old = solver(G,idx)
+        Tournée_old, cost_old = hk!(G,idx,epsilon)
         cost_old = calculate_cost!(Tournée_old,filename)
         if cost_old < cost
             cost = cost_old
             Tournée = Tournée_old
-            nn = G.Nodes[idx]
+            Id = idx
         end
     end
-    return Tournée, cost , nn
+    return Tournée, cost , Id
+end
+
+
+"""
+La fonction finetuning_epsilon_hk permet de déterminer le meilleur critère d'arret dans 
+list_epsilon  pour trouver la tournée minimale pour hk!, tout en gardant les autres paramètres fixes.
+"""
+function finetuning_epsilon_hk(filename::String, idx, list_epsilon)
+
+
+    G = create_graph(filename)
+    Tournée, cost = hk!(G,idx,list_epsilon[1])
+    cost = calculate_cost!(Tournée,filename)
+    eps = list_epsilon[1]
+    for k in 2:length(list_epsilon) 
+        G = create_graph(filename)
+        Tournée_old, cost_old = hk!(G,idx,list_epsilon[k])
+        cost_old = calculate_cost!(Tournée_old,filename)
+        if cost_old < cost
+            cost = cost_old
+            Tournée = Tournée_old
+            eps = list_epsilon[k]
+        end
+    end
+    return Tournée, cost , eps
 end

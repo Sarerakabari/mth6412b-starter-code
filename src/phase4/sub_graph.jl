@@ -2,13 +2,13 @@ include("../phase1/main.jl")
 include("../phase3/kruskal_heuristic.jl")
 include("../phase3/prim.jl")
 
-
+"""Création de 1-arbre pour l'algorithme hk!"""
 function one_tree(graph::Graph{T,S},idx::Int64)where {T,S}
 
 #noeud selectionné pour le 1-arbre
     n=graph.Nodes[idx]
 
-        # creation du graphe sans le noeud
+    # creation du graphe sans le noeud
 
     sub_graph_nodes =[graph.Nodes[1:idx-1];graph.Nodes[idx+1:end]]
 

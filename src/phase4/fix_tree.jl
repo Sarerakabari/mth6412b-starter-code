@@ -1,6 +1,6 @@
 include("rsl.jl")
 
-
+"""Création de la tournée minimale en utilsant un parcours en préordre"""
 function fix_tree(graph::Graph{T,S},arbre::Graph{T,S},start::Node{T}) where {T,S}
 
     
@@ -9,7 +9,7 @@ function fix_tree(graph::Graph{T,S},arbre::Graph{T,S},start::Node{T}) where {T,S
     ordre=Node{T}[]
 
     parcours_preordre!(arbre,start,visited,ordre)
-
+    # Pour boucler la tournée
     push!(ordre,start)
 
     tournée = Edge{T,S}[]
@@ -26,6 +26,7 @@ function fix_tree(graph::Graph{T,S},arbre::Graph{T,S},start::Node{T}) where {T,S
             error("Erreur : on n'a pas trouvé d'arête entre $n1 et $n2 dans le graphe.")
         end
     end
+    # Suppresion de dernier élément(start), puisqu'il est redondant
     pop!(ordre)
     Tournée=Graph("Tournée",ordre,tournée)
     return Tournée, cout

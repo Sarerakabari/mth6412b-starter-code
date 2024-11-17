@@ -3,8 +3,7 @@ include("../phase3/kruskal_heuristic.jl")
 include("../phase3/prim.jl")
 include("weighted_node.jl")
 
-# calcul de degrees de chaque noeud et le sous gradient
-
+"""calcul de degrees de chaque noeud et le sous gradient"""
 function degrees(graph::Graph{T,S})where {T,S}
     # initialisation degrees des noeud
     d=Vector{weighted_node{T}}()

@@ -7,8 +7,16 @@ include("weighted_node.jl")
 include("fix_tree.jl")
 
 
+"""
+L'algorithme hk pour calculer une tournée optimale.
+args:
 
-function hk(graph::Graph{T,S},idx)where {T,S}
+    graph   : Le graphe où l'on veut chercher la tournée optimale
+    idx     : L'indice du noeud de départ
+    epsilon : Critère d'arret
+
+"""
+function hk!(graph::Graph{T,S},idx,epsilon)where {T,S}
 
     #initialisation des itérations
     k=0
@@ -39,11 +47,8 @@ function hk(graph::Graph{T,S},idx)where {T,S}
     v_k=ones(n)
     # pas initiale 
     tk=1
-    # Initialisation des pourcentage de noeud de degrée 2
-    maxz=0
-    z=0
 
-while tk>6*1e-1 # condition d'arrêt 
+while tk > epsilon # condition d'arrêt 
     # création du 1 arbre
     T_k,L=one_tree(graph,idx)
 
@@ -77,18 +82,11 @@ while tk>6*1e-1 # condition d'arrêt
     # mise à jour des itérations
     k=k+1
     k_2+=1
-    
-    # suivi de performance pour debugger
-    #z=(count(x -> x == 0, v_k)/length(v_k))*100
-    #if z>=maxz
-    #    maxz=z
-        #println(maxz)
-   #end
 
 end
 # correction de l'arbre pour avoir un circuit 
 T_k,W=fix_tree(graph,T_k,graph.Nodes[idx])
-W=W-2*pi_k
+#W=W-2*pi_k
 
 return T_k,W
 end
