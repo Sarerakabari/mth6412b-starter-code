@@ -113,3 +113,35 @@ function finetuning_epsilon_hk(filename::String, idx, list_epsilon)
     end
     return Tournée, cost , eps
 end
+
+
+"""
+La fonction finetuning_start_epsilon_hk permet de déterminer la tournée minimale pour hk! 
+en focntion du noeud de départ et du critère d'arret,
+ tout en gardant les autres paramètres fixes.
+"""
+
+function finetuning_start_epsilon_hk(filename::String, list_epsilon)
+
+
+    G = create_graph(filename)
+    n = length(G.Nodes)
+    Tournée, cost = hk!(G,1,list_epsilon[1])
+    cost = calculate_cost!(Tournée,filename)
+    eps = list_epsilon[1]
+    Id = 1
+    for k in 1:length(list_epsilon) 
+        for idx in 1:n
+            G = create_graph(filename)
+            Tournée_old, cost_old = hk!(G,idx,list_epsilon[k])
+            cost_old = calculate_cost!(Tournée_old,filename)
+            if cost_old < cost
+                cost = cost_old
+                Tournée = Tournée_old
+                eps = list_epsilon[k]
+                Id  = idx 
+            end
+        end
+    end
+    return Tournée, cost , eps, Id
+end
