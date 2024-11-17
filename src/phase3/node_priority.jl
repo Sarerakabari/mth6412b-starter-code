@@ -46,7 +46,7 @@ Mise à jour de la priorité d'un élément de type node_priority
 - `priority::Number`: nouvelle valeur de la priorité
 """
 function priority!(p::node_priority, priority::Number)
-p.priority = max(0, priority)
+p.priority = priority
 p
 end
 
