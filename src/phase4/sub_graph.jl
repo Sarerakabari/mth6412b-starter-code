@@ -33,7 +33,7 @@ function one_tree(graph::Graph{T,S},idx::Int64)where {T,S}
     #sous graphe
     s_g=Graph("k_n",sub_graph_nodes,A)
     #prim sur le sous graphe
-    k_n,W=prim(s_g)
+    k_n,W=prim(s_g,graph.Nodes[idx])
     
     # creation du  1-arbre
     sort!(B, by=e -> e.data)

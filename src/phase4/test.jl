@@ -2,16 +2,9 @@ include("../phase1/main.jl")
 include("../phase3/node_priority.jl")
 include("../phase3/queue.jl")
 include("../phase3/prim.jl")
-<<<<<<< HEAD
-include("../phase4/sub_graph.jl")
-include("../phase3/queue.jl")
-include("../phase4/rsl.jl")
-include("../phase4/degrees.jl")
-=======
 include("rsl.jl")
 include("finetuning.jl")
 using Test
->>>>>>> d6279085d48e2df02580d10b4240c21fa8904a24
 
 
 #création des noeuds
@@ -41,18 +34,6 @@ G1=Graph("small",N,E)
 #Création d'une arbre à partir de N
 E1=[e1,e2,e3]
 
-<<<<<<< HEAD
-show(g_1)
-
-
-G=create_graph("C:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/swiss42.tsp")
-
-start=G.Nodes[3]
-
-A,B=rsl(G,start)
-
-d,v_k,p,v=degrees(A)
-=======
 #Création de l'arbre
 Tree=Graph("tree",N,E1)
 
@@ -79,4 +60,3 @@ T,C = rsl(G1,n3)
 @test C == 14
 T,C = rsl(G1,n4)
 @test C == 18
->>>>>>> d6279085d48e2df02580d10b4240c21fa8904a24
