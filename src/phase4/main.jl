@@ -44,6 +44,7 @@ end
 
 
 #main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/fri26.tsp", "start_hk")
-#main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "epsilon_hk")
-#main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/fri26.tsp", "start_epsilon_hk")
+#main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr17.tsp", "start_hk")
+#main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "epsilon_hk")
+#main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "start_epsilon_hk")
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/dantzig42.tsp", "start_epsilon_hk")

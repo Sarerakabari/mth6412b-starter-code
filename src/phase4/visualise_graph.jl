@@ -18,5 +18,5 @@ function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where
     end
 
     # Tracer le graphe avec GraphPlot.jl
-    gplot(g, layout = circular_layout,nodelabel = [node.name for node in nodes], nodesize=13)
+    gplot(g, layout = spring_layout,nodelabel = [node.name for node in nodes], NODESIZE=0.06)
 end
