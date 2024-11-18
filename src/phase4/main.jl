@@ -22,13 +22,13 @@ function main(filename::String, finetunning::String)
 
     elseif finetunning == "start_hk"
         T, C, ID =  finetuning_start_hk(filename, 1e-1)
-        println("Le coût de la tournée est", C)
+        println("Le coût de la tournée est :  ", C)
         println("La tournée est composée par:")
         show(T)
         visualize_graph(T.Nodes,T.Edges)
     elseif finetunning == "epsilon_hk"
         T, C, EPS =  finetuning_epsilon_hk(filename,1,list_eps)
-        println("Le coût de la tournée est", C)
+        println("Le coût de la tournée est :  ", C)
         println("La tournée est composée par:")
         show(T)
         visualize_graph(T.Nodes,T.Edges)

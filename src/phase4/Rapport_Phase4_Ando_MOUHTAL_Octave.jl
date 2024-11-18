@@ -521,129 +521,174 @@ md"""
 7. `fix_tree(graph::Graph{T,S}, arbre::Graph{T,S}, start::Node{T})`:
    Corrige un 1-arbre en le transformant en un circuit hamiltonien. Cela inclut :
    - Un parcours en pré-ordre des nœuds.
-   - La construction d'une tournée (chemin circulaire) et le calcul de son coût total.
+   - La construction d'une tournée et le calcul de son coût total.
+"""
 
+# ╔═╡ 5e7e90e8-1088-4c75-9474-d51a7327e1df
+md"""
+```julia
+function fix_tree(graph::Graph{T,S},arbre::Graph{T,S},start::Node{T}) where {T,S}
+
+    
+
+    visited=Dict(node => false for node in graph.Nodes)
+    ordre=Node{T}[]
+
+    parcours_preordre!(arbre,start,visited,ordre)
+    # Pour boucler la tournée
+    push!(ordre,start)
+
+    tournée = Edge{T,S}[]
+    cout = 0
+
+    for i in 1:length(ordre)-1
+        n1, n2 = ordre[i],ordre[i+1]
+        edge_index=findfirst(x -> (x.node1 == n1 && x.node2 == n2) || (x.node1 == n2 && x.node2 == n1), graph.Edges)
+        edge=graph.Edges[edge_index]
+        if edge !== nothing
+            push!(tournée,edge)
+            cout+=edge.data
+        else
+            error("Erreur : on n'a pas trouvé d'arête entre $n1 et $n2 dans le graphe.")
+        end
+    end
+    # Suppresion de dernier élément(start), puisqu'il est redondant
+    pop!(ordre)
+    Tournée=Graph("Tournée",ordre,tournée)
+    return Tournée, cout
+end
+```
+"""
+
+# ╔═╡ f4fcf415-bd09-4493-82fd-7d9c054dbf60
+md"""
 8. `degrees(graph::Graph{T,S})`:
    Calcule :
    - Les degrés de chaque nœud.
    - Les sous-gradients associés.
    Retourne des structures de données pour les pondérations et sous-gradients.
+"""
 
-9. `hk!(graph::Graph{T,S}, idx, epsilon)`:
-   Implémente une méthode itérative pour trouver une solution optimale à un problème combinatoire en :
+# ╔═╡ a5d12422-a0d9-4741-963c-a38450c347d7
+md"""
+```julia
+function degrees(graph::Graph{T,S})where {T,S}
+    # initialisation degrees des noeud
+    d=Vector{weighted_node{T}}()
+    p=[]
+    # initialisation sous-gradient
+    v_k=Vector{weighted_node{T}}()
+    v=[]
+    for node in graph.Nodes
+        #initialisation de poids d'un noeud
+        push!(d,weighted_node(node))
+        push!(v_k,weighted_node(node))
+        # voisins connecté à ce nouvelle
+        neighboor_nodes=findall(x->x.node1==node||x.node2==node,graph.Edges)
+        j=0
+        # vecteur de noeud contentant les voisins
+        A=Vector{Node{T}}()
+        # compatge des voisins
+        for i in neighboor_nodes
+            if graph.Edges[i].node1==node
+                n=graph.Edges[i].node2
+            else
+                n=graph.Edges[i].node1
+            end
+            if !(n in A)
+                push!(A,n)
+                j+=1
+            end  
+        end
+        # mise à jour du poids
+        priority!(d[end],float.(j))
+        # mise à jour du sous gradient
+        priority!(v_k[end],float.(j-2))
+        # mise à jour du vecteur degrées
+        push!(p,j)
+        # mise à jour du vecteur sous gradient
+        push!(v,(j-2))
+
+
+    end
+    return d,v_k,p,v
+   
+end
+```
+"""
+
+# ╔═╡ 1af51dff-d647-41a6-aa32-a84a35e3b054
+md"""9. `hk!(graph::Graph{T,S}, idx, epsilon)`:
+   Implémente la métode itérative hk pour trouver la tournée optimale :
    - Générant des 1-arbres (via `one_tree`).
    - Corrigeant les poids du graphe (via `weigth_update!`).
    - Ajustant les sous-gradients et les priorités des nœuds.
    - Convertissant le 1-arbre final en un circuit (via `fix_tree`).
    - Arrêtant les itérations lorsque la précision `epsilon` est atteinte.
-   L’algorithme exploite un processus de mise à jour des poids pour améliorer les solutions au fil des itérations."""
-
-# ╔═╡ 5e7e90e8-1088-4c75-9474-d51a7327e1df
-md"""
-```
-the minimun spanning tree are composed of:
-Edge (10, 20) bounds 10 and 20,his weight is 28.0
-Edge (14, 18) bounds 14 and 18,his weight is 35.0
-Edge (4, 15) bounds 4 and 15,his weight is 38.0
-Edge (26, 29) bounds 26 and 29,his weight is 39.0
-Edge (24, 27) bounds 24 and 27,his weight is 41.0
-Edge (2, 21) bounds 2 and 21,his weight is 42.0
-Edge (4, 10) bounds 4 and 10,his weight is 42.0
-Edge (8, 27) bounds 8 and 27,his weight is 43.0
-Edge (14, 22) bounds 14 and 22,his weight is 44.0
-Edge (1, 28) bounds 1 and 28,his weight is 45.0
-Edge (5, 9) bounds 5 and 9,his weight is 46.0
-Edge (6, 12) bounds 6 and 12,his weight is 55.0
-Edge (16, 27) bounds 16 and 27,his weight is 55.0
-Edge (15, 18) bounds 15 and 18,his weight is 56.0
-Edge (15, 19) bounds 15 and 19,his weight is 56.0
-Edge (5, 26) bounds 5 and 26,his weight is 57.0
-Edge (10, 13) bounds 10 and 13,his weight is 57.0
-Edge (14, 17) bounds 14 and 17,his weight is 59.0
-Edge (6, 28) bounds 6 and 28,his weight is 60.0
-Edge (5, 6) bounds 5 and 6,his weight is 61.0
-Edge (1, 21) bounds 1 and 21,his weight is 65.0
-Edge (16, 19) bounds 16 and 19,his weight is 66.0
-Edge (1, 24) bounds 1 and 24,his weight is 67.0
-Edge (19, 25) bounds 19 and 25,his weight is 69.0
-Edge (3, 29) bounds 3 and 29,his weight is 77.0
-Edge (11, 15) bounds 11 and 15,his weight is 79.0
-Edge (23, 27) bounds 23 and 27,his weight is 80.0
-Edge (7, 25) bounds 7 and 25,his weight is 95.0
-the total cost is 1557.0
-```
 """
-
-# ╔═╡ f4fcf415-bd09-4493-82fd-7d9c054dbf60
-md""" Test sur le fichier swiss42.tsp"""
-
-# ╔═╡ a5d12422-a0d9-4741-963c-a38450c347d7
-md"""
-```julia
-#du graphe à partir bayg29.tsp
-
-G=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-1/instances/stsp/swiss42.tsp")
-
-#Test sur le fichier bayg29.tsp
-A,B=kruskal(G)
-
-println("the minimun spanning tree are composed of:")
-for a in A
-    show(a)
-end
-println("the total cost is ",B)
-```
-"""
-
-# ╔═╡ 1af51dff-d647-41a6-aa32-a84a35e3b054
-md"""#### Résultat :"""
 
 # ╔═╡ ce87222b-1a28-4696-a784-7c72d5274a19
 md"""
-```
-the minimun spanning tree are composed of:
-Edge (3, 28) bounds 3 and 28,his weight is 4.0
-Edge (15, 17) bounds 15 and 17,his weight is 8.0
-Edge (3, 4) bounds 3 and 4,his weight is 11.0
-Edge (4, 5) bounds 4 and 5,his weight is 11.0
-Edge (15, 16) bounds 15 and 16,his weight is 11.0
-Edge (12, 13) bounds 12 and 13,his weight is 14.0
-Edge (1, 2) bounds 1 and 2,his weight is 15.0
-Edge (6, 27) bounds 6 and 27,his weight is 15.0
-Edge (3, 29) bounds 3 and 29,his weight is 18.0
-Edge (2, 7) bounds 2 and 7,his weight is 19.0
-Edge (24, 42) bounds 24 and 42,his weight is 19.0
-Edge (5, 7) bounds 5 and 7,his weight is 20.0
-Edge (18, 32) bounds 18 and 32,his weight is 21.0
-Edge (30, 31) bounds 30 and 31,his weight is 21.0
-Edge (11, 26) bounds 11 and 26,his weight is 22.0
-Edge (16, 38) bounds 16 and 38,his weight is 22.0
-Edge (6, 7) bounds 6 and 7,his weight is 23.0
-Edge (19, 27) bounds 19 and 27,his weight is 23.0
-Edge (21, 35) bounds 21 and 35,his weight is 23.0
-Edge (21, 34) bounds 21 and 34,his weight is 24.0
-Edge (14, 20) bounds 14 and 20,his weight is 25.0
-Edge (13, 19) bounds 13 and 19,his weight is 26.0
-Edge (22, 40) bounds 22 and 40,his weight is 26.0
-Edge (10, 24) bounds 10 and 24,his weight is 27.0
-Edge (29, 30) bounds 29 and 30,his weight is 27.0
-Edge (9, 10) bounds 9 and 10,his weight is 28.0
-Edge (12, 26) bounds 12 and 26,his weight is 28.0
-Edge (9, 11) bounds 9 and 11,his weight is 29.0
-Edge (22, 41) bounds 22 and 41,his weight is 30.0
-Edge (2, 8) bounds 2 and 8,his weight is 32.0
-Edge (18, 38) bounds 18 and 38,his weight is 33.0
-Edge (6, 20) bounds 6 and 20,his weight is 34.0
-Edge (15, 20) bounds 15 and 20,his weight is 35.0
-Edge (23, 39) bounds 23 and 39,his weight is 36.0
-Edge (1, 33) bounds 1 and 33,his weight is 37.0
-Edge (23, 40) bounds 23 and 40,his weight is 39.0
-Edge (36, 37) bounds 36 and 37,his weight is 39.0
-Edge (10, 40) bounds 10 and 40,his weight is 46.0
-Edge (25, 41) bounds 25 and 41,his weight is 49.0
-Edge (33, 35) bounds 33 and 35,his weight is 49.0
-Edge (32, 36) bounds 32 and 36,his weight is 60.0
-the total cost is 1079.0
+```julia
+function hk!(graph::Graph{T,S},idx,epsilon)where {T,S}
+    #initialisation des itérations
+    k=0
+    k_2=0
+    # cout du circuit
+    W=-Inf
+    #initialisation du  1 arbre
+    T_k=graph
+    # initialisation de la correction des poids
+    pi_k=0
+    # initialisation de la periode
+    periode=floor(Int,(length(graph.Nodes)/2))
+    # initialisation du sous gradient
+    P_k=Vector{weighted_node{T}}()
+    for node in graph.Nodes
+    push!(P_k,weighted_node(node))
+    end
+    n=length(graph.Nodes)
+    # initialisation du vecteur sous gradient
+    v_k=ones(n)
+    # pas initiale 
+    tk=1
+
+while tk > epsilon # condition d'arrêt 
+    # création du 1 arbre
+    T_k,L=one_tree(graph,idx)
+
+    # correction du cout
+    W_k=L-2*pi_k
+    W=max(W,W_k)
+
+    # calcul des degrées et du sous gradient
+    D,V,d_k,v_k=degrees(T_k)
+
+    #mise à jour du pas et de la période 
+    if k==periode
+        periode=floor(Int,(periode/2))+1
+        tk=tk/2
+        k=0    
+
+    end
+    # mise à jour de la correction sur le poids
+    pi_k=pi_k+tk*sum(v_k)
+    # mise à jour des poids
+    for p_k in P_k
+        p_k.priority=p_k.priority+tk*V[findfirst(x->x.node==p_k.node,V)].priority 
+    end
+    weigth_update!(graph,P_k)
+    # mise à jour des itérations
+    k=k+1
+    k_2+=1
+end
+# correction de l'arbre pour avoir un circuit 
+T_k,W=fix_tree(graph,T_k,graph.Nodes[idx])
+#W=W-2*pi_k
+
+return T_k,W
+end
+
 ```
 """
 

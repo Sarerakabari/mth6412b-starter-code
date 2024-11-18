@@ -17,32 +17,23 @@ args:
 
 """
 function hk!(graph::Graph{T,S},idx,epsilon)where {T,S}
-
     #initialisation des itérations
     k=0
     k_2=0
-    
     # cout du circuit
     W=-Inf
     #initialisation du  1 arbre
     T_k=graph
-
-
     # initialisation de la correction des poids
     pi_k=0
-
-
     # initialisation de la periode
     periode=floor(Int,(length(graph.Nodes)/2))
-
     # initialisation du sous gradient
     P_k=Vector{weighted_node{T}}()
-
     for node in graph.Nodes
     push!(P_k,weighted_node(node))
     end
     n=length(graph.Nodes)
-
     # initialisation du vecteur sous gradient
     v_k=ones(n)
     # pas initiale 
@@ -61,28 +52,21 @@ while tk > epsilon # condition d'arrêt
 
     #mise à jour du pas et de la période 
     if k==periode
-
         periode=floor(Int,(periode/2))+1
         tk=tk/2
         k=0    
 
     end
-    #println(tk)
-
     # mise à jour de la correction sur le poids
     pi_k=pi_k+tk*sum(v_k)
-
     # mise à jour des poids
     for p_k in P_k
-
         p_k.priority=p_k.priority+tk*V[findfirst(x->x.node==p_k.node,V)].priority 
-   
     end
     weigth_update!(graph,P_k)
     # mise à jour des itérations
     k=k+1
     k_2+=1
-
 end
 # correction de l'arbre pour avoir un circuit 
 T_k,W=fix_tree(graph,T_k,graph.Nodes[idx])
