@@ -5,7 +5,7 @@ include("../phase4/degrees.jl")
 include("../phase4/weigth_update.jl")
 include("weighted_node.jl")
 include("fix_tree.jl")
-
+export hk!
 
 """
 L'algorithme hk pour calculer une tournée optimale.

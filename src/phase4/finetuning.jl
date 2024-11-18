@@ -1,4 +1,4 @@
-export finetuning_start_hk, calculate_cost!
+export finetuning_start_rsl, finetuning_start_hk, calculate_cost!, finetuning_epsilon_hk, finetuning_start_epsilon_hk
 
 
 

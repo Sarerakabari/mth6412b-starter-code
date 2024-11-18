@@ -1,5 +1,5 @@
 include("rsl.jl")
-
+export fix_tree
 """Création de la tournée minimale en utilsant un parcours en préordre"""
 function fix_tree(graph::Graph{T,S},arbre::Graph{T,S},start::Node{T}) where {T,S}
 
