@@ -242,9 +242,14 @@ md"""
 ##### 4. Résultats""" 
 
 # ╔═╡ 4c326a3e-fc60-4732-b48f-9fb2146dce6e
-md"""Premièrement, introduisons la fonction `main` en dessous qui servent pour afficher les résultats dans cette phase du projet. La fonction à deux arguments:
-1. filename     : Le chemin vers le fichier .tsp
-2. finetunning  : La méthode à utiliser, pour l'instant il prend `start_rsl` puisque on va utiliser la fonction `finetuning_start_rsl`
+md"""Premièrement, introduisons la fonction `main` qui agit comme point d'entrée pour exécuter différentes optimisations sur un graphe donné à partir d'un fichier, en fonction du type de réglage `fin finetuning` demandé. La fonction à deux arguments:
+1. `filename`     : Le nom du fichier contenant les données du graphe .tsp
+2. `finetunning` : Spécifie le type d'optimisation à effectuer. Les options incluent :
+- `start_rsl` : Optimisation du point de départ pour l'algorithme rsl.
+- `start_hk` : Optimisation du point de départ pour l'algorithme hk!.
+- `epsilon_hk` : Optimisation du critère d'arrêt `epsilon` pour l'algorithme hk!.
+- `start_epsilon_hk` : Optimisation conjointe du point de départ et du critère d'arrêt pour hk!.
+
 """
 
 # ╔═╡ ab9964f8-856e-4fe9-bcab-914bd3102388
@@ -692,6 +697,171 @@ end
 ```
 """
 
+# ╔═╡ 551fad28-88c3-4bbf-8caf-43b03da0af4d
+md"""
+##### 6. Test unitaires dans le cas hk
+"""
+
+# ╔═╡ a35c7014-558e-459b-ace8-d2fce92f75cd
+
+
+# ╔═╡ d98814aa-3e8d-4ff0-9331-597834bda3e4
+md"""
+##### 7. Ajustement fin des paramètres de la fonction `hk`
+"""
+
+# ╔═╡ 9407504e-e6c8-4c67-a2ae-be38660c261f
+md"""La fonction `hk!` dépend du point de départ et du critère d'arret, c'est pour cela on va introduire les trois fonctions suvantes :""" 
+
+# ╔═╡ 3bc3f0ca-79f1-4ea1-857e-f41af555d46d
+md"""
+1. La fonction intérmédiaire `calculate_cost!` qui calcule le coût réel d'une tournée donné dans un graphe en se basant sur les poids originaux des arêtes.
+"""
+
+# ╔═╡ 52ad7565-310e-4878-9026-e145b645ce53
+md"""
+```julia
+function calculate_cost!(graph::Graph{T,S},filename::String) where {T,S}
+    G = create_graph(filename)
+    cost = 0
+    for edge in graph.Edges
+        edge_index=findfirst(x -> (x.node1.name == edge.node1.name && x.node2.name == edge.node2.name) || (x.node1.name == edge.node2.name && x.node2.name == edge.node1.name), G.Edges)
+        edge.data = G.Edges[edge_index].data
+        cost = cost + edge.data
+    end
+    cost
+end
+```
+"""
+
+# ╔═╡ d6b2309b-6226-4615-81c9-ddb2ff0f91e6
+md"""
+2. `finetuning_start_hk` : Détermine le meilleur nœud de départ pour l'algorithme `hk!` en fixant un critère d'arrêt donné.
+"""
+
+# ╔═╡ 8c10d4ae-274c-4002-b0d7-b24687d02ea1
+md"""
+```julia
+function finetuning_start_hk(filename::String, epsilon) 
+
+
+
+    # hk! change le graphe en entrée, 
+    # pour cela nous créeons le graphe à chacque fois
+    G = create_graph(filename)
+    n = length(G.Nodes)
+    Id = 1
+    Tournée, cost = hk!(G,1,epsilon) 
+    cost = calculate_cost!(Tournée,filename)
+    for idx in 2:n
+        G = create_graph(filename)
+        Tournée_old, cost_old = hk!(G,idx,epsilon)
+        cost_old = calculate_cost!(Tournée_old,filename)
+        if cost_old < cost
+            cost = cost_old
+            Tournée = Tournée_old
+            Id = idx
+        end
+    end
+    return Tournée, cost , Id
+end
+```
+"""
+
+# ╔═╡ 56855b17-968c-4b59-8458-741075577a72
+md"""
+3. `finetuning_epsilon_hk` : Détermine le meilleur critère d'arrêt `epsilon` parmi `list_epsilon` pour l'algorithme `hk!`, en fixant le nœud de départ dont l'indice est `idx`.
+"""
+
+# ╔═╡ 366584af-f2ba-4773-a095-44fb6f90ee49
+md"""
+```julia
+function finetuning_epsilon_hk(filename::String, idx, list_epsilon)
+
+
+    G = create_graph(filename)
+    Tournée, cost = hk!(G,idx,list_epsilon[1])
+    cost = calculate_cost!(Tournée,filename)
+    eps = list_epsilon[1]
+    for k in 2:length(list_epsilon) 
+        G = create_graph(filename)
+        Tournée_old, cost_old = hk!(G,idx,list_epsilon[k])
+        cost_old = calculate_cost!(Tournée_old,filename)
+        if cost_old < cost
+            cost = cost_old
+            Tournée = Tournée_old
+            eps = list_epsilon[k]
+        end
+    end
+    return Tournée, cost , eps
+end
+```
+"""
+
+# ╔═╡ bf7647d9-a946-4271-b80b-6672a1a89778
+md"""
+4. `finetuning_start_epsilon_hk` : Explore tous les nœuds de départ et tous les critères d'arrêt pour déterminer la meilleure combinaison pour l'algorithme `hk!`.
+"""
+
+# ╔═╡ 5adfea69-3dae-4744-9d59-491ae1ce8db5
+md"""
+```julia
+function finetuning_start_epsilon_hk(filename::String, list_epsilon)
+
+
+    G = create_graph(filename)
+    n = length(G.Nodes)
+    Tournée, cost = hk!(G,1,list_epsilon[1])
+    cost = calculate_cost!(Tournée,filename)
+    eps = list_epsilon[1]
+    Id = 1
+    for k in 1:length(list_epsilon) 
+        for idx in 1:n
+            G = create_graph(filename)
+            Tournée_old, cost_old = hk!(G,idx,list_epsilon[k])
+            cost_old = calculate_cost!(Tournée_old,filename)
+            if cost_old < cost
+                cost = cost_old
+                Tournée = Tournée_old
+                eps = list_epsilon[k]
+                Id  = idx 
+            end
+        end
+    end
+    return Tournée, cost , eps, Id
+end
+```
+"""
+
+# ╔═╡ 279b74b5-8d3f-4676-a1c4-a89f84e2830c
+md"""
+##### 8. Résultats""" 
+
+# ╔═╡ 488aacc1-a3fb-4960-8014-830736925ee8
+md"""Pour afficher les résultats, nous allons utiliser la fonction `main`, déjà introduite, pour afficher les résultats. Nous allons utiliser trois fichiers `.tsp` pour tester les trois fonctions d'ajustement.
+""" 
+
+# ╔═╡ 70a7948c-95c2-4bac-9f25-1f3411e4ed9a
+md"""
+```julia
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+```
+"""
+
+# ╔═╡ 5132072b-15e4-47a1-885a-82fdbc41c740
+md"""
+```julia
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+```
+"""
+
+# ╔═╡ 8c234e56-24fb-40e7-8a75-7d90be1a9f77
+md"""
+```julia
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+```
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -742,7 +912,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─c5a3aabd-1786-48fc-ba37-4fac672248cb
 # ╟─d50e2d9f-7839-4648-9731-b95d19043c75
 # ╟─127a54e2-838f-4ee8-b7db-cfbceec47e48
-# ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
+# ╠═9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
@@ -773,5 +943,22 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─a5d12422-a0d9-4741-963c-a38450c347d7
 # ╟─1af51dff-d647-41a6-aa32-a84a35e3b054
 # ╟─ce87222b-1a28-4696-a784-7c72d5274a19
+# ╟─551fad28-88c3-4bbf-8caf-43b03da0af4d
+# ╠═a35c7014-558e-459b-ace8-d2fce92f75cd
+# ╟─d98814aa-3e8d-4ff0-9331-597834bda3e4
+# ╟─9407504e-e6c8-4c67-a2ae-be38660c261f
+# ╟─3bc3f0ca-79f1-4ea1-857e-f41af555d46d
+# ╟─52ad7565-310e-4878-9026-e145b645ce53
+# ╟─d6b2309b-6226-4615-81c9-ddb2ff0f91e6
+# ╟─8c10d4ae-274c-4002-b0d7-b24687d02ea1
+# ╟─56855b17-968c-4b59-8458-741075577a72
+# ╟─366584af-f2ba-4773-a095-44fb6f90ee49
+# ╟─bf7647d9-a946-4271-b80b-6672a1a89778
+# ╟─5adfea69-3dae-4744-9d59-491ae1ce8db5
+# ╟─279b74b5-8d3f-4676-a1c4-a89f84e2830c
+# ╠═488aacc1-a3fb-4960-8014-830736925ee8
+# ╟─70a7948c-95c2-4bac-9f25-1f3411e4ed9a
+# ╟─5132072b-15e4-47a1-885a-82fdbc41c740
+# ╟─8c234e56-24fb-40e7-8a75-7d90be1a9f77
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

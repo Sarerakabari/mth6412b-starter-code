@@ -1,6 +1,5 @@
 include("../phase1/graph.jl")
 """Type abstrait d'un weighted_node."""
-export weighted_node, weighted_node, priority, priority!
 abstract type Abstractweighted_node{T} end
 
 """Type weighted_node contentant 4 attributs : son nom (de type String), le noeud en lui-même (de type Node{T})
