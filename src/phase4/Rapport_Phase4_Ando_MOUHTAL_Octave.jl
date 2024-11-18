@@ -838,27 +838,309 @@ md"""
 ##### 8. Résultats""" 
 
 # ╔═╡ 488aacc1-a3fb-4960-8014-830736925ee8
-md"""Pour afficher les résultats, nous allons utiliser la fonction `main`, déjà introduite, pour afficher les résultats. Nous allons utiliser trois fichiers `.tsp` pour tester les trois fonctions d'ajustement.
+md"""Pour afficher les résultats, nous allons utiliser la fonction `main`, déjà introduite. Nous allons utiliser trois fichiers `.tsp` pour tester les trois fonctions d'ajustement.
 """ 
+
+# ╔═╡ b3c124a2-ff5e-4700-87bc-6dcc3f570341
+md"""
+#### A.
+"""
 
 # ╔═╡ 70a7948c-95c2-4bac-9f25-1f3411e4ed9a
 md"""
 ```julia
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr17.tsp", "start_hk")
 ```
+"""
+
+# ╔═╡ 27b13c66-d958-418a-a7fe-166e04b0a48b
+md"""
+###### Résultat
+"""
+
+# ╔═╡ 444562fa-bb46-475f-84ca-a9e97fbc5a5a
+md"""
+```julia
+Le coût de la tournée est :  2206.0
+La tournée est composée par:
+Graph Tournée has 17 nodes and 17 Edges
+ Nodes are 
+Node 1, data: Float64[]
+Node 7, data: Float64[]
+Node 8, data: Float64[]
+Node 6, data: Float64[]
+Node 14, data: Float64[]
+Node 15, data: Float64[]
+Node 10, data: Float64[]
+Node 2, data: Float64[]
+Node 5, data: Float64[]
+Node 11, data: Float64[]
+Node 3, data: Float64[]
+Node 17, data: Float64[]
+Node 4, data: Float64[]
+Node 16, data: Float64[]
+Node 12, data: Float64[]
+Node 9, data: Float64[]
+Node 13, data: Float64[]
+ Edges are 
+Edge (1, 7) bounds 1 and 7,his weight is 80.0
+Edge (7, 8) bounds 7 and 8,his weight is 29.0
+Edge (6, 8) bounds 6 and 8,his weight is 34.0
+Edge (6, 14) bounds 6 and 14,his weight is 105.0
+Edge (14, 15) bounds 14 and 15,his weight is 57.0
+Edge (10, 15) bounds 10 and 15,his weight is 240.0
+Edge (2, 10) bounds 2 and 10,his weight is 289.0
+Edge (2, 5) bounds 2 and 5,his weight is 227.0
+Edge (5, 11) bounds 5 and 11,his weight is 61.0
+Edge (3, 11) bounds 3 and 11,his weight is 110.0
+Edge (3, 17) bounds 3 and 17,his weight is 142.0
+Edge (4, 17) bounds 4 and 17,his weight is 84.0
+Edge (4, 16) bounds 4 and 16,his weight is 237.0
+Edge (12, 16) bounds 12 and 16,his weight is 157.0
+Edge (9, 12) bounds 9 and 12,his weight is 95.0
+Edge (9, 13) bounds 9 and 13,his weight is 189.0
+Edge (1, 13) bounds 1 and 13,his weight is 70.0
+md
+```
+"""
+
+# ╔═╡ 18bc1596-da39-41a1-8555-aabd696b07c0
+md"""
+Il faut bien noter que dans la fonction `main`, on fixe epsilon à 1e-1, c'est-à-dire ; `finetuning_start_hk(filename, 1e-1)`. Le résultat montre que la tournée a un coût de 2206.0, qui est proche du coût réel de la tournée minimale, qui est 2085.
+"""
+
+# ╔═╡ 8bc86510-bceb-44ff-8985-043838319cb2
+md"""
+#### B.
 """
 
 # ╔═╡ 5132072b-15e4-47a1-885a-82fdbc41c740
 md"""
 ```julia
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "epsilon_hk")
 ```
+"""
+
+# ╔═╡ 949dfaa1-eace-4668-b35d-32eac5091e40
+md"""
+###### Résultat
+"""
+
+# ╔═╡ 13875d24-86af-4c95-b748-ad5efd0b15a6
+md"""
+```julia
+Le coût de la tournée est :  1616.0
+La tournée est composée par:
+Graph Tournée has 24 nodes and 24 Edges
+ Nodes are 
+Node 1, data: Float64[]
+Node 12, data: Float64[]
+Node 4, data: Float64[]
+Node 23, data: Float64[]
+Node 9, data: Float64[]
+Node 13, data: Float64[]
+Node 14, data: Float64[]
+Node 20, data: Float64[]
+Node 2, data: Float64[]
+Node 15, data: Float64[]
+Node 19, data: Float64[]
+Node 22, data: Float64[]
+Node 18, data: Float64[]
+Node 10, data: Float64[]
+Node 5, data: Float64[]
+Node 21, data: Float64[]
+Node 3, data: Float64[]
+Node 11, data: Float64[]
+Node 16, data: Float64[]
+Node 8, data: Float64[]
+Node 7, data: Float64[]
+Node 17, data: Float64[]
+Node 6, data: Float64[]
+Node 24, data: Float64[]
+ Edges are 
+Edge (1, 12) bounds 1 and 12,his weight is 70.0
+Edge (4, 12) bounds 4 and 12,his weight is 27.0
+Edge (4, 23) bounds 4 and 23,his weight is 108.0
+Edge (9, 23) bounds 9 and 23,his weight is 71.0
+Edge (9, 13) bounds 9 and 13,his weight is 29.0
+Edge (13, 14) bounds 13 and 14,his weight is 97.0
+Edge (14, 20) bounds 14 and 20,his weight is 69.0
+Edge (2, 20) bounds 2 and 20,his weight is 43.0
+Edge (2, 15) bounds 2 and 15,his weight is 50.0
+Edge (15, 19) bounds 15 and 19,his weight is 68.0
+Edge (19, 22) bounds 19 and 22,his weight is 46.0
+Edge (18, 22) bounds 18 and 22,his weight is 40.0
+Edge (10, 18) bounds 10 and 18,his weight is 116.0
+Edge (5, 10) bounds 5 and 10,his weight is 40.0
+Edge (5, 21) bounds 5 and 21,his weight is 32.0
+Edge (3, 21) bounds 3 and 21,his weight is 76.0
+Edge (3, 11) bounds 3 and 11,his weight is 49.0
+Edge (11, 16) bounds 11 and 16,his weight is 84.0
+Edge (8, 16) bounds 8 and 16,his weight is 58.0
+Edge (7, 8) bounds 7 and 8,his weight is 22.0
+Edge (7, 17) bounds 7 and 17,his weight is 121.0
+Edge (6, 17) bounds 6 and 17,his weight is 150.0
+Edge (6, 24) bounds 6 and 24,his weight is 29.0
+Edge (1, 24) bounds 1 and 24,his weight is 121.0
+```
+"""
+
+# ╔═╡ 1a5e302c-5742-436b-ae8d-61d45e129043
+md"""
+Il faut bien noter que dans la fonction `main`, on fixe l'indice du noeud initiale à 1, c'est-à-dire ; `finetuning_epsilon_hk(filename,1,list_eps)` et `list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]`. Le résultat montre que la tournée a un coût de 1616.0, qui est acceptable comme résulat puisque le coût réel de la tournée minimale est 1272.0. Le résultat peut etre améliorer en utilisant `finetuning_start_epsilon_hk` qui donne une valeur de 1336.0.
+"""
+
+# ╔═╡ b5ff5622-5bea-47ee-917b-14fc6b656daf
+md"""
+#### C.
 """
 
 # ╔═╡ 8c234e56-24fb-40e7-8a75-7d90be1a9f77
 md"""
 ```julia
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/dantzig42.tsp", "start_epsilon_hk")
+```
+"""
+
+# ╔═╡ cc3f5e0a-7ed9-4540-b434-754d13f6d223
+md"""
+###### Résultat
+"""
+
+# ╔═╡ c74dab06-a017-4ecc-acbc-f691dc3e2c4b
+md"""
+```julia
+Le coût de la tournée est :  827.0
+La tournée est composée par:
+Graph Tournée has 42 nodes and 42 Edges
+ Nodes are 
+Node 24, data: [88.0, 65.0]
+Node 25, data: [99.0, 67.0]
+Node 9, data: [117.0, 74.0]
+Node 3, data: [133.0, 73.0]
+Node 2, data: [166.0, 88.0]
+Node 1, data: [170.0, 85.0]
+Node 41, data: [172.0, 82.0]
+Node 42, data: [174.0, 87.0]
+Node 40, data: [158.0, 61.0]
+Node 39, data: [157.0, 54.0]
+Node 38, data: [154.5, 45.0]
+Node 37, data: [147.5, 36.0]
+Node 36, data: [147.0, 18.0]
+Node 35, data: [135.0, 32.0]
+Node 34, data: [125.0, 30.0]
+Node 31, data: [112.0, 37.0]
+Node 30, data: [104.0, 35.0]
+Node 32, data: [112.0, 24.0]
+Node 33, data: [113.0, 13.0]
+Node 28, data: [83.0, 38.0]
+Node 29, data: [85.0, 25.0]
+Node 5, data: [142.0, 55.0]
+Node 4, data: [140.0, 70.0]
+Node 8, data: [119.0, 68.0]
+Node 7, data: [125.0, 60.0]
+Node 6, data: [126.0, 53.0]
+Node 10, data: [99.0, 83.0]
+Node 11, data: [73.0, 79.0]
+Node 12, data: [72.0, 91.0]
+Node 13, data: [37.0, 94.0]
+Node 14, data: [6.0, 106.0]
+Node 15, data: [3.0, 97.0]
+Node 16, data: [21.0, 82.0]
+Node 17, data: [33.0, 67.0]
+Node 18, data: [4.0, 66.0]
+Node 19, data: [3.0, 42.0]
+Node 20, data: [27.0, 33.0]
+Node 21, data: [52.0, 41.0]
+Node 23, data: [58.0, 66.0]
+Node 22, data: [57.0, 59.0]
+Node 27, data: [89.0, 55.0]
+Node 26, data: [95.0, 55.0]
+ Edges are 
+Edge (24, 25) bounds 24 and 25,his weight is 8.0
+Edge (9, 25) bounds 9 and 25,his weight is 21.0
+Edge (3, 9) bounds 3 and 9,his weight is 20.0
+Edge (2, 3) bounds 2 and 3,his weight is 45.0
+Edge (1, 2) bounds 1 and 2,his weight is 8.0
+Edge (1, 41) bounds 1 and 41,his weight is 3.0
+Edge (41, 42) bounds 41 and 42,his weight is 6.0
+Edge (40, 42) bounds 40 and 42,his weight is 32.0
+Edge (39, 40) bounds 39 and 40,his weight is 6.0
+Edge (38, 39) bounds 38 and 39,his weight is 9.0
+Edge (37, 38) bounds 37 and 38,his weight is 12.0
+Edge (36, 37) bounds 36 and 37,his weight is 17.0
+Edge (35, 36) bounds 35 and 36,his weight is 18.0
+Edge (34, 35) bounds 34 and 35,his weight is 9.0
+Edge (31, 34) bounds 31 and 34,his weight is 14.0
+Edge (30, 31) bounds 30 and 31,his weight is 8.0
+Edge (30, 32) bounds 30 and 32,his weight is 15.0
+Edge (32, 33) bounds 32 and 33,his weight is 11.0
+Edge (28, 33) bounds 28 and 33,his weight is 40.0
+Edge (28, 29) bounds 28 and 29,his weight is 12.0
+Edge (5, 29) bounds 5 and 29,his weight is 66.0
+Edge (4, 5) bounds 4 and 5,his weight is 15.0
+Edge (4, 8) bounds 4 and 8,his weight is 20.0
+Edge (7, 8) bounds 7 and 8,his weight is 10.0
+Edge (6, 7) bounds 6 and 7,his weight is 6.0
+Edge (6, 10) bounds 6 and 10,his weight is 41.0
+Edge (10, 11) bounds 10 and 11,his weight is 23.0
+Edge (11, 12) bounds 11 and 12,his weight is 11.0
+Edge (12, 13) bounds 12 and 13,his weight is 40.0
+Edge (13, 14) bounds 13 and 14,his weight is 35.0
+Edge (14, 15) bounds 14 and 15,his weight is 10.0
+Edge (15, 16) bounds 15 and 16,his weight is 27.0
+Edge (16, 17) bounds 16 and 17,his weight is 21.0
+Edge (17, 18) bounds 17 and 18,his weight is 31.0
+Edge (18, 19) bounds 18 and 19,his weight is 26.0
+Edge (19, 20) bounds 19 and 20,his weight is 22.0
+Edge (20, 21) bounds 20 and 21,his weight is 30.0
+Edge (21, 23) bounds 21 and 23,his weight is 27.0
+Edge (22, 23) bounds 22 and 23,his weight is 5.0
+Edge (22, 27) bounds 22 and 27,his weight is 32.0
+Edge (26, 27) bounds 26 and 27,his weight is 3.0
+Edge (24, 26) bounds 24 and 26,his weight is 12.0
+```
+"""
+
+# ╔═╡ 2f209160-1b34-4de1-a8e8-df13e83ea2be
+md"""
+Le résultat montre que la tournée a un coût de 827.0, qui est bon comme résulat puisque le coût réel de la tournée minimale est 699. Le résultat peut etre améliorer en utilisant plus de valeur possible dans la liste `list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]`.
+"""
+
+# ╔═╡ 2ab19f77-aafc-4692-9318-df059c49c55e
+
+
+# ╔═╡ 6556cbb7-2613-44c9-bf20-079d9f4b5703
+md"""
+#### Appendix.
+"""
+
+# ╔═╡ e0cc320f-2edf-45a7-865a-0fa42f03f4f5
+md"""
+La fonction `visualize_graph` permet de créer une visualisation graphique d'un graphe en utilisant les bibliothèques Graphs.jl et GraphPlot.jl. Pour cela, il faut installer les bibliothèques adéquates.
+"""
+
+# ╔═╡ 7f590224-6dbc-4168-8e2f-6ce7919e571d
+md"""
+```julia
+function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where {T,S}
+    # Associer chaque nœud à un identifiant numérique pour Graphs.jl
+    node_to_index = Dict{Node{T}, Int}()
+    for (i, node) in enumerate(nodes)
+        node_to_index[node] = i
+    end
+
+    # Créer un graphe avec Graphs.jl
+    g = SimpleGraph(length(nodes))
+    for edge in edges
+        u = node_to_index[edge.node1]
+        v = node_to_index[edge.node2]
+        Graphs.add_edge!(g, u, v)
+    end
+
+    # Tracer le graphe avec GraphPlot.jl
+    gplot(g, layout = spring_layout,nodelabel = [node.name for node in nodes], NODESIZE=0.06)
+end
 ```
 """
 
@@ -917,7 +1199,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
 # ╟─4c326a3e-fc60-4732-b48f-9fb2146dce6e
-# ╟─ab9964f8-856e-4fe9-bcab-914bd3102388
+# ╠═ab9964f8-856e-4fe9-bcab-914bd3102388
 # ╟─1738d0e6-cab3-4e01-a99c-b490579071f5
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
 # ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
@@ -956,9 +1238,25 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─bf7647d9-a946-4271-b80b-6672a1a89778
 # ╟─5adfea69-3dae-4744-9d59-491ae1ce8db5
 # ╟─279b74b5-8d3f-4676-a1c4-a89f84e2830c
-# ╠═488aacc1-a3fb-4960-8014-830736925ee8
+# ╟─488aacc1-a3fb-4960-8014-830736925ee8
+# ╟─b3c124a2-ff5e-4700-87bc-6dcc3f570341
 # ╟─70a7948c-95c2-4bac-9f25-1f3411e4ed9a
+# ╟─27b13c66-d958-418a-a7fe-166e04b0a48b
+# ╟─444562fa-bb46-475f-84ca-a9e97fbc5a5a
+# ╟─18bc1596-da39-41a1-8555-aabd696b07c0
+# ╟─8bc86510-bceb-44ff-8985-043838319cb2
 # ╟─5132072b-15e4-47a1-885a-82fdbc41c740
+# ╟─949dfaa1-eace-4668-b35d-32eac5091e40
+# ╟─13875d24-86af-4c95-b748-ad5efd0b15a6
+# ╟─1a5e302c-5742-436b-ae8d-61d45e129043
+# ╟─b5ff5622-5bea-47ee-917b-14fc6b656daf
 # ╟─8c234e56-24fb-40e7-8a75-7d90be1a9f77
+# ╟─cc3f5e0a-7ed9-4540-b434-754d13f6d223
+# ╟─c74dab06-a017-4ecc-acbc-f691dc3e2c4b
+# ╟─2f209160-1b34-4de1-a8e8-df13e83ea2be
+# ╟─2ab19f77-aafc-4692-9318-df059c49c55e
+# ╟─6556cbb7-2613-44c9-bf20-079d9f4b5703
+# ╟─e0cc320f-2edf-45a7-865a-0fa42f03f4f5
+# ╟─7f590224-6dbc-4168-8e2f-6ce7919e571d
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
