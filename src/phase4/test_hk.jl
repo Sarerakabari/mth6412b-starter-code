@@ -1,13 +1,5 @@
 include("../phase1/main.jl")
-include("../phase3/node_priority.jl")
-include("../phase3/queue.jl")
-include("../phase3/kruskal_heuristic.jl")
-include("../phase3/prim.jl")
-include("../phase4/sub_graph.jl")
-include("../phase4/degrees.jl")
-include("../phase4/weigth_update.jl")
-include("../phase4/hk.jl")
-include("fix_tree.jl")
+
 
 using Test
 

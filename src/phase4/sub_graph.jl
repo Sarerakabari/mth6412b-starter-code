@@ -1,6 +1,5 @@
 include("../phase1/main.jl")
-include("../phase3/kruskal_heuristic.jl")
-include("../phase3/prim.jl")
+
 export one_tree
 """Création de 1-arbre pour l'algorithme hk!"""
 function one_tree(graph::Graph{T,S},idx::Int64)where {T,S}

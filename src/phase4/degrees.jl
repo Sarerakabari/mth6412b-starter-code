@@ -1,7 +1,4 @@
-include("../phase1/main.jl")
-include("../phase3/kruskal_heuristic.jl")
-include("../phase3/prim.jl")
-include("weighted_node.jl")
+
 export degrees
 
 """calcul de degrees de chaque noeud et le sous gradient"""
