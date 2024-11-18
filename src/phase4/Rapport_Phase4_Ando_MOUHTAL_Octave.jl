@@ -703,7 +703,103 @@ md"""
 """
 
 # ╔═╡ a35c7014-558e-459b-ace8-d2fce92f75cd
+md"""
+```
+Les tests unitaires dans le cas de hk! sont présents dans le fichier test_hk.jl. Nous avons implémenter les tests unitaires ci-dessous avec un exemple simple.
+```
+"""
 
+# ╔═╡ ca6c5680-4dd6-4162-9d94-ed9db27c17e3
+md"""
+```julia
+include("../phase1/main.jl")
+include("../phase3/node_priority.jl")
+include("../phase3/queue.jl")
+include("../phase3/kruskal_heuristic.jl")
+include("../phase3/prim.jl")
+include("../phase4/sub_graph.jl")
+include("../phase4/degrees.jl")
+include("../phase4/weigth_update.jl")
+include("../phase4/hk.jl")
+include("fix_tree.jl")
+
+using Test
+
+
+# Création des nœuds
+n1 = Node("A", [4])
+n2 = Node("B", [4])
+n3 = Node("C", [4])
+n4 = Node("D", [4])
+
+# Vecteur de nœuds
+N = [n1, n2, n3, n4]
+
+# Création des arêtes
+e1 = Edge("AB", 1, n1, n2)
+e2 = Edge("AC", 1, n1, n3)
+e3 = Edge("AD", 1, n1, n4)
+e4 = Edge("BC", 11, n2, n3)
+e5 = Edge("BD", 7, n2, n4)
+e6 = Edge("CD", 5, n3, n4)
+
+# Vecteur des arêtes
+E = [e1, e2, e3, e4, e5, e6]
+
+# Création du graphe complet
+G1 = Graph("small", N, E)
+
+# Création d'une arbre à partir de N
+E1 = [e1, e2, e3]
+
+# Création de l'arbre
+Tree = Graph("tree", N, E1)
+
+# Tester la fonction `parcours_preordre!`
+visited = Dict(node => false for node in N)
+ordre = Node{Vector{Int64}}[]
+parcours_preordre!(Tree, n2, visited, ordre)
+
+@test ordre[1] == n2
+@test ordre[2] == n1
+@test ordre[3] == n3
+@test ordre[4] == n4
+
+# Tester la fonction `fix_tree`
+T, C = fix_tree(G1, Tree, n1)
+@test C == 18
+T, C = fix_tree(G1, Tree, n2)
+@test C == 14
+T, C = fix_tree(G1, Tree, n3)
+@test C == 14
+T, C = fix_tree(G1, Tree, n4)
+@test C == 18
+
+# Tester `degrees`
+d, v_k, p, v = degrees(G1)
+@test length(d) == 4
+@test length(v_k) == 4
+@test p == [3, 3, 3, 3]
+@test v == [1, 1, 1, 1]
+
+# Tester `one_tree`
+one_tree_result, weight = one_tree(G1, 1)
+@test weight == 14  # Exemple attendu
+
+```
+"""
+
+# ╔═╡ 3d814941-0a5e-4456-90bf-71bb0bda0c78
+md"""
+###### Résulat
+"""
+
+# ╔═╡ 2de45b06-8614-468d-91e9-479322ad2f7c
+md"""
+```julia
+Test Passed
+```
+"""
 
 # ╔═╡ d98814aa-3e8d-4ff0-9331-597834bda3e4
 md"""
@@ -1194,7 +1290,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─c5a3aabd-1786-48fc-ba37-4fac672248cb
 # ╟─d50e2d9f-7839-4648-9731-b95d19043c75
 # ╟─127a54e2-838f-4ee8-b7db-cfbceec47e48
-# ╠═9d8d7cfe-a427-4d19-8bed-de8a921dafe2
+# ╟─9d8d7cfe-a427-4d19-8bed-de8a921dafe2
 # ╟─b63df5ba-fe18-4b68-b1b8-cc8aa46f7998
 # ╟─61b100da-3fd6-42d5-9676-fc3ee2d30ca6
 # ╟─b55a2239-968f-48df-a867-933efcb4b86e
@@ -1226,7 +1322,10 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 # ╟─1af51dff-d647-41a6-aa32-a84a35e3b054
 # ╟─ce87222b-1a28-4696-a784-7c72d5274a19
 # ╟─551fad28-88c3-4bbf-8caf-43b03da0af4d
-# ╠═a35c7014-558e-459b-ace8-d2fce92f75cd
+# ╟─a35c7014-558e-459b-ace8-d2fce92f75cd
+# ╟─ca6c5680-4dd6-4162-9d94-ed9db27c17e3
+# ╟─3d814941-0a5e-4456-90bf-71bb0bda0c78
+# ╟─2de45b06-8614-468d-91e9-479322ad2f7c
 # ╟─d98814aa-3e8d-4ff0-9331-597834bda3e4
 # ╟─9407504e-e6c8-4c67-a2ae-be38660c261f
 # ╟─3bc3f0ca-79f1-4ea1-857e-f41af555d46d
