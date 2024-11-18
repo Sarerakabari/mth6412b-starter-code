@@ -1,10 +1,4 @@
 include("../phase1/main.jl")
-include("../phase3/node_priority.jl")
-include("../phase3/queue.jl")
-include("../phase3/prim.jl")
-include("rsl.jl")
-include("hk.jl")
-include("finetuning.jl")
 include("visualise_graph.jl")
 
 list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
@@ -47,4 +41,4 @@ end
 #main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr17.tsp", "start_hk")
 #main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "epsilon_hk")
 #main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "start_epsilon_hk")
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/dantzig42.tsp", "start_epsilon_hk")
+main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/dantzig42.tsp", "start_epsilon_hk")

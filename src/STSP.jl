@@ -14,7 +14,6 @@ include("phase2/kruskal.jl")
 include("phase3/node_priority.jl")
 include("phase3/queue.jl")
 include("phase3/prim.jl")
-include("phase4/finetuning.jl")
 include("phase4/rsl.jl")
 include("phase4/degrees.jl")
 include("phase4/weighted_node.jl")
@@ -22,6 +21,7 @@ include("phase4/weigth_update.jl")
 include("phase4/sub_graph.jl")
 include("phase4/fix_tree.jl")
 include("phase4/hk.jl")
+include("phase4/finetuning.jl")
 
 
 end # module STSP
