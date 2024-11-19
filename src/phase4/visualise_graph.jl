@@ -2,21 +2,27 @@ using Graphs
 using GraphPlot
 export visualize_graph
 """Fonction pour afficher les graphes graphiquement"""
-function visualize_graph(nodes::Vector{Node{T}}, edges::Vector{Edge{T,S}}) where {T,S}
+function visualize_graph(graph::Graph{T,S}) where {T,S}
     # Associer chaque nœud à un identifiant numérique pour Graphs.jl
-    node_to_index = Dict{Node{T}, Int}()
-    for (i, node) in enumerate(nodes)
-        node_to_index[node] = i
-    end
-
-    # Créer un graphe avec Graphs.jl
-    g = SimpleGraph(length(nodes))
-    for edge in edges
-        u = node_to_index[edge.node1]
-        v = node_to_index[edge.node2]
-        Graphs.add_edge!(g, u, v)
-    end
-
-    # Tracer le graphe avec GraphPlot.jl
-    gplot(g, layout = spring_layout,nodelabel = [node.name for node in nodes], NODESIZE=0.06)
+    
+        fig = plot(legend=false)
+      
+        # edge positions
+        for edge in graph.Edges
+          
+            plot!([edge.node1.data[1], edge.node2.data[1]], [edge.node1.data[2], edge.node2.data[2]],
+                linewidth=1.5, alpha=0.75, color=:red)
+          
+        end
+        x=[]
+        y=[]
+        #node positions
+        for node in graph.Nodes
+        push!(x,node.data[1])
+        push!(y,node.data[2])
+        
+        end
+        scatter!(x, y)
+        fig
+    
 end
