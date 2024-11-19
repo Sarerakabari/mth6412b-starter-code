@@ -1,9 +1,5 @@
 include("../phase1/main.jl")
-include("../phase3/node_priority.jl")
-include("../phase3/queue.jl")
-include("../phase3/prim.jl")
-include("rsl.jl")
-include("finetuning.jl")
+
 using Test
 
 

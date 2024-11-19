@@ -38,7 +38,9 @@ function main(filename::String, finetunning::String)
 end
 
 
-main("c:/Users/Ando/Desktop/mth6412b-starte", "start_rsl")
-main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_hk")
-main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_epsilon_hk")
-main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/gr48.tsp", "start_epsilon_hk")
+#main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_rsl")
+#main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_hk")
+#main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "epsilon_hk")
+#main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_epsilon_hk")
+G = create_graph("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp")
+visualize_graph(G)
