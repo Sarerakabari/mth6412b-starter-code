@@ -1,5 +1,5 @@
 import Base.show
-include("../phase1/graph.jl")
+
 
 
 """Type abstrait d'un composant connexe: noeud enfant pointant vers le noeud parent ."""

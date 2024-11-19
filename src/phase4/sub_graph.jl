@@ -1,4 +1,4 @@
-include("../phase1/main.jl")
+
 
 export one_tree
 """Création de 1-arbre pour l'algorithme hk!"""

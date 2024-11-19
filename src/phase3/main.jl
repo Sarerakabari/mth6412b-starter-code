@@ -1,7 +1,5 @@
 
-include("../phase1/main.jl")
-include("kruskal_heuristic.jl")
-include("prim.jl")
+
 
 
 

@@ -1,9 +1,7 @@
 
+export create_graph
 
-include("read_stsp.jl")
-include("node.jl")
-include("Edge.jl")
-include("graph.jl")
+
 #Fonction qui construit un graph avec les données stsp
 
 function create_graph(filename::String)

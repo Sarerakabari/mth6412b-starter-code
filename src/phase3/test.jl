@@ -1,6 +1,5 @@
-include("queue.jl")
-include("prim.jl")
-include("kruskal_heuristic.jl")
+
+
 using Test
 #création de noeud
 n1=Node("A",[4])

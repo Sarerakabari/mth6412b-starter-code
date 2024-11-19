@@ -22,6 +22,7 @@ include("phase4/sub_graph.jl")
 include("phase4/fix_tree.jl")
 include("phase4/hk.jl")
 include("phase4/finetuning.jl")
+include("phase4/visualise_graph.jl")
 
 
 end # module STSP

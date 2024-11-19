@@ -1,9 +1,4 @@
 
-include("../phase1/main.jl")
-include("kruskal.jl")
-
-
-
 
 # Création du graphe à partir bayg29.tsp
 
