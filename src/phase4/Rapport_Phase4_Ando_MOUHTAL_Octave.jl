@@ -47,11 +47,11 @@ md""" Le lecteur peut fork le projet et lancer le fichier main.jl pour retrouver
 # ╔═╡ 2af66ac8-dee5-4c71-a29e-34797fe0acf9
 md"Les implementations ont été testé sur le graphe suivant:" 
 
-# ╔═╡ 34c653fc-2e79-4421-ac0f-abd00c768565
-
+# ╔═╡ 81a66347-cc8c-47b9-b7af-f2c54eb3b2f3
+md"bayg29.stp"
 
 # ╔═╡ 4d5e2107-5b83-4a38-9f35-79c94544ae52
-
+img6 = Images.load("C:/Users/Ando/Desktop/analyse/original.PNG")
 
 # ╔═╡ b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 md"""
@@ -312,7 +312,7 @@ md""" Code du programme principale : """
 # ╔═╡ 3e2249ce-2411-4ba4-bd18-033689e41ae2
 md"""
 ```julia
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/bayg29.tsp", "start_rsl")
+main("../../instances/stsp/bayg29.tsp", "start_rsl")
 ```
 """
 
@@ -393,18 +393,8 @@ Edge (11, 17) bounds 11 and 17,his weight is 106.0
 md"""Le coût de la tournée est de 2014, ce qui est inférieur au double du coût de la tournée minimale réelle, qui est de 1610.
 """
 
-# ╔═╡ 00d946ea-944b-4bab-945d-a29ddb6bb2ae
-# ╠═╡ disabled = true
-#=╠═╡
-using Plots
-
-  ╠═╡ =#
-
-# ╔═╡ 88e18b77-2492-4618-9e06-ecefc745d94a
-# ╠═╡ disabled = true
-#=╠═╡
-nœuds = 1:29  # Numéros de 1 à 29 pour les nœuds
-  ╠═╡ =#
+# ╔═╡ 172f1988-7b4e-4128-883c-6afe06a9bc95
+img2 = Images.load("C:/Users/Ando/Desktop/analyse/RSL.PNG")
 
 # ╔═╡ 93a5a055-410e-468b-ab4b-08dfd194b3df
 # ╠═╡ disabled = true
@@ -987,7 +977,7 @@ md"""
 # ╔═╡ 70a7948c-95c2-4bac-9f25-1f3411e4ed9a
 md"""
 ```julia
-main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_hk")
+main("../../instances/stsp/bayg29.tsp", "start_hk")
 ```
 """
 
@@ -1070,8 +1060,14 @@ md"""
 Il faut bien noter que dans la fonction `main`, on fixe epsilon à 1e-1, c'est-à-dire ; `finetuning_start_hk(filename, 1e-1)`. Le résultat montre que la tournée a un coût de 1888, qui est proche du coût réel de la tournée minimale, qui est 1610.
 """
 
+# ╔═╡ 7c92f634-aa75-42f7-a725-fb2a76228da0
+img1 = Images.load("C:/Users/Ando/Desktop/analyse/hk1.PNG")
+
 # ╔═╡ 08a57bea-667e-4a85-8ffb-c63b78ebadfe
 md" le graphe ci-dessous montre que l'estimation de la tournée est en fonction du noeud de départ"
+
+# ╔═╡ f4fc8eca-76a2-4530-a10b-27360f536647
+
 
 # ╔═╡ eb85bc3f-72e2-4726-a87a-ff58fff16309
 ### Étape 2 : Définir les données
@@ -1100,7 +1096,7 @@ md"""
 # ╔═╡ 5132072b-15e4-47a1-885a-82fdbc41c740
 md"""
 ```julia
-main("/Users/mouhtal/Desktop/mth6412b-starter-code-5/instances/stsp/gr24.tsp", "epsilon_hk")
+main(""../../instances/stsp/bayg29.tsp"", "epsilon_hk")
 ```
 """
 
@@ -1183,13 +1179,8 @@ md"""
 Il faut bien noter que dans la fonction `main`, on fixe l'indice du noeud initiale à 1, c'est-à-dire ; `finetuning_epsilon_hk(filename,1,list_eps)` et `list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]`. Le résultat montre que la tournée a un coût de 2107.0, qui est acceptable comme résulat puisque le coût réel de la tournée minimale est 1272.0. Le résultat peut etre améliorer en utilisant `finetuning_start_epsilon_hk` qui donne une valeur de 1610.
 """
 
-# ╔═╡ 7ae0c8cb-1fcd-430a-85c4-86370cf009f5
-plotly()  # Change de backend à Plotly
-
-# Données
-
-# ╔═╡ 33721180-9a4b-4988-a472-9c6acce9b998
-
+# ╔═╡ 02b26317-6b5a-4732-8094-5f8c43d6bf1b
+img3 = Images.load("C:/Users/Ando/Desktop/analyse/hk2.PNG")
 
 # ╔═╡ 7e03b37c-ff57-4205-bb75-1aa7b3b5e503
 x = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.01, 0.001, 0.0001, 1.0e-5, 1.0e-6, 1.0e-7]
@@ -1211,7 +1202,7 @@ md"""
 # ╔═╡ 8c234e56-24fb-40e7-8a75-7d90be1a9f77
 md"""
 ```julia
-main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "epsilon_hk")
+main("../../instances/stsp/bayg29.tsp", "epsilon_hk")
 ```
 """
 
@@ -1297,6 +1288,9 @@ Le résultat montre que la tournée a un coût de 1810.0, qui est bon comme rés
 # ╔═╡ 9f2d6cfb-f784-4c06-988e-a7b257cd69e2
 md" Nous pouvons voir qu'en modifiant le critère d'arrêt et le noeud de depart, il espossible dèavoir une solution qui est proche de la solution optimale."
 
+# ╔═╡ cdb19c4e-8ea8-470d-b071-c48dcbc0f5ef
+img8 = Images.load("C:/Users/Ando/Desktop/analyse/hk3.PNG")
+
 # ╔═╡ 59023187-a8a8-47aa-966c-2afd039849a5
 md"""
 #### C. Analyse Comparative rsl vs hk
@@ -1329,6 +1323,9 @@ md"""
 md"""
 #### Appendix.
 """
+
+# ╔═╡ 59c1d2fd-43f8-4abd-a755-8bac401510c2
+
 
 # ╔═╡ e0cc320f-2edf-45a7-865a-0fa42f03f4f5
 md"""
@@ -3238,9 +3235,9 @@ version = "1.4.1+1"
 # ╟─322e6e27-5af8-49b0-96f4-025bbf2403f4
 # ╟─063e8297-bc61-4bde-85d0-8f144185c6d3
 # ╠═2af66ac8-dee5-4c71-a29e-34797fe0acf9
+# ╟─81a66347-cc8c-47b9-b7af-f2c54eb3b2f3
 # ╠═bc95877b-6960-4a80-b269-6aa561ee1ec7
-# ╠═34c653fc-2e79-4421-ac0f-abd00c768565
-# ╠═4d5e2107-5b83-4a38-9f35-79c94544ae52
+# ╟─4d5e2107-5b83-4a38-9f35-79c94544ae52
 # ╟─b4aac71c-7ec4-41b6-8d85-02b8c3dc742d
 # ╟─d970b71a-1f3f-46c8-93ce-df35125d369a
 # ╟─8c4e3107-ac56-4e2a-a889-b199e7eb8547
@@ -3262,10 +3259,9 @@ version = "1.4.1+1"
 # ╟─3e2249ce-2411-4ba4-bd18-033689e41ae2
 # ╟─481cf377-6d0b-42c9-bdec-6ea229805ed0
 # ╟─63f51ecf-1760-4122-80ce-a0bf6a868b5c
-# ╠═7a309c85-33b9-4ce1-85de-536cf26eddf9
-# ╟─00d946ea-944b-4bab-945d-a29ddb6bb2ae
-# ╟─88e18b77-2492-4618-9e06-ecefc745d94a
-# ╟─93a5a055-410e-468b-ab4b-08dfd194b3df
+# ╟─7a309c85-33b9-4ce1-85de-536cf26eddf9
+# ╠═172f1988-7b4e-4128-883c-6afe06a9bc95
+# ╠═93a5a055-410e-468b-ab4b-08dfd194b3df
 # ╟─c57de4cb-c55f-41fd-ac7a-cfce0fa64c9d
 # ╠═82bcd2ce-e3ff-49cc-a76b-87e5699eddc4
 # ╠═312cd7cc-0fde-4ee3-95b9-455c64557a0c
@@ -3293,7 +3289,7 @@ version = "1.4.1+1"
 # ╟─a35c7014-558e-459b-ace8-d2fce92f75cd
 # ╟─ca6c5680-4dd6-4162-9d94-ed9db27c17e3
 # ╟─3d814941-0a5e-4456-90bf-71bb0bda0c78
-# ╠═2de45b06-8614-468d-91e9-479322ad2f7c
+# ╟─2de45b06-8614-468d-91e9-479322ad2f7c
 # ╟─d98814aa-3e8d-4ff0-9331-597834bda3e4
 # ╟─9407504e-e6c8-4c67-a2ae-be38660c261f
 # ╟─3bc3f0ca-79f1-4ea1-857e-f41af555d46d
@@ -3311,7 +3307,9 @@ version = "1.4.1+1"
 # ╟─27b13c66-d958-418a-a7fe-166e04b0a48b
 # ╟─444562fa-bb46-475f-84ca-a9e97fbc5a5a
 # ╟─18bc1596-da39-41a1-8555-aabd696b07c0
+# ╟─7c92f634-aa75-42f7-a725-fb2a76228da0
 # ╟─08a57bea-667e-4a85-8ffb-c63b78ebadfe
+# ╠═f4fc8eca-76a2-4530-a10b-27360f536647
 # ╟─eb85bc3f-72e2-4726-a87a-ff58fff16309
 # ╟─2d2fbb0b-890d-4474-8b15-91576e7bfbad
 # ╟─163d4c61-6c74-4250-85fd-2f9a581a8447
@@ -3320,11 +3318,10 @@ version = "1.4.1+1"
 # ╟─949dfaa1-eace-4668-b35d-32eac5091e40
 # ╟─13875d24-86af-4c95-b748-ad5efd0b15a6
 # ╟─1a5e302c-5742-436b-ae8d-61d45e129043
+# ╟─02b26317-6b5a-4732-8094-5f8c43d6bf1b
 # ╠═4593e854-0035-478a-9e04-b4dbbc05dc60
-# ╟─7ae0c8cb-1fcd-430a-85c4-86370cf009f5
-# ╠═33721180-9a4b-4988-a472-9c6acce9b998
-# ╠═7e03b37c-ff57-4205-bb75-1aa7b3b5e503
-# ╠═e00372c2-6f0a-41ba-ae7e-ae87771a23f8
+# ╟─7e03b37c-ff57-4205-bb75-1aa7b3b5e503
+# ╟─e00372c2-6f0a-41ba-ae7e-ae87771a23f8
 # ╟─8e4369ca-0fb9-4d64-b935-06d10ebbaa2c
 # ╟─b5ff5622-5bea-47ee-917b-14fc6b656daf
 # ╟─8c234e56-24fb-40e7-8a75-7d90be1a9f77
@@ -3332,12 +3329,14 @@ version = "1.4.1+1"
 # ╟─c74dab06-a017-4ecc-acbc-f691dc3e2c4b
 # ╟─2f209160-1b34-4de1-a8e8-df13e83ea2be
 # ╟─9f2d6cfb-f784-4c06-988e-a7b257cd69e2
+# ╟─cdb19c4e-8ea8-470d-b071-c48dcbc0f5ef
 # ╟─59023187-a8a8-47aa-966c-2afd039849a5
 # ╟─2ab19f77-aafc-4692-9318-df059c49c55e
 # ╟─b433fa78-05c7-4aa0-909a-697474482e71
 # ╟─46be280e-14f1-4b72-943f-4cb3cac347a0
 # ╟─6556cbb7-2613-44c9-bf20-079d9f4b5703
-# ╠═e0cc320f-2edf-45a7-865a-0fa42f03f4f5
+# ╟─59c1d2fd-43f8-4abd-a755-8bac401510c2
+# ╟─e0cc320f-2edf-45a7-865a-0fa42f03f4f5
 # ╟─7f590224-6dbc-4168-8e2f-6ce7919e571d
 # ╠═b0a83a2e-46fa-4cc7-aa16-9d9e78db875d
 # ╟─00000000-0000-0000-0000-000000000001
