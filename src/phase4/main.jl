@@ -1,5 +1,5 @@
 
-
+using STSP
 
 list_eps = [1e-1,2*1e-1, 3*1e-1, 4*1e-1, 5*1e-1,6*1e-1,7*1e-1, 8*1e-1, 9*1e-1,1e-2,1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
 
@@ -37,9 +37,9 @@ function main(filename::String, finetunning::String)
 end
 
 
-main("../../instances/stsp/bayg29.tsp", "start_rsl")
-main("../../instances/stsp/bayg29.tsp", "start_hk")
-#main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_rsl")
+#main("../../instances/stsp/bayg29.tsp", "start_rsl")
+#main("../../instances/stsp/bayg29.tsp", "start_hk")
+main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_rsl")
 #main("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp", "start_epsilon_hk")
 #G = create_graph("c:/Users/Ando/Desktop/mth6412b-starter-code/instances/stsp/bayg29.tsp")
 #visualize_graph(G)
