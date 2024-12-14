@@ -1,5 +1,4 @@
-include("node_pointer.jl")
-include("kruskal.jl")
+
 using Test
 #création de noeud
 n1=Node("A",[4])

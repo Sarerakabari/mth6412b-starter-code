@@ -1,4 +1,4 @@
-include("../phase1/graph.jl")
+
 """Type abstrait d'un weighted_node."""
 abstract type Abstractweighted_node{T} end
 

@@ -1,5 +1,4 @@
-include("../phase1/main.jl")
-include("weighted_node.jl")
+
 export weigth_update!
 """ Mise à jour des poides des arretes d'un graphe """
 function weigth_update!(graph::Graph{T,S},pi_k::Vector{weighted_node{T}})where {T,S}

@@ -1,9 +1,5 @@
-include("../phase1/main.jl")
-include("../phase3/node_priority.jl")
-include("../phase3/queue.jl")
-include("../phase3/prim.jl")
-include("rsl.jl")
-include("finetuning.jl")
+
+
 using Test
 
 
@@ -52,11 +48,11 @@ parcours_preordre!(Tree, n2, visited,ordre)
 
 #Tester la fonction rsl
 
-T,C = rsl(G1,n1)
+T,C = rsl(G1,1)
 @test C == 18
-T,C = rsl(G1,n2)
+T,C = rsl(G1,2)
 @test C == 14
-T,C = rsl(G1,n3)
+T,C = rsl(G1,3)
 @test C == 14
-T,C = rsl(G1,n4)
+T,C = rsl(G1,4)
 @test C == 18

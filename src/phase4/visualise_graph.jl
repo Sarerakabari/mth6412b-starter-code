@@ -1,6 +1,7 @@
-using Graphs
-using GraphPlot
+
 export visualize_graph
+
+
 """Fonction pour afficher les graphes graphiquement"""
 function visualize_graph(graph::Graph{T,S}) where {T,S}
     # Associer chaque nœud à un identifiant numérique pour Graphs.jl
