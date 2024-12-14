@@ -71,6 +71,9 @@ On convertit ensuite weight au format convenable pour write_tour, et on se sert 
 La fonction write_tour crée un fichier de tournée minimale dans notre dossier, et on utilise reconstruct_picture pour reconstruire une image.
 Mais on n'y arrive pas, on a un problème notamment de Out of Bounds à cause du noeud 0 qui est rajouté selon l'énoncé mais supprimé nulle part (pas précisé dans tools).
 
+Aussi cela marchait mieux quand on n'utilisait pas ce main directement mais qu'on donnait ces informations dans un terminal, probablement à cause de soucis liés au module STSP ou aux includes.
+
+
 """
 
 # ╔═╡ 61a04b84-efc9-44a4-aeb6-d31d897396f7
