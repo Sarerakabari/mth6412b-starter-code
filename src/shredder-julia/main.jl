@@ -33,7 +33,7 @@ for file in readdir(tsp_folder)
         weight=Float32(weight)
         node_ids = [parse(Int, node.name) for node in tournee]
 
-        write_tour(filename,tournee,weight) # Ecriture du fichier .tour de la tournée correspondante
+        write_tour(filename,node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
 
         # Nom du fichier d'image d'entrée
         input_image = "$filename.png"
