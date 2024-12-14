@@ -22,6 +22,7 @@ include("phase4/sub_graph.jl")
 include("phase4/fix_tree.jl")
 include("phase4/hk.jl")
 include("phase4/finetuning.jl")
+include("shredder-julia/bin/tools.jl")
 
 
 end # module STSP
