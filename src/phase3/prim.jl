@@ -21,7 +21,9 @@ function prim(graph::Graph{T,S},start::Node{T}) where {T,S}
 
     #initialisation de la file de priorité 
     for node in graph.Nodes
-        if node == start
+        if node == graph.Nodes[1]
+            continue
+        elseif node == start
             push!(Q,priority!(node_priority(node),0))
         else
             push!(Q,node_priority(node))

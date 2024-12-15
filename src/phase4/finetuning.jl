@@ -20,9 +20,9 @@ function finetuning_start_rsl(filename::String)
 
     G = create_graph(filename)
     n = length(G.Nodes)
-    Id = 1
-    Tournée, cost = rsl(G,1) 
-    for idx in 2:n
+    Id = 2
+    Tournée, cost = rsl(G,2) 
+    for idx in 3:n
         Tournée_old, cost_old = rsl(G,idx)
         if cost_old < cost
             cost = cost_old

@@ -19,15 +19,20 @@ include("../phase4/finetuning.jl")
 include("bin/tools.jl")
 
 
-#graph=create_graph("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/shredder-julia/tsp/instances/blue-hour-paris.tsp")
-#tournee,weight=rsl(graph,190) # Utilisation de l'algorithme rsl pour trouver une tournée minimale
-tournee,weight,_=finetuning_start_rsl("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/shredder-julia/tsp/instances/blue-hour-paris.tsp")
-tournee=tournee.Nodes
-weight=Float32(weight)
-node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
-write_tour("blue-paris-after.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
+     shuffled_filepath::String, id::Int)
 
-# Nom du fichier d'image d'entrée
-#tour_filename = "/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/shredder-julia/tsp/tours/blue-hour-paris.tour"
-tour_filename = "/Users/mouhtal/Desktop/mth6412b-starter-code-6/blue-paris-after.tour"
-reconstruct_picture(tour_filename,"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/shredder-julia/images/shuffled/blue-hour-paris.png","blue-paris-finale.png", view = true)
+    graph = create_graph(tsp_filepath)
+    tournee,weight=rsl(graph, id)
+    tournee=tournee.Nodes
+    weight=Float32(weight)
+    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
+    write_tour("tokyo-skytree-aerial-finale.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale.tour",shuffled_filepath,"the-enchanted-garden-finale.png", view = true)
+
+end
+
+rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/tokyo-skytree-aerial.tsp",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/tokyo-skytree-aerial.tour",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/tokyo-skytree-aerial.png",
+120)
