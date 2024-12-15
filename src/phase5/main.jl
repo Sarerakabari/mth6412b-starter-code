@@ -1,23 +1,24 @@
-include("../phase1/node.jl")
-include("../phase1/Edge.jl")
-include("../phase1/graph.jl")
-include("../phase1/read_stsp.jl")
-include("../phase1/create_graph.jl")
-include("../phase2/node_pointer.jl")
-include("../phase2/kruskal.jl")
-include("../phase3/node_priority.jl")
-include("../phase3/queue.jl")
-include("../phase3/prim.jl")
-include("../phase4/rsl.jl")
-include("../phase4/degrees.jl")
-include("../phase4/weighted_node.jl")
-include("../phase4/weigth_update.jl")
-include("../phase4/sub_graph.jl")
-include("../phase4/fix_tree.jl")
-include("../phase4/hk.jl")
-include("../phase4/finetuning.jl")
-include("bin/tools.jl")
+#include("../phase1/node.jl")
+#include("../phase1/Edge.jl")
+#include("../phase1/graph.jl")
+#include("../phase1/read_stsp.jl")
+#include("../phase1/create_graph.jl")
+#include("../phase2/node_pointer.jl")
+#include("../phase2/kruskal.jl")
+#include("../phase3/node_priority.jl")
+#include("../phase3/queue.jl")
+#include("../phase3/prim.jl")
+#include("../phase4/rsl.jl")
+#include("../phase4/degrees.jl")
+#include("../phase4/weighted_node.jl")
+#include("../phase4/weigth_update.jl")
+#include("../phase4/sub_graph.jl")
+#include("../phase4/fix_tree.jl")
+#include("../phase4/hk.jl")
+#include("../phase4/finetuning.jl")
+#include("bin/tools.jl")
 
+using STSP
 
 
 """Reconstruire les images à l'aide de rsl
@@ -38,6 +39,8 @@ function rsl_reconstruct(tsp_filepath::String,
     tournee,weight=rsl(graph, id)
     tournee=tournee.Nodes
     weight=Float32(weight)
+    println(weight)
+
     # Ajout de l'indice premier noeud
     node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
     write_tour("finale-rsl.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
@@ -45,9 +48,9 @@ function rsl_reconstruct(tsp_filepath::String,
 
 end
 
-#rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/abstract-light-painting.tsp",
-#"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/abstract-light-painting.png",
-#20)
+rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png",
+500)
 
 """Reconstruire les images à l'aide de hk
 args:
@@ -67,6 +70,7 @@ function hk_reconstruct(tsp_filepath::String,
    tournee,weight=hk!(graph, id, 0.5)
    tournee=tournee.Nodes
    weight=Float32(weight)
+   println(weight)
    # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
    write_tour("finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
@@ -75,9 +79,9 @@ function hk_reconstruct(tsp_filepath::String,
 end
 
 
-hk_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/tokyo-skytree-aerial.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/tokyo-skytree-aerial.png",
-120)
+hk_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png",
+200)
 
 """Reconstruire les images à l'aide de rsl mis à l'échelle
 args:
@@ -96,6 +100,8 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
    tournee,weight,_=finetuning_start_rsl(graph)
    tournee=tournee.Nodes
    weight=Float32(weight)
+   println(weight)
+
    # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
    write_tour("finale-tuning.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
@@ -103,5 +109,5 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
 
 end
 
-#finrtuning_rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/abstract-light-painting.tsp",
-#"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/abstract-light-painting.png")
+finrtuning_rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png")
