@@ -31,12 +31,14 @@ function rsl_reconstruct(tsp_filepath::String,
      shuffled_filepath::String, id::Int)
 
     graph = create_graph(tsp_filepath)
+    # Enlever le premier noeud et toutes les arretes lui incident
     graph.Edges = filter(edge -> edge.node1 != graph.Nodes[1] && edge.node2 != graph.Nodes[1], graph.Edges)
     graph.Nodes = filter(node -> node != graph.Nodes[1], graph.Nodes)
 
     tournee,weight=rsl(graph, id)
     tournee=tournee.Nodes
     weight=Float32(weight)
+    # Ajout de l'indice premier noeud
     node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
     write_tour("finale-rsl.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
     reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-rsl.tour",shuffled_filepath,"finale-rsl.png", view = true)
@@ -58,12 +60,14 @@ function hk_reconstruct(tsp_filepath::String,
    shuffled_filepath::String, id::Int)
 
    graph = create_graph(tsp_filepath)
+   # Enlever le premier noeud et toutes les arretes lui incident
    graph.Edges = filter(edge -> edge.node1 != graph.Nodes[1] && edge.node2 != graph.Nodes[1], graph.Edges) 
    graph.Nodes = filter(node -> node != graph.Nodes[1], graph.Nodes)
 
    tournee,weight=hk!(graph, id, 0.5)
    tournee=tournee.Nodes
    weight=Float32(weight)
+   # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
    write_tour("finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-hk.tour",shuffled_filepath,"finale-hk.png", view = true)
@@ -85,12 +89,14 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
     shuffled_filepath::String)
 
    graph = create_graph(tsp_filepath)
+   # Enlever le premier noeud et toutes les arretes lui incident
    graph.Edges = filter(edge -> edge.node1 != graph.Nodes[1] && edge.node2 != graph.Nodes[1], graph.Edges)
    graph.Nodes = filter(node -> node != graph.Nodes[1], graph.Nodes)
 
    tournee,weight,_=finetuning_start_rsl(graph)
    tournee=tournee.Nodes
    weight=Float32(weight)
+   # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
    write_tour("finale-tuning.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-tuning.tour",shuffled_filepath,"finale-tuning.png", view = true)
