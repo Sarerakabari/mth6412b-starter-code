@@ -15,14 +15,14 @@ pour trouver la tournée minimale pour rsl.
 `cost`      : Le cout de la tournée
 `Id`        : L'indice du meilleur noeud de départ
 """
-function finetuning_start_rsl(filename::String)
+function finetuning_start_rsl(G::Graph{T,S}) where {T,S}
 
 
-    G = create_graph(filename)
+    #G = create_graph(filename)
     n = length(G.Nodes)
-    Id = 2
-    Tournée, cost = rsl(G,2) 
-    for idx in 3:n
+    Id = 1
+    Tournée, cost = rsl(G,1) 
+    for idx in 2:n
         Tournée_old, cost_old = rsl(G,idx)
         if cost_old < cost
             cost = cost_old
