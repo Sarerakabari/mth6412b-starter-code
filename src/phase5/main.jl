@@ -28,7 +28,20 @@ function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
     weight=Float32(weight)
     node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
     write_tour("tokyo-skytree-aerial-finale.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale.tour",shuffled_filepath,"the-enchanted-garden-finale.png", view = true)
+    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale.tour",shuffled_filepath,"tokyo-skytree-aerial-finale.png", view = true)
+
+end
+
+function hk_reconstruct!(tsp_filepath::String, tour_filepath::String,
+    shuffled_filepath::String, id::Int)
+
+   graph = create_graph(tsp_filepath)
+   tournee,weight=hk!(graph, id, 0.5)
+   tournee=tournee.Nodes
+   weight=Float32(weight)
+   node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
+   write_tour("tokyo-skytree-aerial-finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale-hk.tour",shuffled_filepath,"the-enchanted-garden-finale-hk.png", view = true)
 
 end
 
