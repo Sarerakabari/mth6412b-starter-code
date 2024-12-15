@@ -16,7 +16,7 @@
 #include("../phase4/fix_tree.jl")
 #include("../phase4/hk.jl")
 #include("../phase4/finetuning.jl")
-#include("bin/tools.jl")
+include("bin/tools.jl")
 
 using STSP
 
@@ -43,13 +43,13 @@ function rsl_reconstruct(tsp_filepath::String,
 
     # Ajout de l'indice premier noeud
     node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
-    write_tour("finale-rsl.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-rsl.tour",shuffled_filepath,"finale-rsl.png", view = true)
+    write_tour("newimages/finale-rsl.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+    reconstruct_picture("newimages/finale-rsl.tour",shuffled_filepath,"newimages/finale-rsl.png", view = true)
 
 end
 
-rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png",
+rsl_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png",
 500)
 
 """Reconstruire les images à l'aide de hk
@@ -73,15 +73,15 @@ function hk_reconstruct(tsp_filepath::String,
    println(weight)
    # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
-   write_tour("finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-hk.tour",shuffled_filepath,"finale-hk.png", view = true)
+   write_tour("newimages/finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+   reconstruct_picture("newimages/finale-hk.tour",shuffled_filepath,"newimages/finale-hk.png", view = true)
 
 end
 
 
-hk_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png",
-200)
+hk_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png",
+500)
 
 """Reconstruire les images à l'aide de rsl mis à l'échelle
 args:
@@ -104,10 +104,10 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
 
    # Ajout de l'indice premier noeud
    node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
-   write_tour("finale-tuning.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-tuning.tour",shuffled_filepath,"finale-tuning.png", view = true)
+   write_tour("newimages/finale-tuning.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+   reconstruct_picture("newimages/finale-tuning.tour",shuffled_filepath,"newimages/finale-tuning.png", view = true)
 
 end
 
-finrtuning_rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/lower-kananaskis-lake.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/lower-kananaskis-lake.png")
+finrtuning_rsl_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png")
