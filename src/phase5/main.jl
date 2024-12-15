@@ -20,8 +20,14 @@ include("bin/tools.jl")
 
 
 
+"""Reconstruire les images à l'aide de rsl
+args:
 
-function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
+    tsp_filepath   : Le chemin vers le fichier .tsp 
+    shuffled_filepath     : Le chemin vers l'image mélangé .png
+    id : L'indice du noeud de départ dans rsl
+"""
+function rsl_reconstruct(tsp_filepath::String,
      shuffled_filepath::String, id::Int)
 
     graph = create_graph(tsp_filepath)
@@ -38,12 +44,17 @@ function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
 end
 
 #rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/abstract-light-painting.tsp",
-#"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/abstract-light-painting.tour",
 #"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/abstract-light-painting.png",
 #20)
 
+"""Reconstruire les images à l'aide de hk
+args:
 
-function hk_reconstruct(tsp_filepath::String, tour_filepath::String,
+    tsp_filepath   : Le chemin vers le fichier .tsp 
+    shuffled_filepath     : Le chemin vers l'image mélangé .png
+    id : L'indice du noeud de départ dans hk!
+"""
+function hk_reconstruct(tsp_filepath::String,
    shuffled_filepath::String, id::Int)
 
    graph = create_graph(tsp_filepath)
@@ -61,12 +72,16 @@ end
 
 
 hk_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/tokyo-skytree-aerial.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/tokyo-skytree-aerial.tour",
 "/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/tokyo-skytree-aerial.png",
 120)
 
+"""Reconstruire les images à l'aide de rsl mis à l'échelle
+args:
 
-function finrtuning_rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
+    tsp_filepath   : Le chemin vers le fichier .tsp 
+    shuffled_filepath     : Le chemin vers l'image mélangé .png
+"""
+function finrtuning_rsl_reconstruct(tsp_filepath::String,
     shuffled_filepath::String)
 
    graph = create_graph(tsp_filepath)
@@ -83,5 +98,4 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
 end
 
 #finrtuning_rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/abstract-light-painting.tsp",
-#"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/abstract-light-painting.tour",
 #"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/abstract-light-painting.png")
