@@ -18,7 +18,6 @@ include("../phase4/hk.jl")
 include("../phase4/finetuning.jl")
 include("bin/tools.jl")
 
-
 function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
      shuffled_filepath::String, id::Int)
 
@@ -27,10 +26,11 @@ function rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
     tournee=tournee.Nodes
     weight=Float32(weight)
     node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
-    write_tour("tokyo-skytree-aerial-finale.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale.tour",shuffled_filepath,"tokyo-skytree-aerial-finale.png", view = true)
+    write_tour("the-enchanted-garden-finale.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+    reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/the-enchanted-garden-finale.tour",shuffled_filepath,"the-enchanted-garden-finale.png", view = true)
 
 end
+
 
 function hk_reconstruct!(tsp_filepath::String, tour_filepath::String,
     shuffled_filepath::String, id::Int)
@@ -39,13 +39,24 @@ function hk_reconstruct!(tsp_filepath::String, tour_filepath::String,
    tournee,weight=hk!(graph, id, 0.5)
    tournee=tournee.Nodes
    weight=Float32(weight)
-   node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
+   node_ids = [parse(Int, node.name) for node in tournee]
    write_tour("tokyo-skytree-aerial-finale-hk.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
-   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale-hk.tour",shuffled_filepath,"the-enchanted-garden-finale-hk.png", view = true)
+   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/tokyo-skytree-aerial-finale-hk.tour",shuffled_filepath,"tokyo-skytree-aerial-finale-hk.png", view = true)
 
 end
 
-rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/tokyo-skytree-aerial.tsp",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/tokyo-skytree-aerial.tour",
-"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/tokyo-skytree-aerial.png",
-120)
+function finrtuning_rsl_reconstruct(tsp_filepath::String, tour_filepath::String,
+    shuffled_filepath::String)
+
+   tournee,weight,_=finetuning_start_rsl(tsp_filepath)
+   tournee=tournee.Nodes
+   weight=Float32(weight)
+   node_ids = vcat(1,[parse(Int, node.name) for node in tournee])
+   write_tour("finale-tuning.tour",node_ids,weight) # Ecriture du fichier .tour de la tournée correspondante
+   reconstruct_picture("/Users/mouhtal/Desktop/mth6412b-starter-code-6/finale-tuning.tour",shuffled_filepath,"finale-tuning.png", view = true)
+
+end
+
+finrtuning_rsl_reconstruct("/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/instances/abstract-light-painting.tsp",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/tsp/tours/abstract-light-painting.tour",
+"/Users/mouhtal/Desktop/mth6412b-starter-code-6/src/phase5/images/shuffled/abstract-light-painting.png")
