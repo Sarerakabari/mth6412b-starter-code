@@ -1,21 +1,3 @@
-#include("../phase1/node.jl")
-#include("../phase1/Edge.jl")
-#include("../phase1/graph.jl")
-#include("../phase1/read_stsp.jl")
-#include("../phase1/create_graph.jl")
-#include("../phase2/node_pointer.jl")
-#include("../phase2/kruskal.jl")
-#include("../phase3/node_priority.jl")
-#include("../phase3/queue.jl")
-#include("../phase3/prim.jl")
-#include("../phase4/rsl.jl")
-#include("../phase4/degrees.jl")
-#include("../phase4/weighted_node.jl")
-#include("../phase4/weigth_update.jl")
-#include("../phase4/sub_graph.jl")
-#include("../phase4/fix_tree.jl")
-#include("../phase4/hk.jl")
-#include("../phase4/finetuning.jl")
 include("bin/tools.jl")
 
 using STSP
@@ -48,9 +30,9 @@ function rsl_reconstruct(tsp_filepath::String,
 
 end
 
-rsl_reconstruct("tsp/instances/nikos-cat.tsp",
-"images/shuffled/nikos-cat.png",
-500)
+rsl_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
+"images/shuffled/tokyo-skytree-aerial.png",
+120)
 
 """Reconstruire les images à l'aide de hk
 args:
@@ -79,9 +61,9 @@ function hk_reconstruct(tsp_filepath::String,
 end
 
 
-hk_reconstruct("tsp/instances/nikos-cat.tsp",
-"images/shuffled/nikos-cat.png",
-500)
+hk_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
+"images/shuffled/tokyo-skytree-aerial.png",
+120)
 
 """Reconstruire les images à l'aide de rsl mis à l'échelle
 args:
@@ -109,5 +91,5 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
 
 end
 
-finrtuning_rsl_reconstruct("tsp/instances/nikos-cat.tsp",
-"images/shuffled/nikos-cat.png")
+finrtuning_rsl_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
+"images/shuffled/tokyo-skytree-aerial.png")
