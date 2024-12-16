@@ -30,9 +30,9 @@ function rsl_reconstruct(tsp_filepath::String,
 
 end
 
-rsl_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
-"images/shuffled/tokyo-skytree-aerial.png",
-120)
+rsl_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png",
+500)
 
 """Reconstruire les images à l'aide de hk
 args:
@@ -61,9 +61,9 @@ function hk_reconstruct(tsp_filepath::String,
 end
 
 
-hk_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
-"images/shuffled/tokyo-skytree-aerial.png",
-120)
+hk_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png",
+500)
 
 """Reconstruire les images à l'aide de rsl mis à l'échelle
 args:
@@ -91,5 +91,5 @@ function finrtuning_rsl_reconstruct(tsp_filepath::String,
 
 end
 
-finrtuning_rsl_reconstruct("tsp/instances/tokyo-skytree-aerial.tsp",
-"images/shuffled/tokyo-skytree-aerial.png")
+finrtuning_rsl_reconstruct("tsp/instances/nikos-cat.tsp",
+"images/shuffled/nikos-cat.png")
